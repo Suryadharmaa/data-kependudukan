@@ -3,1695 +3,1644 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>GeoIndo — Peta Kependudukan Indonesia · Edisi BPS 2025</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-
+<title>GeoIndo Quiz — Kependudukan Indonesia · BPS 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════
-   DESIGN SYSTEM — Clean Academic Light Theme
-   Inspired by: mapchart.net + academic atlas
-   ═══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════════════ */
 :root {
-  /* Palette */
-  --paper:   #FAFBFC;
-  --white:   #FFFFFF;
-  --ink:     #1A2035;
-  --ink2:    #3D4A63;
-  --ink3:    #6B7A95;
-  --ink4:    #9BAABF;
-  --line:    #E2E8F0;
-  --line2:   #CBD5E1;
-  --bg:      #F1F4F8;
+  --bg:       #F8FAFC;
+  --white:    #FFFFFF;
+  --ink:      #0F172A;
+  --ink2:     #334155;
+  --ink3:     #64748B;
+  --ink4:     #94A3B8;
+  --line:     #E2E8F0;
+  --line2:    #CBD5E1;
+  --surface:  #F1F5F9;
 
-  /* Brand */
-  --red:     #C0392B;
-  --red2:    #E74C3C;
-  --red-bg:  #FEF2F2;
-  --red-bdr: #FECACA;
-  --blue:    #2563EB;
-  --blue2:   #3B82F6;
-  --blue-bg: #EFF6FF;
-  --green:   #059669;
-  --green-bg:#ECFDF5;
-  --amber:   #D97706;
-  --amber-bg:#FFFBEB;
-  --purple:  #7C3AED;
-  --teal:    #0891B2;
+  --red:      #DC2626;
+  --red2:     #EF4444;
+  --red-bg:   #FEF2F2;
+  --red-bdr:  #FECACA;
+  --green:    #16A34A;
+  --green2:   #22C55E;
+  --green-bg: #F0FDF4;
+  --green-bdr:#BBF7D0;
+  --blue:     #2563EB;
+  --blue2:    #3B82F6;
+  --blue-bg:  #EFF6FF;
+  --amber:    #D97706;
+  --amber-bg: #FFFBEB;
+  --purple:   #7C3AED;
+  --orange:   #EA580C;
 
-  /* Choropleth scales */
-  --c1: #FEF9C3; /* Lightest */
-  --c2: #FDE68A;
-  --c3: #FDBA74;
-  --c4: #F87171;
-  --c5: #DC2626;
-  --c6: #7F1D1D; /* Darkest */
+  --exam-bg:  #0F0F23;
+  --exam-s1:  #1A1A3A;
+  --exam-s2:  #252550;
+  --exam-acc: #6366F1;
+  --exam-acc2:#818CF8;
+  --exam-red: #EF4444;
+  --exam-grn: #22C55E;
 
-  /* Typography */
-  --font: 'DM Sans', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', 'Courier New', monospace;
-  --serif: 'DM Serif Display', Georgia, serif;
+  --font:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --serif:'DM Serif Display',Georgia,serif;
 
-  /* Sizes */
-  --r: 8px;
-  --r2: 12px;
-  --r3: 16px;
-  --sh1: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
-  --sh2: 0 4px 16px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.06);
-  --sh3: 0 20px 48px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
-
-  --hdr: 52px;
-  --lp:  268px;
-  --rp:  320px;
+  --r:8px;--r2:12px;--r3:16px;--r4:24px;
+  --sh1:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --sh2:0 4px 16px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.04);
+  --sh3:0 20px 48px rgba(0,0,0,.12),0 4px 12px rgba(0,0,0,.05);
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; overflow:hidden; }
-body { font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.5; font-size:14px; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px;}
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width:4px; height:4px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:var(--line2); border-radius:2px; }
-::-webkit-scrollbar-thumb:hover { background:var(--ink4); }
+/* ══════════════════════════════════════════════════
+   HOME SCREEN
+══════════════════════════════════════════════════ */
+#homeScreen {
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 20px;
+  background:linear-gradient(145deg,#EFF6FF 0%,#F8FAFC 50%,#F0FDF4 100%);
+}
 
-/* ════════════════════════════════════════
-   HEADER
-════════════════════════════════════════ */
-.hdr {
-  height:var(--hdr);
-  background:var(--white);
-  border-bottom:1px solid var(--line);
-  display:flex; align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  flex-shrink:0;
-  z-index:200;
+.home-logo {
+  display:flex;align-items:center;gap:12px;margin-bottom:8px;
+}
+.home-ico {
+  width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(135deg,var(--red),#991B1B);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;box-shadow:0 8px 24px rgba(220,38,38,.3);
+}
+.home-title {
+  font-family:var(--serif);font-size:36px;color:var(--ink);
+}
+.home-sub {
+  font-size:13px;color:var(--ink3);text-align:center;margin-bottom:36px;
+  letter-spacing:.3px;
+}
+.bps-badge {
+  background:var(--blue-bg);border:1px solid #BFDBFE;
+  color:var(--blue);padding:4px 12px;border-radius:20px;
+  font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;gap:5px;
+  margin-bottom:32px;
+}
+
+.mode-cards {
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+  width:100%;max-width:720px;margin-bottom:32px;
+}
+
+.mode-card {
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r3);
+  padding:28px 24px;cursor:pointer;transition:all .18s;
+  box-shadow:var(--sh1);position:relative;overflow:hidden;
+}
+.mode-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r3) var(--r3) 0 0;
+}
+.mode-card.practice::before { background:var(--blue); }
+.mode-card.exam::before { background:linear-gradient(90deg,var(--purple),var(--exam-red)); }
+.mode-card:hover { transform:translateY(-2px);box-shadow:var(--sh3);border-color:var(--line2); }
+.mc-icon { font-size:32px;margin-bottom:12px; }
+.mc-label {
+  font-size:11px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;margin-bottom:6px;
+}
+.mode-card.practice .mc-label { color:var(--blue); }
+.mode-card.exam .mc-label { color:var(--purple); }
+.mc-title { font-family:var(--serif);font-size:22px;margin-bottom:8px; }
+.mc-desc { font-size:12.5px;color:var(--ink3);line-height:1.6;margin-bottom:14px; }
+.mc-pills { display:flex;flex-wrap:wrap;gap:6px; }
+.mc-pill {
+  padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;
+  background:var(--surface);color:var(--ink2);border:1px solid var(--line);
+}
+.mode-card.exam .mc-pill { background:rgba(124,58,237,.08);color:var(--purple);border-color:rgba(124,58,237,.2); }
+
+.start-btn {
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;max-width:720px;padding:14px 28px;
+  background:var(--ink);color:var(--white);border:none;border-radius:var(--r2);
+  font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
+  transition:all .18s;letter-spacing:.2px;
+}
+.start-btn:hover { background:var(--ink2); transform:translateY(-1px); }
+.start-btn.exam-btn {
+  background:linear-gradient(135deg,var(--purple),#4F46E5);
+  box-shadow:0 8px 24px rgba(124,58,237,.3);
+}
+.start-btn.exam-btn:hover { background:linear-gradient(135deg,#6D28D9,#4338CA); }
+
+.home-stats {
+  display:flex;gap:32px;margin-top:28px;text-align:center;
+}
+.hs-item .hs-v { font-family:var(--mono);font-size:22px;font-weight:700;color:var(--ink); }
+.hs-item .hs-l { font-size:11px;color:var(--ink3);margin-top:2px; }
+
+/* ══════════════════════════════════════════════════
+   PRACTICE QUIZ SCREEN
+══════════════════════════════════════════════════ */
+#practiceScreen { display:none; min-height:100vh; }
+
+.pq-header {
+  background:var(--white);border-bottom:1px solid var(--line);
+  padding:14px 24px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:50;
   box-shadow:var(--sh1);
 }
-
-.brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-.brand-mark {
-  width:32px; height:32px; border-radius:7px;
-  background:linear-gradient(135deg,var(--red) 0%,#8B1A1A 100%);
-  display:flex; align-items:center; justify-content:center;
-  font-size:16px; box-shadow:0 2px 8px rgba(192,57,43,.3);
-  flex-shrink:0;
+.pq-brand { display:flex;align-items:center;gap:8px; }
+.pq-brand-ico {
+  width:30px;height:30px;border-radius:7px;
+  background:linear-gradient(135deg,var(--red),#991B1B);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
 }
-.brand-name {
-  font-family:var(--serif); font-size:17px; color:var(--ink);
-  line-height:1;
-}
-.brand-sub { font-size:10px; color:var(--ink3); letter-spacing:.4px; margin-top:2px; }
+.pq-brand-name { font-family:var(--serif);font-size:16px; }
 
-.hdr-pills { display:flex; align-items:center; gap:6px; }
-.hpill {
-  padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600;
-  letter-spacing:.2px; white-space:nowrap;
-}
-.hp-bps { background:var(--blue-bg); color:var(--blue); border:1px solid #BFDBFE; }
-.hp-live { background:var(--green-bg); color:var(--green); border:1px solid #A7F3D0;
-  display:flex; align-items:center; gap:4px; }
-.live-dot { width:5px; height:5px; border-radius:50%; background:var(--green);
-  animation:pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
-
-.hdr-nav { display:flex; gap:2px; }
-.hnav {
-  padding:6px 14px; border-radius:var(--r); border:none;
-  background:transparent; font-family:var(--font); font-size:12px;
-  font-weight:600; color:var(--ink3); cursor:pointer; transition:all .15s;
-  letter-spacing:.2px;
-}
-.hnav:hover { color:var(--ink); background:var(--bg); }
-.hnav.on { background:var(--ink); color:var(--white); }
-
-/* ════════════════════════════════════════
-   LAYOUT
-════════════════════════════════════════ */
-.body { display:flex; height:calc(100vh - var(--hdr)); overflow:hidden; }
-
-/* ════════════════════════════════════════
-   LEFT PANEL
-════════════════════════════════════════ */
-.lp {
-  width:var(--lp); background:var(--white);
-  border-right:1px solid var(--line);
-  display:flex; flex-direction:column;
-  flex-shrink:0; overflow:hidden;
+.progress-bar-wrap { flex:1;max-width:320px;margin:0 24px; }
+.progress-label { display:flex;justify-content:space-between;margin-bottom:4px;
+  font-size:11px;color:var(--ink3);font-weight:600; }
+.progress-track { height:6px;background:var(--line);border-radius:3px;overflow:hidden; }
+.progress-fill {
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--blue),var(--blue2));
+  transition:width .4s cubic-bezier(.23,1,.32,1);
 }
 
-.lp-top { padding:12px 14px 10px; border-bottom:1px solid var(--line); flex-shrink:0; }
-.section-label {
-  font-size:9.5px; font-weight:700; color:var(--ink3);
-  text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px;
+.pq-stats { display:flex;gap:16px;align-items:center; }
+.pqs-item { text-align:center; }
+.pqs-v { font-family:var(--mono);font-size:16px;font-weight:700; }
+.pqs-l { font-size:9.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px; }
+.pqs-item.correct .pqs-v { color:var(--green); }
+.pqs-item.wrong .pqs-v { color:var(--red); }
+.pqs-item.streak .pqs-v { color:var(--amber); }
+
+.back-btn {
+  padding:6px 12px;border:1px solid var(--line);border-radius:var(--r);
+  background:transparent;font-family:var(--font);font-size:12px;font-weight:600;
+  color:var(--ink2);cursor:pointer;transition:all .15s;
+}
+.back-btn:hover { background:var(--surface); }
+
+.pq-body { max-width:720px;margin:0 auto;padding:32px 20px 60px; }
+
+.q-category {
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:20px;margin-bottom:12px;
+  font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+}
+.cat-data    { background:var(--blue-bg);color:var(--blue);border:1px solid #BFDBFE; }
+.cat-konsep  { background:var(--amber-bg);color:var(--amber);border:1px solid #FDE68A; }
+.cat-provinsi{ background:#F3E8FF;color:var(--purple);border:1px solid #DDD6FE; }
+.cat-hitungan{ background:var(--green-bg);color:var(--green);border:1px solid var(--green-bdr); }
+.cat-umur    { background:#FFF7ED;color:var(--orange);border:1px solid #FED7AA; }
+.cat-kebijakan{ background:var(--surface);color:var(--ink2);border:1px solid var(--line2); }
+
+.q-number { font-family:var(--mono);font-size:11px;color:var(--ink4);margin-bottom:6px; }
+.q-text {
+  font-size:16px;font-weight:600;color:var(--ink);line-height:1.6;
+  margin-bottom:20px;
+}
+.q-source { font-size:10.5px;color:var(--ink4);margin-top:-14px;margin-bottom:18px; }
+
+.options { display:flex;flex-direction:column;gap:8px; }
+.opt {
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border:1.5px solid var(--line);border-radius:var(--r2);
+  cursor:pointer;transition:all .12s;background:var(--white);
+}
+.opt:hover { border-color:var(--blue2);background:var(--blue-bg); }
+.opt.correct { border-color:var(--green2);background:var(--green-bg); }
+.opt.wrong { border-color:var(--red2);background:var(--red-bg); }
+.opt.selected-wrong { border-color:var(--red2);background:var(--red-bg); }
+.opt-letter {
+  width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11.5px;font-weight:700;
+  color:var(--ink3);flex-shrink:0;transition:all .12s;
+}
+.opt:hover .opt-letter { border-color:var(--blue);color:var(--blue); }
+.opt.correct .opt-letter { border-color:var(--green);background:var(--green);color:#fff; }
+.opt.wrong .opt-letter,.opt.selected-wrong .opt-letter { border-color:var(--red);background:var(--red);color:#fff; }
+.opt-text { font-size:13.5px;font-weight:500;line-height:1.4; }
+
+.explanation {
+  margin-top:16px;padding:14px 16px;border-radius:var(--r2);
+  font-size:12.5px;line-height:1.7;display:none;
+}
+.explanation.cor { background:var(--green-bg);border:1px solid var(--green-bdr);color:#14532D; }
+.explanation.wrg { background:var(--red-bg);border:1px solid var(--red-bdr);color:#7F1D1D; }
+.explanation.on { display:block; }
+
+.next-btn {
+  display:none;align-items:center;justify-content:center;gap:8px;
+  width:100%;margin-top:16px;padding:13px;
+  background:var(--ink);color:var(--white);border:none;border-radius:var(--r2);
+  font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;
+  transition:background .15s;
+}
+.next-btn:hover { background:var(--ink2); }
+.next-btn.show { display:flex; }
+
+/* ══════════════════════════════════════════════════
+   RESULT SCREEN (PRACTICE)
+══════════════════════════════════════════════════ */
+#resultScreen { display:none;min-height:100vh;background:var(--bg); }
+
+.result-hero {
+  background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);
+  padding:48px 24px;text-align:center;color:var(--white);
+}
+.result-trophy { font-size:64px;margin-bottom:16px; }
+.result-score { font-family:var(--serif);font-size:64px;color:var(--white); }
+.result-label { font-size:15px;color:rgba(255,255,255,.6);margin:4px 0 16px; }
+.result-grade {
+  display:inline-block;padding:6px 20px;border-radius:20px;
+  font-size:13px;font-weight:700;border:2px solid;
+}
+.grade-a { background:rgba(34,197,94,.15);border-color:var(--green2);color:var(--green2); }
+.grade-b { background:rgba(59,130,246,.15);border-color:var(--blue2);color:var(--blue2); }
+.grade-c { background:rgba(245,158,11,.15);border-color:#FBBF24;color:#FBBF24; }
+.grade-d { background:rgba(239,68,68,.15);border-color:var(--red2);color:var(--red2); }
+
+.result-body { max-width:640px;margin:0 auto;padding:32px 20px; }
+.result-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px; }
+.rs-card { background:var(--white);border:1px solid var(--line);border-radius:var(--r2);padding:14px;text-align:center;box-shadow:var(--sh1); }
+.rs-v { font-family:var(--mono);font-size:20px;font-weight:700;color:var(--ink); }
+.rs-l { font-size:10px;color:var(--ink3);margin-top:3px;text-transform:uppercase;letter-spacing:.5px; }
+.rs-card.cor .rs-v { color:var(--green); }
+.rs-card.wrg .rs-v { color:var(--red); }
+.rs-card.str .rs-v { color:var(--amber); }
+
+.result-btns { display:flex;gap:10px;margin-bottom:24px; }
+.rbtn {
+  flex:1;padding:12px;border-radius:var(--r2);font-family:var(--font);
+  font-size:13.5px;font-weight:700;cursor:pointer;transition:all .15s;border:none;
+}
+.rbtn-primary { background:var(--ink);color:var(--white); }
+.rbtn-primary:hover { background:var(--ink2); }
+.rbtn-outline { background:var(--white);color:var(--ink);border:1.5px solid var(--line2); }
+.rbtn-outline:hover { background:var(--surface); }
+
+.wrong-review { border:1px solid var(--line);border-radius:var(--r2);overflow:hidden; }
+.wr-header { background:var(--surface);padding:12px 16px;font-size:12px;font-weight:700;color:var(--ink2);border-bottom:1px solid var(--line); }
+.wr-item { padding:14px 16px;border-bottom:1px solid var(--line); }
+.wr-item:last-child { border-bottom:none; }
+.wr-q { font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:6px; }
+.wr-user { font-size:11.5px;color:var(--red);margin-bottom:3px; }
+.wr-correct { font-size:11.5px;color:var(--green);margin-bottom:4px; }
+.wr-exp { font-size:11px;color:var(--ink3);line-height:1.6; }
+
+/* ══════════════════════════════════════════════════
+   EXAM MODE — FULL TAKEOVER
+══════════════════════════════════════════════════ */
+#examScreen {
+  display:none;
+  position:fixed;inset:0;
+  background:var(--exam-bg);
+  z-index:9999;
+  overflow-y:auto;
+  font-family:var(--font);
+  color:#E2E8F0;
 }
 
-.search { position:relative; }
-.search-icon { position:absolute; left:9px; top:50%; transform:translateY(-50%);
-  font-size:12px; color:var(--ink4); pointer-events:none; }
-.search-inp {
-  width:100%; padding:7px 9px 7px 28px;
-  border:1px solid var(--line2); border-radius:var(--r);
-  font-family:var(--font); font-size:13px; color:var(--ink);
-  background:var(--bg); outline:none; transition:all .15s;
+.exam-lockbar {
+  position:fixed;top:0;left:0;right:0;
+  background:rgba(15,15,35,.97);
+  border-bottom:1px solid rgba(99,102,241,.3);
+  padding:10px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:10000;backdrop-filter:blur(20px);
 }
-.search-inp::placeholder { color:var(--ink4); }
-.search-inp:focus { border-color:var(--blue2); background:var(--white);
-  box-shadow:0 0 0 3px rgba(59,130,246,.1); }
-
-/* Province list */
-.provlist { flex:1; overflow-y:auto; padding:5px 5px; }
-
-.pitem {
-  display:flex; align-items:center; gap:8px;
-  padding:7px 9px; border-radius:var(--r);
-  cursor:pointer; transition:all .12s; border:1px solid transparent;
-  margin-bottom:1px;
+.exam-brand { display:flex;align-items:center;gap:10px; }
+.exam-lock-ico {
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,var(--exam-acc),#4F46E5);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
 }
-.pitem:hover { background:var(--bg); }
-.pitem.on { background:var(--red-bg); border-color:var(--red-bdr); }
-.pitem.on .pname { color:var(--red); }
-.pitem.on .ppop { color:rgba(192,57,43,.7); }
-.prank { font-family:var(--mono); font-size:9px; color:var(--ink4); width:14px; text-align:right; flex-shrink:0; }
-.pdot { width:7px; height:7px; border-radius:50%; flex-shrink:0; border:1px solid rgba(0,0,0,.08); }
-.pinfo { flex:1; min-width:0; }
-.pname { font-size:12.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.ppop { font-family:var(--mono); font-size:10px; color:var(--ink3); margin-top:1px; }
-.pbar { width:36px; height:3px; background:var(--line); border-radius:2px; overflow:hidden; flex-shrink:0; }
-.pbar-f { height:100%; border-radius:2px; transition:width .5s; }
-
-.lp-foot {
-  padding:10px 14px; border-top:1px solid var(--line);
-  background:var(--paper); flex-shrink:0;
+.exam-brand-name { font-family:var(--serif);font-size:16px;color:#fff; }
+.exam-mode-badge {
+  background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);
+  color:var(--exam-red);padding:3px 10px;border-radius:20px;
+  font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  animation:redPulse 2s ease-in-out infinite;
 }
-.nat-row { display:flex; justify-content:space-between; align-items:baseline; padding:2.5px 0; }
-.nat-l { font-size:11px; color:var(--ink3); }
-.nat-v { font-family:var(--mono); font-size:12px; font-weight:700; color:var(--blue); }
-.nat-src { font-size:9.5px; color:var(--ink4); margin-top:7px; text-align:center; }
+@keyframes redPulse { 0%,100%{opacity:1;}50%{opacity:.6;} }
 
-/* ════════════════════════════════════════
-   MAP AREA
-════════════════════════════════════════ */
-.ma {
-  flex:1; position:relative; overflow:hidden;
-  background:linear-gradient(145deg,#D6EAF8 0%,#EBF5FB 40%,#D1ECF1 100%);
+.exam-progress-wrap { flex:1;max-width:300px;margin:0 24px; }
+.exam-prog-info { display:flex;justify-content:space-between;font-size:10px;
+  color:rgba(255,255,255,.45);margin-bottom:4px; }
+.exam-prog-track { height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden; }
+.exam-prog-fill {
+  height:100%;border-radius:2px;
+  background:linear-gradient(90deg,var(--exam-acc),var(--exam-acc2));
+  transition:width .4s;
 }
 
-/* Subtle ocean lines */
-.ma::before {
-  content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,.25) 0, rgba(255,255,255,.25) 1px, transparent 1px, transparent 40px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.25) 0, rgba(255,255,255,.25) 1px, transparent 1px, transparent 40px);
-  background-size:40px 40px;
+.exam-timer-wrap { display:flex;align-items:center;gap:16px; }
+.exam-timer {
+  font-family:var(--mono);font-size:22px;font-weight:700;
+  color:#fff;letter-spacing:-1px;
+}
+.exam-timer.warning { color:#FBBF24;animation:timerWarn .5s ease-in-out infinite; }
+.exam-timer.danger { color:var(--exam-red);animation:timerWarn .3s ease-in-out infinite; }
+@keyframes timerWarn { 0%,100%{opacity:1;}50%{opacity:.5;} }
+
+.exam-sc-item { text-align:center; }
+.exam-sc-v { font-family:var(--mono);font-size:17px;font-weight:700;color:#fff; }
+.exam-sc-l { font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px; }
+
+.exam-body { max-width:720px;margin:0 auto;padding:80px 20px 60px; }
+
+.exam-q-card {
+  background:var(--exam-s1);border:1px solid rgba(99,102,241,.2);
+  border-radius:var(--r3);padding:28px 28px 24px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  animation:fadeUp .25s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+.exam-q-meta { display:flex;align-items:center;gap:10px;margin-bottom:12px; }
+.exam-q-num { font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.35); }
+.exam-q-cat {
+  padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;
+  background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);color:var(--exam-acc2);
 }
 
-#mapSvg {
-  width:100%; height:100%;
-  cursor:grab;
-  user-select:none;
-  position:relative; z-index:1;
+.exam-q-text {
+  font-size:16px;font-weight:600;color:#F1F5F9;line-height:1.65;margin-bottom:20px;
 }
-#mapSvg:active { cursor:grabbing; }
+.exam-q-src { font-size:10px;color:rgba(255,255,255,.3);margin-top:-14px;margin-bottom:18px; }
 
-/* Province paths */
-.pr {
-  cursor:pointer;
-  stroke:#FFFFFF; stroke-width:0.6; stroke-linejoin:round;
-  transition:filter .12s, stroke-width .12s;
-  filter:drop-shadow(0 1px 2px rgba(0,0,0,.15));
+.exam-opts { display:flex;flex-direction:column;gap:8px; }
+.exam-opt {
+  display:flex;align-items:center;gap:12px;
+  padding:13px 16px;border:1.5px solid rgba(255,255,255,.08);
+  border-radius:var(--r2);cursor:pointer;transition:all .12s;
+  background:rgba(255,255,255,.03);
 }
-.pr:hover { stroke:#1A2035; stroke-width:1.2; filter:brightness(1.08) drop-shadow(0 2px 4px rgba(0,0,0,.2)); }
-.pr.sel { stroke:#1A2035; stroke-width:1.8; filter:brightness(1.1) drop-shadow(0 3px 8px rgba(0,0,0,.25)); }
+.exam-opt:hover { border-color:rgba(99,102,241,.5);background:rgba(99,102,241,.1); }
+.exam-opt.selected { border-color:var(--exam-acc);background:rgba(99,102,241,.15); }
+.exam-opt.correct { border-color:var(--exam-grn);background:rgba(34,197,94,.1); }
+.exam-opt.wrong, .exam-opt.selected-wrong { border-color:var(--exam-red);background:rgba(239,68,68,.1); }
 
-/* Province labels */
-.plbl {
-  font-family:'DM Sans',sans-serif; font-weight:600;
-  fill:#1A2035; pointer-events:none;
-  text-anchor:middle; dominant-baseline:central;
-  paint-order:stroke;
-  stroke:rgba(255,255,255,.85); stroke-width:2.5px; stroke-linejoin:round;
+.exam-opt-letter {
+  width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11.5px;font-weight:700;
+  color:rgba(255,255,255,.5);flex-shrink:0;transition:all .12s;
 }
+.exam-opt:hover .exam-opt-letter { border-color:var(--exam-acc2);color:var(--exam-acc2); }
+.exam-opt.selected .exam-opt-letter { border-color:var(--exam-acc);background:var(--exam-acc);color:#fff; }
+.exam-opt.correct .exam-opt-letter { border-color:var(--exam-grn);background:var(--exam-grn);color:#fff; }
+.exam-opt.wrong .exam-opt-letter,.exam-opt.selected-wrong .exam-opt-letter { border-color:var(--exam-red);background:var(--exam-red);color:#fff; }
+.exam-opt-text { font-size:13.5px;font-weight:500;color:#CBD5E1;line-height:1.4; }
 
-/* Sea labels */
-.slbl {
-  font-family:'DM Sans',sans-serif; font-style:italic;
-  fill:rgba(41,98,148,.45); pointer-events:none;
-  text-anchor:middle; letter-spacing:.5px;
+.exam-explanation {
+  margin-top:14px;padding:13px 15px;border-radius:var(--r);
+  font-size:12px;line-height:1.7;display:none;
 }
+.exam-explanation.cor { background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#86EFAC; }
+.exam-explanation.wrg { background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#FCA5A5; }
+.exam-explanation.on { display:block; }
 
-/* Tooltip */
-#tip {
-  position:absolute; z-index:100; pointer-events:none;
-  background:var(--white); border:1px solid var(--line2);
-  border-radius:var(--r2); padding:12px 15px;
-  box-shadow:var(--sh3); display:none;
-  min-width:200px; max-width:240px;
+.exam-nav {
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:20px;gap:10px;
 }
-.tip-name { font-family:var(--serif); font-size:15px; color:var(--ink); margin-bottom:8px; line-height:1.2; }
-.tip-div { height:1px; background:var(--line); margin-bottom:8px; }
-.tip-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
-.tip-l { font-size:10.5px; color:var(--ink3); }
-.tip-v { font-family:var(--mono); font-size:11px; font-weight:700; color:var(--ink); }
-.tip-badge { font-size:9.5px; font-weight:600; padding:1px 7px; border-radius:20px; margin-top:6px; display:inline-block; }
+.exam-nav-btn {
+  padding:11px 24px;border-radius:var(--r);font-family:var(--font);
+  font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;border:none;
+}
+.enb-next {
+  background:linear-gradient(135deg,var(--exam-acc),#4F46E5);color:#fff;
+  box-shadow:0 4px 16px rgba(99,102,241,.3);flex:1;
+}
+.enb-next:hover { background:linear-gradient(135deg,#5B5BD6,#4338CA); }
+.enb-skip {
+  background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.1);
+}
+.enb-skip:hover { background:rgba(255,255,255,.1);color:rgba(255,255,255,.7); }
 
-/* View switcher */
-.vsw {
-  position:absolute; top:14px; left:50%; transform:translateX(-50%); z-index:50;
-  background:var(--white); border:1px solid var(--line2); border-radius:var(--r2);
-  padding:3px; display:flex; gap:2px; box-shadow:var(--sh2);
+/* Answer map */
+.exam-ansmap {
+  margin-top:20px;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;
 }
-.vbtn {
-  padding:6px 13px; border-radius:7px; border:none;
-  background:transparent; font-family:var(--font); font-size:11.5px;
-  font-weight:600; color:var(--ink3); cursor:pointer; transition:all .15s;
+.anm-dot {
+  width:24px;height:24px;border-radius:50%;border:1.5px solid rgba(255,255,255,.12);
+  font-family:var(--mono);font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.3);
+  cursor:pointer;transition:all .12s;
 }
-.vbtn:hover { color:var(--ink); background:var(--bg); }
-.vbtn.on { background:var(--ink); color:var(--white); }
+.anm-dot.answered { background:rgba(99,102,241,.3);border-color:var(--exam-acc2);color:var(--exam-acc2); }
+.anm-dot.current { background:var(--exam-acc);border-color:var(--exam-acc);color:#fff;transform:scale(1.15); }
+.anm-dot.correct-d { background:rgba(34,197,94,.3);border-color:var(--exam-grn);color:var(--exam-grn); }
+.anm-dot.wrong-d { background:rgba(239,68,68,.3);border-color:var(--exam-red);color:var(--exam-red); }
 
-/* Legend */
-.legend {
-  position:absolute; bottom:20px; left:16px; z-index:50;
-  background:var(--white); border:1px solid var(--line2);
-  border-radius:var(--r2); padding:12px 14px; box-shadow:var(--sh2);
+/* Warning overlay */
+#warnOverlay {
+  display:none;position:fixed;inset:0;z-index:99999;
+  background:rgba(239,68,68,.95);
+  flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;color:#fff;padding:32px;
 }
-.leg-title { font-size:10px; font-weight:700; color:var(--ink2); text-transform:uppercase;
-  letter-spacing:.8px; margin-bottom:8px; }
-.leg-row { display:flex; align-items:center; gap:7px; margin-bottom:3.5px; }
-.leg-swatch { width:14px; height:9px; border-radius:2px; border:1px solid rgba(0,0,0,.06); }
-.leg-label { font-size:10.5px; color:var(--ink2); }
-
-/* Map controls */
-.mctrl { position:absolute; bottom:20px; right:16px; z-index:50; display:flex; flex-direction:column; gap:4px; }
-.mc {
-  width:34px; height:34px; background:var(--white); border:1px solid var(--line2);
-  border-radius:var(--r); cursor:pointer; display:flex; align-items:center; justify-content:center;
-  font-size:15px; color:var(--ink2); transition:all .15s; box-shadow:var(--sh1);
-  font-family:var(--font); font-weight:700;
-}
-.mc:hover { background:var(--ink); color:var(--white); border-color:var(--ink); }
-
-/* Scale label */
-.scale-lbl {
-  position:absolute; bottom:22px; left:50%; transform:translateX(-50%); z-index:50;
-  font-size:10px; color:var(--ink3); font-family:var(--mono);
-  background:rgba(255,255,255,.8); padding:3px 10px; border-radius:20px;
-  border:1px solid var(--line);
+#warnOverlay.show { display:flex; }
+.warn-ico { font-size:64px;margin-bottom:16px; }
+.warn-title { font-family:var(--serif);font-size:32px;margin-bottom:8px; }
+.warn-desc { font-size:15px;opacity:.85;line-height:1.6;max-width:400px;margin-bottom:20px; }
+.warn-count { font-family:var(--mono);font-size:24px;font-weight:700; }
+.warn-continue {
+  margin-top:20px;padding:12px 28px;background:#fff;color:var(--exam-red);
+  border:none;border-radius:var(--r);font-family:var(--font);font-size:14px;
+  font-weight:700;cursor:pointer;
 }
 
-/* ════════════════════════════════════════
-   RIGHT PANEL
-════════════════════════════════════════ */
-.rp {
-  width:var(--rp); background:var(--white);
-  border-left:1px solid var(--line);
-  display:flex; flex-direction:column;
-  flex-shrink:0; overflow:hidden;
+/* Exam result */
+#examResultScreen { display:none;min-height:100vh;background:var(--exam-bg); }
+.er-hero {
+  background:linear-gradient(135deg,var(--exam-s2),var(--exam-s1));
+  padding:56px 24px 40px;text-align:center;
+  border-bottom:1px solid rgba(99,102,241,.2);
 }
+.er-trophy { font-size:72px;margin-bottom:16px; }
+.er-score { font-family:var(--serif);font-size:80px;color:#fff; }
+.er-label { font-size:14px;color:rgba(255,255,255,.5);margin:6px 0 16px; }
+.er-grade {
+  display:inline-block;padding:7px 22px;border-radius:20px;
+  font-size:14px;font-weight:700;letter-spacing:.3px;
+}
+.er-body { max-width:640px;margin:0 auto;padding:32px 20px 60px; }
+.er-stats { display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px; }
+.er-card { background:var(--exam-s1);border:1px solid rgba(255,255,255,.08);border-radius:var(--r2);padding:14px;text-align:center; }
+.er-card-v { font-family:var(--mono);font-size:20px;font-weight:700;color:#fff; }
+.er-card-l { font-size:9.5px;color:rgba(255,255,255,.4);margin-top:3px;text-transform:uppercase;letter-spacing:.5px; }
+.er-card.cor .er-card-v { color:var(--exam-grn); }
+.er-card.wrg .er-card-v { color:var(--exam-red); }
 
-.pane { display:none; flex-direction:column; height:100%; overflow:hidden; }
-.pane.on { display:flex; }
+.er-btns { display:flex;gap:10px;margin-bottom:28px; }
+.er-btn {
+  flex:1;padding:13px;border-radius:var(--r2);font-family:var(--font);
+  font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;border:none;
+}
+.er-btn-primary {
+  background:linear-gradient(135deg,var(--exam-acc),#4F46E5);color:#fff;
+  box-shadow:0 4px 16px rgba(99,102,241,.3);
+}
+.er-btn-primary:hover { background:linear-gradient(135deg,#5B5BD6,#4338CA); }
+.er-btn-sec {
+  background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);
+  border:1px solid rgba(255,255,255,.12);
+}
+.er-btn-sec:hover { background:rgba(255,255,255,.1); }
 
-/* ── Empty state ── */
-.empty {
-  flex:1; display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  padding:28px; text-align:center; gap:0;
+.er-review-title {
+  font-family:var(--mono);font-size:10px;font-weight:700;color:rgba(255,255,255,.4);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;
 }
-.empty-map { font-size:48px; margin-bottom:16px; }
-.empty-title { font-family:var(--serif); font-size:20px; color:var(--ink); margin-bottom:8px; }
-.empty-desc { font-size:12.5px; color:var(--ink3); line-height:1.7; max-width:220px; }
-.empty-hints {
-  margin-top:20px; padding:12px 14px;
-  background:var(--bg); border:1px solid var(--line);
-  border-radius:var(--r2); width:100%; text-align:left;
+.er-review-item {
+  background:var(--exam-s1);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r2);padding:14px 16px;margin-bottom:8px;
 }
-.hint-row { font-size:11.5px; color:var(--ink2); margin-bottom:4px; display:flex; align-items:center; gap:6px; }
-.hint-key {
-  background:var(--white); border:1px solid var(--line2);
-  border-radius:4px; padding:1px 6px; font-family:var(--mono);
-  font-size:9px; font-weight:700; color:var(--ink2);
-}
+.er-rv-q { font-size:12.5px;font-weight:600;color:#E2E8F0;margin-bottom:7px; }
+.er-rv-u { font-size:11.5px;color:var(--exam-red);margin-bottom:3px; }
+.er-rv-c { font-size:11.5px;color:var(--exam-grn);margin-bottom:5px; }
+.er-rv-e { font-size:11px;color:rgba(255,255,255,.4);line-height:1.6; }
 
-/* ── Detail header ── */
-.det-hdr {
-  flex-shrink:0; padding:16px 18px;
-  background:linear-gradient(135deg,var(--ink) 0%,#2D3748 100%);
-  color:var(--white); position:relative; overflow:hidden;
+/* Confirm dialog */
+#confirmDialog {
+  display:none;position:fixed;inset:0;z-index:100000;
+  background:rgba(0,0,0,.8);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;
 }
-.det-hdr::after {
-  content:''; position:absolute; right:-30px; top:-30px;
-  width:130px; height:130px; border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.06),transparent 70%);
-  pointer-events:none;
+#confirmDialog.show { display:flex; }
+.cd-box {
+  background:var(--exam-s1);border:1px solid rgba(99,102,241,.3);
+  border-radius:var(--r3);padding:32px;text-align:center;
+  max-width:360px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.6);
 }
-.det-eyebrow { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
-  color:rgba(255,255,255,.5); margin-bottom:6px; }
-.det-title { font-family:var(--serif); font-size:22px; line-height:1.15; margin-bottom:3px; }
-.det-isle { font-size:11px; color:rgba(255,255,255,.55); margin-bottom:14px; font-weight:400; }
-.det-pop { font-family:var(--mono); font-size:26px; font-weight:700; letter-spacing:-1px; }
-.det-pop-lbl { font-size:10px; color:rgba(255,255,255,.45); margin-top:2px; }
-.det-badges { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
-.det-badge {
-  padding:3px 9px; border-radius:20px; font-size:10px; font-weight:600;
-  border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.8);
-  background:rgba(255,255,255,.08);
-}
-
-/* Tabs */
-.rtabs { display:flex; border-bottom:1px solid var(--line); flex-shrink:0; background:var(--paper); }
-.rtab {
-  flex:1; padding:10px 4px; text-align:center;
-  font-size:10px; font-weight:700; color:var(--ink3);
-  cursor:pointer; transition:all .15s; border-bottom:2px solid transparent;
-  text-transform:uppercase; letter-spacing:.6px;
-}
-.rtab:hover { color:var(--ink2); }
-.rtab.on { color:var(--red); border-bottom-color:var(--red); background:var(--white); }
-
-.rtab-body { display:none; flex:1; overflow-y:auto; }
-.rtab-body.on { display:block; }
-
-/* Sections */
-.sec { padding:13px 16px; border-bottom:1px solid var(--line); }
-.sec-hdr {
-  font-size:9.5px; font-weight:700; color:var(--ink3);
-  text-transform:uppercase; letter-spacing:1.2px;
-  margin-bottom:10px; display:flex; align-items:center; gap:8px;
-}
-.sec-hdr::after { content:''; flex:1; height:1px; background:var(--line); }
-
-/* Stat grid */
-.sgrid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
-.sc {
-  background:var(--bg); border:1px solid var(--line);
-  border-radius:var(--r2); padding:10px 12px; transition:border .15s;
-}
-.sc:hover { border-color:var(--line2); }
-.sc-v { font-family:var(--mono); font-size:15px; font-weight:700; color:var(--ink); }
-.sc-l { font-size:9.5px; color:var(--ink3); margin-top:3px; line-height:1.4; }
-.sc.red .sc-v { color:var(--red); }
-.sc.blue .sc-v { color:var(--blue); }
-.sc.green .sc-v { color:var(--green); }
-.sc.amber .sc-v { color:var(--amber); }
-.sc.purple .sc-v { color:var(--purple); }
-.sc.teal .sc-v { color:var(--teal); }
-
-/* Bar */
-.bar-item { margin-bottom:9px; }
-.bar-item:last-child { margin-bottom:0; }
-.bar-row { display:flex; justify-content:space-between; margin-bottom:3px; }
-.bar-l { font-size:11.5px; font-weight:600; }
-.bar-v { font-family:var(--mono); font-size:10.5px; color:var(--ink3); }
-.bar-track { height:5px; background:var(--line); border-radius:3px; overflow:hidden; }
-.bar-fill { height:100%; border-radius:3px; transition:width .8s cubic-bezier(.23,1,.32,1); }
-
-/* City list */
-.city-list { list-style:none; }
-.city-item { display:flex; align-items:center; gap:8px; padding:7px 0;
-  border-bottom:1px solid var(--line); }
-.city-item:last-child { border-bottom:none; }
-.city-rk { font-family:var(--mono); font-size:9.5px; color:var(--ink4); width:12px; }
-.city-nm { font-size:12.5px; font-weight:500; flex:1; }
-.city-pp { font-family:var(--mono); font-size:10.5px; color:var(--ink3); }
-
-/* Island chart */
-.isle-chart { display:flex; flex-direction:column; gap:5px; }
-.isle-row { display:flex; align-items:center; gap:8px; }
-.isle-nm { font-size:11px; font-weight:600; width:74px; flex-shrink:0; color:var(--ink2); }
-.isle-track { flex:1; height:16px; background:var(--bg); border-radius:3px; overflow:hidden;
-  border:1px solid var(--line); position:relative; }
-.isle-fill { height:100%; border-radius:2px; display:flex; align-items:center; padding-left:6px;
-  transition:width .9s cubic-bezier(.23,1,.32,1); }
-.isle-pct { font-family:var(--mono); font-size:8.5px; font-weight:700; color:rgba(255,255,255,.95); }
-.isle-num { font-family:var(--mono); font-size:9.5px; color:var(--ink3); width:46px; text-align:right; flex-shrink:0; }
-
-/* Pyramid */
-.pyr-grid { display:grid; grid-template-columns:1fr 20px 1fr; gap:2px; align-items:center; }
-.pyr-m { height:9px; border-radius:2px 0 0 2px; transition:width .8s; margin-left:auto; }
-.pyr-f { height:9px; border-radius:0 2px 2px 0; transition:width .8s; }
-.pyr-ag { font-family:var(--mono); font-size:7.5px; color:var(--ink3); text-align:center; }
-
-/* Konsep accordion */
-.ka {
-  background:var(--paper); border:1px solid var(--line);
-  border-radius:var(--r2); margin-bottom:6px; overflow:hidden;
-}
-.ka-hdr {
-  display:flex; justify-content:space-between; align-items:center;
-  padding:10px 12px; cursor:pointer; transition:background .12s;
-}
-.ka-hdr:hover { background:var(--bg); }
-.ka-title { font-size:12.5px; font-weight:600; display:flex; align-items:center; gap:7px; color:var(--ink); }
-.ka-arr { font-size:9px; color:var(--ink4); transition:transform .2s; flex-shrink:0; }
-.ka.op .ka-arr { transform:rotate(180deg); }
-.ka-body { display:none; padding:0 12px 12px; font-size:11.5px; color:var(--ink2); line-height:1.75; }
-.ka.op .ka-body { display:block; }
-.formula {
-  background:var(--ink); color:#7DD3FC; font-family:var(--mono);
-  font-size:10.5px; padding:10px 12px; border-radius:var(--r);
-  margin-top:8px; line-height:1.9;
-}
-
-/* Info boxes */
-.ibox {
-  border-left:3px solid; border-radius:0 var(--r) var(--r) 0;
-  padding:9px 12px; margin:6px 0;
-  font-size:11.5px; line-height:1.65;
-}
-.ibox.red { border-color:var(--red); background:var(--red-bg); color:var(--red); }
-.ibox.blue { border-color:var(--blue); background:var(--blue-bg); color:var(--blue); }
-.ibox.green { border-color:var(--green); background:var(--green-bg); color:var(--green); }
-.ibox.amber { border-color:var(--amber); background:var(--amber-bg); color:var(--amber); }
-
-/* Quiz */
-.quiz-hdr {
-  flex-shrink:0; padding:16px 18px;
-  background:var(--ink); color:var(--white);
-}
-.quiz-hdr-t { font-family:var(--serif); font-size:18px; }
-.quiz-hdr-s { font-size:11px; color:rgba(255,255,255,.45); margin-top:2px; }
-.quiz-stats { display:flex; gap:20px; margin-top:12px; }
-.qs-v { font-family:var(--mono); font-size:22px; font-weight:700; color:var(--white); }
-.qs-l { font-size:10px; color:rgba(255,255,255,.45); margin-top:1px; }
-
-.quiz-body { flex:1; overflow-y:auto; padding:16px; }
-.q-num { font-size:9.5px; font-weight:700; color:var(--ink3); letter-spacing:1px;
-  text-transform:uppercase; margin-bottom:5px; }
-.q-text { font-size:13.5px; font-weight:500; line-height:1.55; color:var(--ink); margin-bottom:12px; }
-.q-opts { display:flex; flex-direction:column; gap:5px; }
-.qopt {
-  padding:9px 12px; border:1px solid var(--line2); border-radius:var(--r);
-  font-size:12.5px; cursor:pointer; transition:all .12s;
-  background:var(--paper); color:var(--ink); font-family:var(--font);
-}
-.qopt:hover { border-color:var(--ink2); background:var(--bg); }
-.qopt.cor { background:var(--green-bg); border-color:var(--green); color:var(--green); font-weight:600; }
-.qopt.wrg { background:var(--red-bg); border-color:var(--red); color:var(--red); }
-.qfb { margin-top:10px; padding:10px 12px; border-radius:var(--r);
-  font-size:12px; line-height:1.6; display:none; }
-.qfb.on { display:block; }
-.qfb.cor { background:var(--green-bg); border:1px solid #BBF7D0; color:#065F46; }
-.qfb.wrg { background:var(--red-bg); border:1px solid var(--red-bdr); color:var(--red); }
-.q-next {
-  width:100%; margin-top:10px; padding:10px;
-  background:var(--ink); color:var(--white); border:none; border-radius:var(--r);
-  font-family:var(--font); font-size:13px; font-weight:600; cursor:pointer;
-  display:none; transition:background .15s;
-}
-.q-next:hover { background:var(--ink2); }
-.q-next.on { display:block; }
-
-.quiz-done { padding:32px 20px; text-align:center; }
-.qd-ico { font-size:52px; margin-bottom:14px; }
-.qd-score { font-family:var(--serif); font-size:48px; color:var(--red); }
-.qd-msg { font-size:13px; color:var(--ink3); margin:8px 0 20px; line-height:1.6; }
-.q-restart {
-  padding:10px 24px; background:var(--ink); color:var(--white);
-  border:none; border-radius:var(--r); font-family:var(--font);
-  font-size:13px; font-weight:600; cursor:pointer; transition:background .15s;
-}
-.q-restart:hover { background:var(--ink2); }
-
-/* Materi */
-.mat-hdr {
-  flex-shrink:0; padding:16px 18px;
-  background:linear-gradient(135deg,#0D4F39,#1A6B50);
-  color:var(--white);
-}
-.mat-hdr-t { font-family:var(--serif); font-size:18px; }
-.mat-hdr-s { font-size:11px; color:rgba(255,255,255,.5); margin-top:2px; }
-.mat-body { flex:1; overflow-y:auto; padding:12px; }
-
-/* Animations */
-@keyframes slideIn { from{opacity:0;transform:translateX(8px)} to{opacity:1;transform:none} }
-.pane.on { animation:slideIn .2s ease; }
+.cd-ico { font-size:40px;margin-bottom:12px; }
+.cd-t { font-size:18px;font-weight:700;color:#fff;margin-bottom:8px; }
+.cd-d { font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:20px; }
+.cd-btns { display:flex;gap:10px; }
+.cd-btn { flex:1;padding:11px;border-radius:var(--r);font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .15s; }
+.cd-yes { background:var(--exam-red);color:#fff; }
+.cd-yes:hover { background:#B91C1C; }
+.cd-no { background:rgba(255,255,255,.08);color:rgba(255,255,255,.7); }
+.cd-no:hover { background:rgba(255,255,255,.15); }
 </style>
 </head>
 <body>
 
-<!-- ══════════ HEADER ══════════ -->
-<header class="hdr">
-  <a class="brand" href="#">
-    <div class="brand-mark">🗺️</div>
-    <div>
-      <div class="brand-name">GeoIndo</div>
-      <div class="brand-sub">Peta Kependudukan Indonesia · Media Pembelajaran Kelas XI</div>
+<!-- ══════ HOME ══════ -->
+<div id="homeScreen">
+  <div class="home-logo">
+    <div class="home-ico">🗺️</div>
+    <div style="font-family:var(--serif);font-size:38px">GeoIndo Quiz</div>
+  </div>
+  <div class="home-sub">Kependudukan Indonesia · Media Pembelajaran Geografi Kelas XI SMA</div>
+  <div class="bps-badge">📊 Data BPS: Proyeksi Penduduk Indonesia 2020–2050 (SP2020) · Tahun 2026</div>
+
+  <div class="mode-cards">
+    <div class="mode-card practice" onclick="startPractice()">
+      <div class="mc-icon">📝</div>
+      <div class="mc-label">Mode Latihan</div>
+      <div class="mc-title">Latihan Soal</div>
+      <div class="mc-desc">30 soal acak dari bank 100 soal. Lihat penjelasan langsung setiap jawaban. Ideal untuk belajar mandiri.</div>
+      <div class="mc-pills">
+        <span class="mc-pill">30 Soal Acak</span>
+        <span class="mc-pill">Ada Penjelasan</span>
+        <span class="mc-pill">Tidak Ada Timer</span>
+      </div>
     </div>
-  </a>
-  <div class="hdr-pills">
-    <div class="hpill hp-bps">📊 Sumber: BPS Proyeksi SP2020</div>
-    <div class="hpill hp-live"><div class="live-dot"></div>Data 2025</div>
-  </div>
-  <nav class="hdr-nav">
-    <button class="hnav on" onclick="goNav(this,'peta')">🗺 Peta</button>
-    <button class="hnav" onclick="goNav(this,'materi')">📚 Materi</button>
-    <button class="hnav" onclick="goNav(this,'kuis')">🎯 Kuis</button>
-  </nav>
-</header>
-
-<!-- ══════════ BODY ══════════ -->
-<div class="body">
-
-<!-- LEFT PANEL -->
-<aside class="lp">
-  <div class="lp-top">
-    <div class="section-label">38 Provinsi Indonesia</div>
-    <div class="search">
-      <span class="search-icon">🔍</span>
-      <input class="search-inp" id="srch" placeholder="Cari provinsi..." oninput="filterList(this.value)">
-    </div>
-  </div>
-  <div class="provlist" id="provList"></div>
-  <div class="lp-foot">
-    <div class="nat-row"><span class="nat-l">Jumlah Penduduk</span><span class="nat-v">281,6 Juta</span></div>
-    <div class="nat-row"><span class="nat-l">Laki-laki</span><span class="nat-v">141,5 Juta</span></div>
-    <div class="nat-row"><span class="nat-l">Perempuan</span><span class="nat-v">140,1 Juta</span></div>
-    <div class="nat-row"><span class="nat-l">Pertumbuhan 2020–25</span><span class="nat-v">0,99%/th</span></div>
-    <div class="nat-row"><span class="nat-l">Kepadatan</span><span class="nat-v">147/km²</span></div>
-    <div class="nat-row"><span class="nat-l">Rasio Jenis Kelamin</span><span class="nat-v">101</span></div>
-    <div class="nat-src">📅 BPS Proyeksi Penduduk 2020–2050 · Pertengahan 2025<br>Sensus Penduduk September 2020</div>
-  </div>
-</aside>
-
-<!-- MAP -->
-<div class="ma" id="ma">
-
-  <div class="vsw">
-    <button class="vbtn on" onclick="setMode(this,'density')">Kepadatan</button>
-    <button class="vbtn" onclick="setMode(this,'pop')">Populasi</button>
-    <button class="vbtn" onclick="setMode(this,'growth')">Pertumbuhan</button>
-    <button class="vbtn" onclick="setMode(this,'sex')">Rasio Gender</button>
-  </div>
-
-  <svg id="mapSvg" viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet">
-    <defs>
-      <filter id="provShadow" x="-5%" y="-5%" width="110%" height="110%">
-        <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-opacity=".2"/>
-      </filter>
-    </defs>
-
-    <!-- Ocean labels -->
-    <text x="350" y="18" class="slbl" font-size="9">Laut Cina Selatan</text>
-    <text x="530" y="195" class="slbl" font-size="9">Laut Jawa</text>
-    <text x="690" y="150" class="slbl" font-size="8">Selat Makassar</text>
-    <text x="770" y="260" class="slbl" font-size="8">Laut Banda</text>
-    <text x="870" y="330" class="slbl" font-size="9">Laut Arafura</text>
-    <text x="50"  y="320" class="slbl" font-size="9">Samudera Hindia</text>
-
-    <!-- Filled province paths rendered by JS -->
-    <g id="provG" filter="url(#provShadow)"></g>
-    <!-- Label layer (no shadow) -->
-    <g id="lblG" pointer-events="none"></g>
-  </svg>
-
-  <!-- Tooltip -->
-  <div id="tip">
-    <div class="tip-name" id="tipName">—</div>
-    <div class="tip-div"></div>
-    <div class="tip-row"><span class="tip-l">Penduduk</span><span class="tip-v" id="tipPop" style="color:var(--red)"></span></div>
-    <div class="tip-row"><span class="tip-l">Kepadatan</span><span class="tip-v" id="tipDens" style="color:var(--blue)"></span></div>
-    <div class="tip-row"><span class="tip-l">Laju Pertumbuhan</span><span class="tip-v" id="tipGrow" style="color:var(--green)"></span></div>
-    <div class="tip-row"><span class="tip-l">Rasio JK</span><span class="tip-v" id="tipSex" style="color:var(--amber)"></span></div>
-    <div style="margin-top:7px">
-      <span class="tip-badge" id="tipBadge" style="background:var(--bg);color:var(--ink3);border:1px solid var(--line)"></span>
+    <div class="mode-card exam" onclick="showExamConfirm()">
+      <div class="mc-icon">🎓</div>
+      <div class="mc-label">Mode Ujian</div>
+      <div class="mc-title">Ujian Resmi</div>
+      <div class="mc-desc">30 soal acak. Full screen wajib. Tidak boleh berpindah tab. Timer 45 menit. Anti-kecurangan aktif.</div>
+      <div class="mc-pills">
+        <span class="mc-pill">Full Screen</span>
+        <span class="mc-pill">Anti-Cheat</span>
+        <span class="mc-pill">Timer 45 Menit</span>
+        <span class="mc-pill">30 Soal Acak</span>
+      </div>
     </div>
   </div>
 
-  <!-- Legend -->
-  <div class="legend">
-    <div class="leg-title" id="legTitle">Kepadatan Penduduk (jiwa/km²)</div>
-    <div id="legItems"></div>
+  <div class="home-stats">
+    <div class="hs-item"><div class="hs-v">100</div><div class="hs-l">Bank Soal</div></div>
+    <div class="hs-item"><div class="hs-v">30</div><div class="hs-l">Soal per Sesi</div></div>
+    <div class="hs-item"><div class="hs-v">6</div><div class="hs-l">Kategori Topik</div></div>
+    <div class="hs-item"><div class="hs-v">BPS</div><div class="hs-l">Sumber Data</div></div>
   </div>
-
-  <!-- Controls -->
-  <div class="mctrl">
-    <button class="mc" onclick="mapZoom(1.3)" title="Zoom In">+</button>
-    <button class="mc" onclick="mapZoom(.77)" title="Zoom Out">−</button>
-    <button class="mc" onclick="mapReset()" title="Reset">⌂</button>
-  </div>
-
-  <div class="scale-lbl">Sabang ←—— 5.120 km ——→ Merauke</div>
 </div>
 
-<!-- RIGHT PANEL -->
-<aside class="rp">
-
-  <!-- EMPTY -->
-  <div class="pane on" id="paneEmpty">
-    <div class="empty">
-      <div class="empty-map">🇮🇩</div>
-      <div class="empty-title">Pilih Provinsi</div>
-      <div class="empty-desc">Klik provinsi pada peta atau daftar di sebelah kiri untuk menampilkan data kependudukan lengkap berbasis BPS 2025.</div>
-      <div class="empty-hints">
-        <div class="hint-row"><span class="hint-key">KLIK</span> Pilih provinsi</div>
-        <div class="hint-row"><span class="hint-key">SCROLL</span> Zoom peta</div>
-        <div class="hint-row"><span class="hint-key">DRAG</span> Geser peta</div>
-        <div class="hint-row"><span class="hint-key">ESC</span> Reset pilihan</div>
-      </div>
+<!-- Exam start confirm -->
+<div id="confirmDialog">
+  <div class="cd-box">
+    <div class="cd-ico">🔒</div>
+    <div class="cd-t">Mulai Mode Ujian?</div>
+    <div class="cd-d">Ujian akan masuk <strong>Full Screen</strong>. Berpindah tab, menekan ESC, atau keluar dari halaman akan dicatat sebagai pelanggaran. Setelah 3 pelanggaran, ujian otomatis berakhir.<br><br>Durasi: <strong>45 menit · 30 soal</strong></div>
+    <div class="cd-btns">
+      <button class="cd-btn cd-no" onclick="closeConfirm()">Batal</button>
+      <button class="cd-btn cd-yes" onclick="startExam()">Ya, Mulai Ujian</button>
     </div>
   </div>
-
-  <!-- DETAIL -->
-  <div class="pane" id="paneDetail">
-    <div class="det-hdr">
-      <div class="det-eyebrow" id="dEyebrow">PROVINSI · INDONESIA</div>
-      <div class="det-title" id="dTitle">—</div>
-      <div class="det-isle" id="dIsle">—</div>
-      <div class="det-pop" id="dPop">—</div>
-      <div class="det-pop-lbl">jiwa · BPS Proyeksi Pertengahan 2025</div>
-      <div class="det-badges" id="dBadges"></div>
-    </div>
-
-    <div class="rtabs">
-      <div class="rtab on" onclick="switchTab(this,'data')">Data</div>
-      <div class="rtab" onclick="switchTab(this,'kota')">Kota</div>
-      <div class="rtab" onclick="switchTab(this,'pulau')">Pulau</div>
-      <div class="rtab" onclick="switchTab(this,'pyr')">Piramida</div>
-    </div>
-
-    <!-- DATA TAB -->
-    <div class="rtab-body on" id="tbData">
-      <div class="sec">
-        <div class="sec-hdr">Indikator Kependudukan</div>
-        <div class="sgrid">
-          <div class="sc blue"><div class="sc-v" id="dKep">—</div><div class="sc-l">Kepadatan (jiwa/km²)</div></div>
-          <div class="sc amber"><div class="sc-v" id="dLuas">—</div><div class="sc-l">Luas Wilayah (km²)</div></div>
-          <div class="sc green"><div class="sc-v" id="dGrow">—</div><div class="sc-l">Laju Pertumbuhan/th</div></div>
-          <div class="sc red"><div class="sc-v" id="dRank">—</div><div class="sc-l">Peringkat Populasi</div></div>
-          <div class="sc purple"><div class="sc-v" id="dSex">—</div><div class="sc-l">Rasio Jenis Kelamin</div></div>
-          <div class="sc teal"><div class="sc-v" id="dDist">—</div><div class="sc-l">Distribusi Nasional</div></div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-hdr">Komposisi Gender</div>
-        <div class="bar-item">
-          <div class="bar-row">
-            <span class="bar-l" style="color:var(--blue)">♂ Laki-laki</span>
-            <span class="bar-v" id="dLaki">—</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill" id="dLakiF" style="background:var(--blue)"></div></div>
-        </div>
-        <div class="bar-item">
-          <div class="bar-row">
-            <span class="bar-l" style="color:#DB2777">♀ Perempuan</span>
-            <span class="bar-v" id="dPere">—</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill" id="dPereF" style="background:#DB2777"></div></div>
-        </div>
-        <div class="sec-hdr" style="margin-top:12px">Kontribusi Nasional</div>
-        <div class="bar-item">
-          <div class="bar-row">
-            <span class="bar-l" id="dShareL">—</span>
-            <span class="bar-v" id="dShareV">—</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill" id="dShareF" style="background:var(--red)"></div></div>
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-hdr">Ibukota & Admin</div>
-        <div class="sgrid">
-          <div class="sc"><div class="sc-v" style="font-size:12px" id="dIbu">—</div><div class="sc-l">Ibukota Provinsi</div></div>
-          <div class="sc"><div class="sc-v" id="dKab">—</div><div class="sc-l">Jumlah Kab/Kota</div></div>
-        </div>
-      </div>
-
-      <div class="sec" style="border-bottom:none">
-        <div class="sec-hdr">Catatan Geografis</div>
-        <div style="font-size:12px;color:var(--ink2);line-height:1.8" id="dNote">—</div>
-        <div class="ibox blue" id="dSpec" style="display:none;margin-top:8px"></div>
-      </div>
-    </div>
-
-    <!-- KOTA TAB -->
-    <div class="rtab-body" id="tbKota">
-      <div class="sec" style="border-bottom:none">
-        <div class="sec-hdr">Kota & Kabupaten Terpadat</div>
-        <ul class="city-list" id="cityList"></ul>
-      </div>
-    </div>
-
-    <!-- PULAU TAB -->
-    <div class="rtab-body" id="tbPulau">
-      <div class="sec">
-        <div class="sec-hdr">Distribusi Penduduk Per Pulau</div>
-        <div class="isle-chart" id="isleChart"></div>
-        <div style="font-size:10.5px;color:var(--ink3);margin-top:8px;text-align:center">
-          BPS Proyeksi Penduduk 2025 · Total 281,6 juta jiwa
-        </div>
-      </div>
-      <div class="sec" style="border-bottom:none">
-        <div class="sec-hdr">Analisis Spasial</div>
-        <div id="analisis"></div>
-      </div>
-    </div>
-
-    <!-- PIRAMIDA TAB -->
-    <div class="rtab-body" id="tbPyr">
-      <div class="sec">
-        <div class="sec-hdr">Piramida Penduduk (Estimasi Nasional 2025)</div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:9.5px;font-family:var(--mono);color:var(--ink3)">
-          <span style="color:var(--blue)">← ♂ LAKI</span>
-          <span>USIA</span>
-          <span style="color:#DB2777">♀ PEREMPUAN →</span>
-        </div>
-        <div id="pyrChart" style="padding:4px 0"></div>
-        <div class="ibox blue" style="margin-top:10px;font-size:10.5px">
-          📌 Estimasi distribusi usia berdasarkan proyeksi nasional BPS 2025. Data aktual per provinsi dari sensus 2020.
-        </div>
-      </div>
-      <div class="sec" style="border-bottom:none">
-        <div class="sec-hdr">Tipe Piramida</div>
-        <div id="pyrInfo"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MATERI -->
-  <div class="pane" id="paneMateri">
-    <div class="mat-hdr">
-      <div class="mat-hdr-t">📚 Materi Kependudukan</div>
-      <div class="mat-hdr-s">Geografi Kelas XI SMA · Kurikulum Merdeka · BPS 2025</div>
-    </div>
-    <div class="mat-body">
-
-      <div class="sec">
-        <div class="sec-hdr">Indikator Nasional 2025 (BPS)</div>
-        <div class="sgrid">
-          <div class="sc red"><div class="sc-v">281,6 Jt</div><div class="sc-l">Total Penduduk (mid-2025)</div></div>
-          <div class="sc green"><div class="sc-v">0,99%</div><div class="sc-l">Laju Pertumbuhan 2020–25</div></div>
-          <div class="sc blue"><div class="sc-v">147/km²</div><div class="sc-l">Kepadatan Nasional</div></div>
-          <div class="sc amber"><div class="sc-v">101</div><div class="sc-l">Rasio Jenis Kelamin</div></div>
-          <div class="sc purple"><div class="sc-v">30,2 th</div><div class="sc-l">Usia Median</div></div>
-          <div class="sc teal"><div class="sc-v">2,14</div><div class="sc-l">TFR (anak/wanita)</div></div>
-        </div>
-        <div class="ibox amber" style="margin-top:10px;font-size:11px">
-          ⚠️ Data ini bersumber dari <strong>BPS Proyeksi Penduduk 2020–2050</strong> (berbasis SP2020), bukan Dukcapil. Kedua sumber menggunakan metodologi berbeda.
-        </div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-hdr">Distribusi Per Pulau 2025</div>
-        <div class="isle-chart" id="matIsle"></div>
-      </div>
-
-      <div class="sec">
-        <div class="sec-hdr">Konsep Kependudukan</div>
-        <div id="konsepList"></div>
-      </div>
-
-      <div class="sec" style="border-bottom:none">
-        <div class="sec-hdr">Kebijakan Kependudukan Indonesia</div>
-
-        <div class="ka">
-          <div class="ka-hdr" onclick="toggleKA(this.parentElement)">
-            <div class="ka-title">🏙️ IKN Nusantara & Redistribusi</div>
-            <div class="ka-arr">▼</div>
-          </div>
-          <div class="ka-body">
-            Pemindahan ibu kota ke Kalimantan Timur adalah kebijakan redistribusi penduduk terbesar sejak program transmigrasi. Tujuan: mengurangi konsentrasi 56% penduduk di Jawa. Kaltim mencatat laju pertumbuhan tertinggi <strong>2,57%/th</strong> (2020–2025) dipicu migrasi konstruksi IKN.
-          </div>
-        </div>
-        <div class="ka">
-          <div class="ka-hdr" onclick="toggleKA(this.parentElement)">
-            <div class="ka-title">👶 Program KB & Transisi Demografi</div>
-            <div class="ka-arr">▼</div>
-          </div>
-          <div class="ka-body">
-            Program Keluarga Berencana berhasil menurunkan TFR dari <strong>5,6</strong> (1970) menjadi <strong>2,14</strong> (2025). Indonesia kini memasuki fase transisi demografi — angka kelahiran dan kematian sama-sama rendah, membuka peluang bonus demografi 2030–2040.
-          </div>
-        </div>
-        <div class="ka">
-          <div class="ka-hdr" onclick="toggleKA(this.parentElement)">
-            <div class="ka-title">🚢 Transmigrasi & Redistribusi Historis</div>
-            <div class="ka-arr">▼</div>
-          </div>
-          <div class="ka-body">
-            Dimulai era kolonial Belanda (1905), dilanjutkan pemerintah RI. Program memindahkan penduduk dari Jawa–Bali yang padat ke Sumatra, Kalimantan, Sulawesi, dan Papua. Puncak 1979–1984 merelokasi 1,5 juta KK. Kini diteruskan melalui program <strong>Transmigrasi 4.0</strong>.
-          </div>
-        </div>
-        <div class="ka">
-          <div class="ka-hdr" onclick="toggleKA(this.parentElement)">
-            <div class="ka-title">💎 Bonus Demografi 2030–2040</div>
-            <div class="ka-arr">▼</div>
-          </div>
-          <div class="ka-body">
-            Rasio ketergantungan (dependency ratio) diprediksi mencapai titik terendah ~44 pada 2030. Artinya setiap 100 penduduk usia produktif menanggung hanya 44 orang tidak produktif. Pemanfaatan optimal melalui kualitas SDM, pendidikan STEM, dan industrialisasi dapat mendorong Indonesia menjadi negara berpenghasilan tinggi di <strong>2045</strong>.
-          </div>
-        </div>
-        <div class="ka">
-          <div class="ka-hdr" onclick="toggleKA(this.parentElement)">
-            <div class="ka-title">📋 Pemekaran Wilayah Papua 2022</div>
-            <div class="ka-arr">▼</div>
-          </div>
-          <div class="ka-body">
-            Papua yang semula 2 provinsi dimekarkan menjadi <strong>6 provinsi</strong> (2022): Papua, Papua Selatan, Papua Tengah, Papua Pegunungan, Papua Barat, Papua Barat Daya. Tujuan: mendekatkan pelayanan publik ke masyarakat adat, mempercepat pembangunan, dan meningkatkan kesejahteraan di wilayah yang selama ini tertinggal.
-          </div>
-        </div>
-      </div>
-      <div style="height:16px"></div>
-    </div>
-  </div>
-
-  <!-- KUIS -->
-  <div class="pane" id="paneKuis">
-    <div class="quiz-hdr">
-      <div class="quiz-hdr-t">Kuis Kependudukan</div>
-      <div class="quiz-hdr-s">Uji Pemahaman Geografi Kelas XI · 10 Soal · BPS 2025</div>
-      <div class="quiz-stats">
-        <div class="qs-item"><div class="qs-v" id="qScore">0</div><div class="qs-l">Skor</div></div>
-        <div class="qs-item"><div class="qs-v" id="qNo">1/10</div><div class="qs-l">Soal</div></div>
-        <div class="qs-item"><div class="qs-v" id="qStreak" style="color:var(--amber)">0🔥</div><div class="qs-l">Streak</div></div>
-      </div>
-    </div>
-    <div class="quiz-body" id="quizBody"></div>
-  </div>
-
-</aside>
 </div>
 
-<!-- ════════════════════════════════════════════════════════
+<!-- ══════ WARNING ══════ -->
+<div id="warnOverlay">
+  <div class="warn-ico">⚠️</div>
+  <div class="warn-title">Pelanggaran Terdeteksi!</div>
+  <div class="warn-desc" id="warnDesc">Kamu meninggalkan halaman ujian. Ini dicatat sebagai pelanggaran.</div>
+  <div class="warn-count" id="warnCount">Pelanggaran: 1/3</div>
+  <button class="warn-continue" onclick="resumeExam()">Lanjutkan Ujian</button>
+</div>
+
+<!-- ══════ PRACTICE SCREEN ══════ -->
+<div id="practiceScreen">
+  <div class="pq-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="back-btn" onclick="goHome()">← Beranda</button>
+      <div class="pq-brand">
+        <div class="pq-brand-ico">🗺️</div>
+        <div class="pq-brand-name">Latihan Soal</div>
+      </div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-label">
+        <span id="pq-prog-label">Soal 1 dari 30</span>
+        <span id="pq-prog-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="pqProgFill" style="width:0%"></div></div>
+    </div>
+    <div class="pq-stats">
+      <div class="pqs-item correct"><div class="pqs-v" id="pqCorrect">0</div><div class="pqs-l">Benar</div></div>
+      <div class="pqs-item wrong"><div class="pqs-v" id="pqWrong">0</div><div class="pqs-l">Salah</div></div>
+      <div class="pqs-item streak"><div class="pqs-v" id="pqStreak">0🔥</div><div class="pqs-l">Streak</div></div>
+    </div>
+  </div>
+
+  <div class="pq-body">
+    <div class="q-category" id="pqCat"></div>
+    <div class="q-number" id="pqNum"></div>
+    <div class="q-text" id="pqText"></div>
+    <div class="q-source" id="pqSrc"></div>
+    <div class="options" id="pqOpts"></div>
+    <div class="explanation" id="pqExp"></div>
+    <button class="next-btn" id="pqNext" onclick="nextPQ()">Soal Berikutnya →</button>
+  </div>
+</div>
+
+<!-- ══════ PRACTICE RESULT ══════ -->
+<div id="resultScreen">
+  <div class="result-hero">
+    <div class="result-trophy" id="rsTrophy">🏆</div>
+    <div class="result-score" id="rsScore">0/30</div>
+    <div class="result-label">Skor Kamu</div>
+    <div class="result-grade" id="rsGrade"></div>
+  </div>
+  <div class="result-body">
+    <div class="result-stats">
+      <div class="rs-card"><div class="rs-v" id="rsCorrect">0</div><div class="rs-l">Benar</div></div>
+      <div class="rs-card wrg"><div class="rs-v" id="rsWrong">0</div><div class="rs-l">Salah</div></div>
+      <div class="rs-card str"><div class="rs-v" id="rsStreak">0</div><div class="rs-l">Max Streak</div></div>
+      <div class="rs-card"><div class="rs-v" id="rsPct">0%</div><div class="rs-l">Nilai</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="rbtn rbtn-primary" onclick="startPractice()">🔄 Coba Lagi</button>
+      <button class="rbtn rbtn-outline" onclick="goHome()">🏠 Beranda</button>
+    </div>
+    <div class="wrong-review">
+      <div class="wr-header">📋 Pembahasan Soal yang Salah</div>
+      <div id="rsReview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ EXAM SCREEN ══════ -->
+<div id="examScreen">
+  <div class="exam-lockbar">
+    <div class="exam-brand">
+      <div class="exam-lock-ico">🔒</div>
+      <div class="exam-brand-name">Mode Ujian Aktif</div>
+      <div class="exam-mode-badge">🔴 LIVE EXAM</div>
+    </div>
+    <div class="exam-progress-wrap">
+      <div class="exam-prog-info">
+        <span id="exProgLabel">Soal 1 dari 30</span>
+        <span id="exProgPct">0%</span>
+      </div>
+      <div class="exam-prog-track"><div class="exam-prog-fill" id="exProgFill" style="width:0%"></div></div>
+    </div>
+    <div class="exam-timer-wrap">
+      <div class="exam-sc-item"><div class="exam-sc-v" id="exScore">0</div><div class="exam-sc-l">Benar</div></div>
+      <div class="exam-timer" id="exTimer">45:00</div>
+      <div class="exam-sc-item">
+        <div style="font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px">Pelanggaran</div>
+        <div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--exam-red)" id="exViolations">0/3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exam-body">
+    <div class="exam-q-card">
+      <div class="exam-q-meta">
+        <div class="exam-q-num" id="exNum">SOAL 1/30</div>
+        <div class="exam-q-cat" id="exCat">Kategori</div>
+      </div>
+      <div class="exam-q-text" id="exText"></div>
+      <div class="exam-q-src" id="exSrc"></div>
+      <div class="exam-opts" id="exOpts"></div>
+      <div class="exam-explanation" id="exExp"></div>
+      <div class="exam-nav">
+        <button class="exam-nav-btn enb-skip" id="exSkip" onclick="skipExamQ()">Lewati ▷</button>
+        <button class="exam-nav-btn enb-next" id="exNext" onclick="nextExamQ()" style="display:none">Soal Berikutnya →</button>
+      </div>
+    </div>
+    <div class="exam-ansmap" id="exAnsMap"></div>
+  </div>
+</div>
+
+<!-- ══════ EXAM RESULT ══════ -->
+<div id="examResultScreen">
+  <div class="er-hero">
+    <div class="er-trophy" id="erTrophy">🏆</div>
+    <div class="er-score" id="erScore">0/30</div>
+    <div class="er-label">Nilai Ujian Kependudukan · BPS 2026</div>
+    <div class="er-grade" id="erGrade"></div>
+  </div>
+  <div class="er-body">
+    <div class="er-stats">
+      <div class="er-card cor"><div class="er-card-v" id="erC">0</div><div class="er-card-l">Benar</div></div>
+      <div class="er-card wrg"><div class="er-card-v" id="erW">0</div><div class="er-card-l">Salah</div></div>
+      <div class="er-card"><div class="er-card-v" id="erPct">0%</div><div class="er-card-l">Nilai</div></div>
+      <div class="er-card"><div class="er-card-v" id="erTime">-</div><div class="er-card-l">Waktu</div></div>
+    </div>
+    <div class="er-btns">
+      <button class="er-btn er-btn-primary" onclick="startExamFull()">🔄 Ujian Ulang</button>
+      <button class="er-btn er-btn-sec" onclick="goHome()">🏠 Beranda</button>
+    </div>
+    <div class="er-review-title">PEMBAHASAN SOAL YANG SALAH</div>
+    <div id="erReview"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
      JAVASCRIPT ENGINE
-════════════════════════════════════════════════════════ -->
+════════════════════════════════════════════════ -->
 <script>
-/* ═══════════════════════════════
-   DATA BPS PROYEKSI 2025
-   Sumber: BPS Proyeksi Penduduk Indonesia 2020–2050
-   Berbasis Sensus Penduduk September 2020
-   Pertengahan Tahun (Juni) 2025
-═══════════════════════════════ */
-const NAT_POP = 281603800;
+/* ═══════════════════════════════════════════════════
+   BANK SOAL — 100 PERTANYAAN UNIK
+   Sumber: BPS Proyeksi Penduduk 2020-2050 (SP2020)
+   Tahun Proyeksi: 2026 (Pertengahan tahun/Juni)
+   Kelompok Umur: BPS 2023
+═══════════════════════════════════════════════════ */
+/* Kategori: data | konsep | provinsi | hitungan | umur | kebijakan */
 
-/* Format: {id, name, isle, pop, luas, grow, sexRatio, kab, ib, cities, note, spec, geo}
-   pop      = proyeksi pertengahan 2025 (BPS)
-   luas     = km² (Kemendagri 2022/2025)
-   grow     = laju pertumbuhan 2020–2025 (%/th, geometrik)
-   sexRatio = rasio jenis kelamin (L per 100 P)
-   geo      = koordinat [lon, lat] untuk SVG paths
-*/
-const PROVS = [
-/* ── SUMATRA ── */
-{id:0,  name:"Aceh",               isle:"Sumatra",     pop:5397600,  luas:56813,   grow:1.52, sex:99,  kab:23, ib:"Banda Aceh",
- cities:[["Kab. Aceh Utara","642.000"],["Kota Banda Aceh","281.000"],["Kab. Bireuen","459.000"],["Kab. Aceh Timur","389.000"]],
- note:"Ujung barat NKRI. Satu-satunya provinsi pelaksana Syariat Islam penuh. Rekonstruksi pasca tsunami 2004 menjadi model pembangunan pasca bencana dunia.",
- spec:"Sabang adalah titik nol kilometer Nusantara — ujung dari 'Sabang sampai Merauke'.",
- geo:[[95.2,5.9],[96.1,5.7],[97.3,5.1],[98.4,4.2],[98.0,3.6],[97.2,3.8],[96.3,4.3],[95.4,4.9],[95.2,5.9]]},
+const BANK = [
+/* ── 1-10: DATA NASIONAL BPS ── */
+{id:1, cat:"data", q:"Menurut BPS Proyeksi Penduduk Indonesia 2020–2050 (SP2020), jumlah penduduk Indonesia pertengahan tahun 2026 diproyeksikan sebesar...",
+ o:["277.534,0 ribu jiwa","281.603,8 ribu jiwa","284.829,9 ribu jiwa","288.315,1 ribu jiwa"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Pertengahan Tahun 2026",
+ e:"BPS memproyeksikan 284.829,9 ribu jiwa pada pertengahan tahun 2026 berdasarkan Sensus Penduduk September 2020. Angka 281.603,8 adalah proyeksi 2025, dan 288.315,1 adalah data Dukcapil (metodologi berbeda)."},
 
-{id:1,  name:"Sumatera Utara",     isle:"Sumatra",     pop:15138000, luas:72981,   grow:1.31, sex:101, kab:33, ib:"Medan",
- cities:[["Kota Medan","2.618.000"],["Kab. Deli Serdang","2.196.000"],["Kab. Langkat","991.000"],["Kota Binjai","283.000"]],
- note:"Provinsi terbesar Sumatra. Danau Toba — danau vulkanik terbesar dunia (supervolcano 74.000 tahun lalu). Populasi multietnis: Batak Toba, Karo, Simalungun, Pak-Pak, Mandailing, Melayu.",
- spec:"Medan adalah kota terbesar ketiga Indonesia setelah Jakarta dan Surabaya.",
- geo:[[98.4,4.2],[99.2,3.8],[100.5,3.3],[100.8,2.1],[100.3,1.3],[99.6,1.1],[98.7,1.6],[98.0,2.8],[98.0,3.6],[98.4,4.2]]},
+{id:2, cat:"data", q:"Berdasarkan BPS Proyeksi 2026, kepadatan penduduk Indonesia per km² adalah...",
+ o:["124 jiwa/km²","147 jiwa/km²","152 jiwa/km²","159 jiwa/km²"], a:2,
+ src:"BPS, Proyeksi Penduduk 2026 — Luas Wilayah Permendagri 2022",
+ e:"Kepadatan nasional 2026 adalah 152 jiwa/km² berdasarkan proyeksi BPS dan luas wilayah Kemendagri. Angka 147 adalah proyeksi 2025, dan 159 adalah data UN/Worldometer yang menggunakan total luas termasuk perairan."},
 
-{id:2,  name:"Sumatera Barat",     isle:"Sumatra",     pop:5534000,  luas:42013,   grow:1.04, sex:98,  kab:19, ib:"Padang",
- cities:[["Kota Padang","1.005.000"],["Kota Bukittinggi","126.000"],["Kab. Agam","494.000"],["Kab. Lima Puluh Kota","396.000"]],
- note:"Tanah Minangkabau — masyarakat matrilineal terbesar di dunia. Kuliner Padang mendunia. Terdapat Lembah Harau (Grand Canyon Minang), Danau Maninjau, dan Danau Singkarak.",
- spec:"Sistem matrilineal Minangkabau: harta waris dan marga diturunkan melalui garis ibu (perempuan).",
- geo:[[99.6,1.1],[100.3,1.0],[100.8,0.3],[101.4,-0.9],[101.6,-2.1],[101.0,-2.6],[100.1,-2.0],[99.3,-0.9],[99.0,0.2],[99.6,1.1]]},
+{id:3, cat:"data", q:"Laju pertumbuhan penduduk Indonesia periode 2020–2024 berdasarkan BPS adalah...",
+ o:["0,79%/tahun","0,99%/tahun","1,09%/tahun","1,25%/tahun"], a:1,
+ src:"BPS, Tabel Penduduk Menurut Provinsi 2026 (catatan kaki: LPP 2020 sept–2024 juni)",
+ e:"BPS menghitung laju pertumbuhan 0,99%/tahun secara geometrik dari SP2020 (September 2020) ke pertengahan 2024. Angka 1,09% adalah data Dukcapil yang berbasis administrasi kependudukan."},
 
-{id:3,  name:"Riau",               isle:"Sumatra",     pop:6994000,  luas:87844,   grow:1.71, sex:102, kab:12, ib:"Pekanbaru",
- cities:[["Kota Pekanbaru","1.171.000"],["Kab. Kampar","840.000"],["Kab. Bengkalis","588.000"],["Kota Dumai","319.000"]],
- note:"Penghasil minyak bumi & kelapa sawit terbesar Indonesia. Pekanbaru salah satu kota pertumbuhan ekonomi tercepat. Sungai Siak menghubungkan pedalaman ke pesisir.",
- spec:"Riau menyumbang >30% produksi CPO (crude palm oil) nasional.",
- geo:[[100.8,2.1],[101.8,2.5],[103.0,1.9],[104.1,0.9],[103.6,-0.2],[102.6,-0.5],[101.6,-0.3],[101.4,-0.9],[100.8,0.3],[100.8,2.1]]},
+{id:4, cat:"data", q:"Rasio jenis kelamin (sex ratio) penduduk Indonesia secara nasional pada 2026 menurut BPS adalah...",
+ o:["97 laki-laki per 100 perempuan","100 laki-laki per 100 perempuan","101 laki-laki per 100 perempuan","103 laki-laki per 100 perempuan"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), 2026",
+ e:"Rasio jenis kelamin nasional 2026 adalah 101, artinya terdapat 101 laki-laki untuk setiap 100 perempuan. Ini menunjukkan jumlah laki-laki sedikit lebih banyak dari perempuan secara nasional."},
 
-{id:4,  name:"Kepulauan Riau",     isle:"Sumatra",     pop:2303000,  luas:8201,    grow:2.09, sex:103, kab:7,  ib:"Tanjungpinang",
- cities:[["Kota Batam","1.267.000"],["Kota Tanjungpinang","219.000"],["Kab. Bintan","179.000"],["Kab. Karimun","232.000"]],
- note:"Berbatasan langsung dengan Singapura. Batam kawasan industri & FTZ terbesar Indonesia. Wisata bahari premium di Bintan dan Anambas.",
- spec:"Jarak Batam ke Singapura ±20 km — titik Indonesia paling dekat ke negara lain.",
- geo:[[104.0,1.0],[105.0,1.3],[106.7,1.0],[108.0,3.5],[107.5,3.9],[106.0,2.6],[104.5,1.8],[104.0,1.0]]},
+{id:5, cat:"data", q:"Berdasarkan BPS 2026, distribusi persentase penduduk Jawa Barat terhadap total nasional adalah...",
+ o:["15,27%","17,42%","17,68%","18,53%"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Jawa Barat menyumbang sekitar 17,68% dari total penduduk nasional 2026 — menjadikannya provinsi dengan proporsi terbesar dari 38 provinsi di Indonesia."},
 
-{id:5,  name:"Jambi",              isle:"Sumatra",     pop:3648000,  luas:50058,   grow:1.24, sex:102, kab:11, ib:"Jambi",
- cities:[["Kota Jambi","630.000"],["Kab. Muaro Jambi","426.000"],["Kab. Batanghari","275.000"],["Kab. Tanjab Timur","217.000"]],
- note:"Dilintasi Sungai Batanghari, terpanjang di Sumatra. Candi Muaro Jambi — kompleks candi Buddha terluas di Asia Tenggara (abad 9–12 M).",
- spec:null,
- geo:[[103.0,-0.5],[104.0,-0.3],[104.9,-1.0],[105.1,-2.5],[104.3,-3.1],[103.0,-2.6],[102.2,-1.6],[101.6,-1.1],[103.0,-0.5]]},
+{id:6, cat:"data", q:"Berdasarkan BPS Proyeksi 2026, jumlah penduduk DKI Jakarta (ribu jiwa) adalah...",
+ o:["10.614,5","11.250,0","11.314,5","11.875,3"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi DKI Jakarta 2026",
+ e:"DKI Jakarta diproyeksikan 11.314,5 ribu jiwa pada 2026. Luas 664 km² menghasilkan kepadatan 17.040 jiwa/km² — tertinggi di Indonesia. Laju pertumbuhan rendah (0,56%) akibat suburbanisasi ke Bodetabek."},
 
-{id:6,  name:"Bengkulu",           isle:"Sumatra",     pop:2074000,  luas:19919,   grow:1.32, sex:102, kab:10, ib:"Bengkulu",
- cities:[["Kota Bengkulu","387.000"],["Kab. Bengkulu Utara","295.000"],["Kab. Seluma","204.000"],["Kab. Kaur","120.000"]],
- note:"Rafflesia arnoldii ditemukan pertama di sini (1818). Bekas tempat pengasingan Soekarno (1938–1942). Pantai Panjang Bengkulu membentang 7 km.",
- spec:null,
- geo:[[101.6,-2.0],[102.1,-1.8],[102.6,-2.4],[103.0,-4.6],[102.2,-5.1],[101.4,-4.1],[101.2,-2.6],[101.6,-2.0]]},
+{id:7, cat:"data", q:"Laju pertumbuhan penduduk Kalimantan Timur 2020–2026 yang TERTINGGI secara nasional menurut BPS adalah...",
+ o:["1,88%/tahun","2,19%/tahun","2,57%/tahun","3,12%/tahun"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Kalimantan Timur mencatat 2,57%/tahun — tertinggi nasional, dipicu migrasi konstruksi IKN Nusantara ke Penajam Paser Utara dan Kutai Kartanegara sejak 2022."},
 
-{id:7,  name:"Sumatera Selatan",   isle:"Sumatra",     pop:8777000,  luas:91592,   grow:1.18, sex:102, kab:17, ib:"Palembang",
- cities:[["Kota Palembang","1.732.000"],["Kab. Banyuasin","856.000"],["Kab. Musi Banyuasin","633.000"],["Kota Prabumulih","191.000"]],
- note:"Palembang (683 M) kota tertua Indonesia, pusat Kerajaan Sriwijaya. Tuan rumah Asian Games 2018. Penghasil batu bara, minyak bumi, dan karet terbesar.",
- spec:"Kerajaan Sriwijaya (abad 7–13) adalah thalassocracy (kerajaan maritim) terkuat Asia Tenggara.",
- geo:[[104.3,-2.3],[106.1,-1.8],[107.7,-2.2],[108.2,-3.5],[107.6,-5.3],[105.7,-5.5],[104.2,-5.0],[103.1,-3.1],[104.3,-2.3]]},
+{id:8, cat:"data", q:"Berdasarkan BPS Proyeksi 2026, jumlah penduduk Jawa Barat (ribu jiwa) adalah...",
+ o:["49.687,0","50.399,4","51.125,8","52.211,0"], a:1,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi Jawa Barat 2026",
+ e:"Jawa Barat diproyeksikan 50.399,4 ribu jiwa pada 2026 — provinsi terpadat di Indonesia. Laju pertumbuhan 1,04%/tahun dari basis 47.967 ribu jiwa (SP2020)."},
 
-{id:8,  name:"Bangka Belitung",    isle:"Sumatra",     pop:1477000,  luas:16424,   grow:1.88, sex:103, kab:7,  ib:"Pangkalpinang",
- cities:[["Kab. Bangka","337.000"],["Kota Pangkalpinang","230.000"],["Kab. Bangka Tengah","197.000"],["Kab. Belitung","199.000"]],
- note:"Penghasil timah terbesar kedua di dunia (setelah Tiongkok). Film Laskar Pelangi (2008) mempopulerkan Belitung. Pantai dengan batu granit raksasa khas.",
- spec:null,
- geo:[[105.7,-1.5],[107.2,-1.5],[108.8,-2.5],[108.3,-4.1],[106.7,-3.9],[105.7,-3.1],[105.7,-1.5]]},
+{id:9, cat:"data", q:"Laju pertumbuhan penduduk DKI Jakarta 2020–2026 menurut BPS adalah...",
+ o:["−0,12%/tahun","0,23%/tahun","0,56%/tahun","0,78%/tahun"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi DKI Jakarta 2026",
+ e:"DKI Jakarta memiliki laju pertumbuhan 0,56%/tahun — terendah di antara provinsi-provinsi besar, akibat suburbanisasi masif ke kawasan Bodetabek (Bogor, Depok, Tangerang, Bekasi)."},
 
-{id:9,  name:"Lampung",            isle:"Sumatra",     pop:9007000,  luas:34924,   grow:0.99, sex:103, kab:15, ib:"Bandar Lampung",
- cities:[["Kab. Lampung Tengah","1.292.000"],["Kab. Lampung Selatan","992.000"],["Kota Bandar Lampung","1.143.000"],["Kota Metro","190.000"]],
- note:"Pintu gerbang Sumatra dari Jawa melalui Selat Sunda. Destinasi utama transmigrasi. TN Way Kambas — habitat gajah Sumatra. Gunung Anak Krakatau aktif di Selat Sunda.",
- spec:"Krakatau (1883): letusan yang mengubah iklim global dan terdengar sampai Australia.",
- geo:[[104.3,-5.0],[106.1,-5.2],[107.7,-5.5],[107.2,-6.0],[106.1,-6.4],[105.1,-6.5],[104.6,-6.0],[104.3,-5.5],[104.3,-5.0]]},
+{id:10, cat:"data", q:"Berdasarkan BPS, jumlah penduduk Jawa Timur 2026 (ribu jiwa) adalah...",
+ o:["40.963,7","41.611,0","41.838,7","42.226,2"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Jawa Timur 2026",
+ e:"Jawa Timur diproyeksikan 41.838,7 ribu jiwa pada 2026, dengan laju pertumbuhan 0,58%/tahun — relatif rendah dibanding nasional akibat migrasi keluar ke kota-kota besar lain."},
 
-/* ── JAWA ── */
-{id:10, name:"Banten",             isle:"Jawa",        pop:12870000, luas:9663,    grow:1.42, sex:104, kab:8,  ib:"Serang",
- cities:[["Kab. Tangerang","3.978.000"],["Kota Tangerang","2.172.000"],["Kota Tangerang Selatan","1.852.000"],["Kota Serang","741.000"]],
- note:"Bandara Internasional Soekarno-Hatta — pintu udara utama Indonesia. Suburbanisasi Jakarta mendorong kepadatan tinggi. Situs Krakatau dan Taman Nasional Ujung Kulon (habitat badak Jawa).",
- spec:null,
- geo:[[105.6,-5.8],[106.9,-5.9],[107.1,-6.5],[106.8,-7.3],[106.1,-7.5],[105.6,-7.1],[105.4,-6.5],[105.6,-5.8]]},
+/* ── 11-20: KELOMPOK UMUR BPS 2023 ── */
+{id:11, cat:"umur", q:"Berdasarkan BPS (Proyeksi SP2020), kelompok umur 0–4 tahun di Indonesia pada 2023 berjumlah...",
+ o:["21.419,8 ribu jiwa","23.219,1 ribu jiwa","24.875,3 ribu jiwa","26.334,5 ribu jiwa"], a:1,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok umur 0–4 tahun pada 2023 berjumlah 23.219,1 ribu jiwa (L: 11.844,6 ribu + P: 11.374,5 ribu). Ini mencerminkan masih tingginya kelahiran absolut meski TFR sudah menurun ke sekitar 2,14."},
 
-{id:11, name:"DKI Jakarta",        isle:"Jawa",        pop:11250000, luas:664,     grow:0.56, sex:101, kab:6,  ib:"Jakarta",
- cities:[["Jakarta Timur","2.775.000"],["Jakarta Barat","2.445.000"],["Jakarta Selatan","2.285.000"],["Jakarta Utara","1.775.000"],["Jakarta Pusat","928.000"]],
- note:"Ibu kota transisi Indonesia (pindah ke IKN Nusantara, Kaltim). Kepadatan 16.943 jiwa/km² — tertinggi nasional. Kontribusi PDB >17% nasional.",
- spec:"Jakarta: laju pertumbuhan 0,56% — terendah nasional — akibat suburbanisasi masif ke Bodetabek.",
- geo:[[106.68,-6.08],[107.05,-6.00],[107.22,-6.35],[106.90,-6.56],[106.68,-6.45],[106.68,-6.08]]},
+{id:12, cat:"umur", q:"Menurut BPS 2023, kelompok umur 70–74 tahun di Indonesia berjumlah...",
+ o:["3.215,7 ribu jiwa","4.453,1 ribu jiwa","5.145,5 ribu jiwa","6.887,2 ribu jiwa"], a:1,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok umur 70–74 tahun berjumlah 4.453,1 ribu jiwa pada 2023. Kelompok ini lebih kecil dibanding usia produktif, mencerminkan piramida penduduk yang masih bersifat konstruktif."},
 
-{id:12, name:"Jawa Barat",         isle:"Jawa",        pop:49687000, luas:35378,   grow:1.04, sex:102, kab:27, ib:"Bandung",
- cities:[["Kab. Bogor","5.938.000"],["Kab. Bandung","3.828.000"],["Kab. Bekasi","3.528.000"],["Kota Bekasi","2.928.000"],["Kota Bandung","2.588.000"]],
- note:"PROVINSI TERPADAT di Indonesia — 17,6% dari total nasional. Pusat industri manufaktur, tekstil, FMCG, dan startup teknologi. Kab. Bogor adalah kabupaten terpadat se-Indonesia.",
- spec:"Kab. Bogor berpenduduk 5,9 juta jiwa — lebih besar dari Malaysia Barat.",
- geo:[[107.1,-6.5],[109.6,-6.7],[110.0,-7.5],[109.1,-8.2],[107.9,-8.2],[107.1,-7.8],[106.8,-7.5],[107.1,-6.5]]},
+{id:13, cat:"umur", q:"Berdasarkan BPS 2023, kelompok umur TERBESAR di Indonesia adalah...",
+ o:["0–4 tahun (23.219,1 ribu)","5–9 tahun (24.220,6 ribu)","10–14 tahun (24.178,3 ribu)","15–19 tahun (23.052,1 ribu)"], a:1,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok 5–9 tahun adalah terbesar dengan 24.220,6 ribu jiwa (L: 12.352,0 + P: 11.868,6). Kelompok 10–14 tahun berada tepat di bawahnya dengan 24.178,3 ribu jiwa."},
 
-{id:13, name:"Jawa Tengah",        isle:"Jawa",        pop:36731000, luas:32801,   grow:0.65, sex:99,  kab:35, ib:"Semarang",
- cities:[["Kab. Brebes","1.998.000"],["Kab. Cilacap","1.803.000"],["Kota Semarang","1.805.000"],["Kab. Grobogan","1.457.000"]],
- note:"Pusat budaya Jawa — Keraton Kasunanan Surakarta dan Mangkunegaran. Candi Borobudur (abad 9, UNESCO) di Magelang. Semarang memiliki kawasan Kota Lama warisan kolonial.",
- spec:null,
- geo:[[109.6,-6.7],[111.6,-6.7],[112.1,-7.3],[111.1,-8.2],[109.8,-8.2],[109.5,-7.5],[109.6,-6.7]]},
+{id:14, cat:"umur", q:"Kelompok umur 75 tahun ke atas (75+) di Indonesia pada 2023 menurut BPS berjumlah...",
+ o:["3.892,4 ribu jiwa","4.453,1 ribu jiwa","5.145,5 ribu jiwa","6.215,3 ribu jiwa"], a:2,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok 75+ berjumlah 5.145,5 ribu jiwa pada 2023. Kelompok lansia (65+) secara total mencapai sekitar 16.864,2 ribu jiwa (7.265,6 + 4.453,1 + 5.145,5) — kian meningkat seiring aging population."},
 
-{id:14, name:"DI Yogyakarta",      isle:"Jawa",        pop:3840000,  luas:3186,    grow:0.79, sex:98,  kab:5,  ib:"Yogyakarta",
- cities:[["Kab. Sleman","1.212.000"],["Kab. Bantul","1.072.000"],["Kab. Gunungkidul","772.000"],["Kota Yogyakarta","420.000"]],
- note:"Daerah Istimewa — Sultan Hamengkubuwono X sebagai gubernur berdasarkan UU keistimewaan. Kota pelajar dengan 100+ perguruan tinggi. Pusat batik, wayang, dan gamelan.",
- spec:null,
- geo:[[110.1,-7.5],[111.1,-7.5],[111.4,-8.2],[110.6,-8.6],[110.1,-8.3],[110.1,-7.5]]},
+{id:15, cat:"umur", q:"Berdasarkan BPS 2023, kelompok umur 65–69 tahun berjumlah...",
+ o:["5.987,2 ribu jiwa","6.543,8 ribu jiwa","7.265,6 ribu jiwa","8.134,9 ribu jiwa"], a:2,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok 65–69 tahun berjumlah 7.265,6 ribu jiwa pada 2023. Bersama 70–74 (4.453,1) dan 75+ (5.145,5), total lansia usia 65+ mencapai sekitar 16,9 juta jiwa."},
 
-{id:15, name:"Jawa Timur",         isle:"Jawa",        pop:41611000, luas:47800,   grow:0.58, sex:98,  kab:38, ib:"Surabaya",
- cities:[["Kota Surabaya","3.004.000"],["Kab. Malang","2.798.000"],["Kab. Jember","2.498.000"],["Kab. Sidoarjo","2.292.000"]],
- note:"Provinsi terbesar kedua populasi. Surabaya — kota pahlawan & metropolis terbesar kedua Indonesia. Gunung Bromo, Ijen, dan Semeru (3.676m) adalah ikon pariwisata nasional.",
- spec:"Jawa Timur menyumbang ±15% PDB nasional, menjadikannya provinsi paling produktif setelah Jawa Barat dan DKI.",
- geo:[[111.6,-6.7],[115.0,-7.3],[115.6,-8.3],[115.1,-9.0],[113.1,-9.2],[111.6,-8.8],[111.1,-8.2],[111.6,-6.7]]},
+{id:16, cat:"umur", q:"Kelompok umur produktif (15–64 tahun) di Indonesia mencakup berapa persen populasi pada 2023 menurut BPS?",
+ o:["58,7%","66,4%","68,8%","70,2%"], a:2,
+ src:"BPS, Proyeksi Penduduk 2023 — Kelompok Umur Produktif",
+ e:"Penduduk usia 15–64 tahun mencakup sekitar 68,8% dari total populasi 2023, mencerminkan fase bonus demografi yang sedang berjalan. Rasio ketergantungan sekitar 45 — relatif rendah, menguntungkan ekonomi."},
 
-/* ── BALI & NUSA TENGGARA ── */
-{id:16, name:"Bali",               isle:"Bali & NTT",  pop:4361000,  luas:5780,    grow:1.49, sex:101, kab:9,  ib:"Denpasar",
- cities:[["Kota Denpasar","962.000"],["Kab. Badung","731.000"],["Kab. Gianyar","527.000"],["Kab. Tabanan","457.000"]],
- note:"Pulau Dewata — pusat pariwisata internasional Indonesia. 6,3 juta wisatawan mancanegara/tahun. Pura Tanah Lot, Uluwatu, Besakih menjadi ikon budaya Hindu yang lestari.",
- spec:"Bali adalah satu-satunya provinsi dengan mayoritas pemeluk Hindu di Indonesia.",
- geo:[[114.6,-8.1],[115.9,-8.1],[116.2,-8.9],[114.9,-9.1],[114.6,-8.8],[114.6,-8.1]]},
+{id:17, cat:"umur", q:"Berdasarkan BPS 2023, penduduk usia 0–14 tahun (usia muda) berjumlah...",
+ o:["60.453,8 ribu jiwa","68.312,4 ribu jiwa","71.618,0 ribu jiwa","74.925,2 ribu jiwa"], a:2,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Penduduk 0–14 tahun berjumlah sekitar 71.618,0 ribu jiwa (23.219,1 + 24.220,6 + 24.178,3) = 26,1% dari total 274.499,8 ribu jiwa. Proporsi yang masih cukup besar menunjukkan momen transisi demografi."},
 
-{id:17, name:"NTB",                isle:"Bali & NTT",  pop:5430000,  luas:20153,   grow:1.38, sex:100, kab:10, ib:"Mataram",
- cities:[["Kab. Lombok Timur","1.179.000"],["Kab. Lombok Tengah","1.009.000"],["Kota Mataram","480.000"],["Kab. Sumbawa","450.000"]],
- note:"Nusa Tenggara Barat. Gunung Rinjani (3.726m) — puncak tertinggi kedua Indonesia. Lombok mulai berkembang sebagai destinasi wisata premium. Sumbawa penghasil madu dan kuda Sumbawa.",
- spec:null,
- geo:[[116.2,-8.2],[118.9,-8.4],[119.4,-9.0],[118.9,-9.6],[116.6,-9.3],[116.1,-8.9],[116.2,-8.2]]},
+{id:18, cat:"umur", q:"Kelompok umur 20–24 tahun di Indonesia pada 2023 menurut BPS berjumlah...",
+ o:["19.875,3 ribu jiwa","21.937,5 ribu jiwa","23.405,8 ribu jiwa","25.128,9 ribu jiwa"], a:1,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok 20–24 tahun berjumlah 21.937,5 ribu jiwa pada 2023. Kelompok ini merupakan angkatan kerja muda yang menjadi kunci optimalisasi bonus demografi 2030–2040."},
 
-{id:18, name:"NTT",                isle:"Bali & NTT",  pop:5457000,  luas:47350,   grow:1.22, sex:99,  kab:22, ib:"Kupang",
- cities:[["Kota Kupang","470.000"],["Kab. Sikka","341.000"],["Kab. Sumba Timur","287.000"],["Kab. Ende","270.000"]],
- note:"Nusa Tenggara Timur. Komodo (Varanus komodoensis) di Pulau Komodo — UNESCO World Heritage. Flores dengan Danau Kelimutu (tiga warna berbeda). Kupang kota pelabuhan penting.",
- spec:null,
- geo:[[120.1,-8.6],[123.1,-8.3],[125.6,-9.8],[126.6,-10.8],[123.1,-11.2],[120.6,-11.0],[119.3,-9.8],[120.1,-8.6]]},
+{id:19, cat:"umur", q:"Berdasarkan BPS 2023, kelompok umur 50–54 tahun berjumlah...",
+ o:["13.284,9 ribu jiwa","14.921,3 ribu jiwa","15.484,5 ribu jiwa","16.873,2 ribu jiwa"], a:2,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok 50–54 tahun berjumlah 15.484,5 ribu jiwa — generasi yang lahir tahun 1969–1973, periode sebelum puncak efektivitas Program KB. Menjelang purnabakti dalam 10–15 tahun ke depan."},
 
-/* ── KALIMANTAN ── */
-{id:19, name:"Kalimantan Barat",   isle:"Kalimantan",  pop:5481000,  luas:147307,  grow:1.44, sex:103, kab:14, ib:"Pontianak",
- cities:[["Kota Pontianak","680.000"],["Kab. Kubu Raya","676.000"],["Kab. Sambas","611.000"],["Kab. Ketapang","523.000"]],
- note:"Dilalui garis khatulistiwa tepat di Pontianak (Tugu Khatulistiwa). Berbatasan darat dengan Malaysia Sarawak. Sungai Kapuas (1.143km) — terpanjang di Indonesia.",
- spec:"Kapuas adalah sungai terpanjang Indonesia (1.143km), lebih panjang dari Rhine di Eropa.",
- geo:[[108.4,-2.4],[110.1,-1.0],[111.4,0.5],[113.6,1.9],[114.1,1.1],[113.9,-0.4],[113.1,-3.4],[110.9,-4.0],[108.9,-3.7],[108.4,-2.4]]},
+{id:20, cat:"umur", q:"Total penduduk Indonesia pertengahan tahun 2023 menurut BPS Proyeksi SP2020 adalah...",
+ o:["271.349,9 ribu jiwa","274.499,8 ribu jiwa","277.749,2 ribu jiwa","279.874,5 ribu jiwa"], a:1,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Total 274.499,8 ribu jiwa pada pertengahan 2023 (Juni) diperoleh dari penjumlahan seluruh kelompok umur dalam proyeksi BPS berbasis SP2020, dihitung secara geometrik dari baseline September 2020."},
 
-{id:20, name:"Kalimantan Tengah",  isle:"Kalimantan",  pop:2716000,  luas:153564,  grow:1.56, sex:104, kab:14, ib:"Palangkaraya",
- cities:[["Kab. Kotawaringin Timur","447.000"],["Kab. Kapuas","428.000"],["Kota Palangkaraya","300.000"],["Kab. Barito Selatan","177.000"]],
- note:"PROVINSI TERLUAS Indonesia (153.564 km²). Palangkaraya pernah diusulkan Soekarno sebagai ibukota RI di tahun 1950-an. Taman Nasional Tanjung Puting — pusat konservasi orangutan.",
- spec:"Kalteng terluas namun terjarang ke-4 — hanya 18 jiwa/km², setara Kanada.",
- geo:[[113.6,-1.0],[115.6,-0.5],[116.4,-1.1],[116.6,-3.0],[116.1,-5.2],[114.3,-4.9],[112.6,-5.0],[111.1,-3.9],[110.9,-4.0],[113.1,-3.4],[113.9,-0.4],[113.6,-1.0]]},
+/* ── 21-35: DATA PER PROVINSI ── */
+{id:21, cat:"provinsi", q:"Berdasarkan BPS 2026, provinsi dengan jumlah penduduk TERBANYAK di Indonesia adalah...",
+ o:["Jawa Tengah (36.731,0 ribu)","Jawa Timur (41.838,7 ribu)","Jawa Barat (50.399,4 ribu)","DKI Jakarta (11.314,5 ribu)"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Jawa Barat adalah provinsi terpadat dengan 50.399,4 ribu jiwa (2026), menyumbang ~17,68% dari total nasional. Diikuti Jawa Timur (41.838,7) dan Jawa Tengah (36.731,0)."},
 
-{id:21, name:"Kalimantan Selatan", isle:"Kalimantan",  pop:4243000,  luas:38744,   grow:1.35, sex:102, kab:13, ib:"Banjarmasin",
- cities:[["Kota Banjarmasin","731.000"],["Kab. Banjar","586.000"],["Kota Banjarbaru","285.000"],["Kab. Tanah Laut","365.000"]],
- note:"Banjarmasin 'Kota Seribu Sungai' — pasar terapung Lok Baintan yang ikonik. Penghasil batu bara terbesar. Suku Banjar terkenal dengan tenun sasirangan dan soto Banjar.",
- spec:null,
- geo:[[115.6,-3.0],[117.6,-2.8],[118.6,-4.5],[118.1,-5.5],[116.3,-5.4],[115.1,-4.7],[114.3,-4.9],[116.1,-5.2],[116.6,-4.4],[115.6,-3.0]]},
+{id:22, cat:"provinsi", q:"Berdasarkan BPS 2026, kepadatan penduduk DKI Jakarta adalah...",
+ o:["11.943 jiwa/km²","14.735 jiwa/km²","17.040 jiwa/km²","19.256 jiwa/km²"], a:2,
+ src:"BPS, Proyeksi Penduduk 2026; Luas Jakarta = 664 km²",
+ e:"DKI Jakarta: 11.314,5 ribu jiwa ÷ 664 km² = 17.040 jiwa/km² — tertinggi di Indonesia. Hampir 115 kali rata-rata nasional (152 jiwa/km²)."},
 
-{id:22, name:"Kalimantan Timur",   isle:"Kalimantan",  pop:3963000,  luas:127267,  grow:2.57, sex:106, kab:10, ib:"Samarinda",
- cities:[["Kota Samarinda","881.000"],["Kota Balikpapan","796.000"],["Kab. Kutai Kartanegara","781.000"],["Kota Bontang","184.000"]],
- note:"Lokasi IKN NUSANTARA (Penajam Paser Utara & Kutai Kartanegara). LAJU PERTUMBUHAN TERTINGGI NASIONAL (2,57%/th 2020–2025) dipicu migrasi konstruksi IKN. Penghasil batu bara & gas alam.",
- spec:"IKN Nusantara ditargetkan menjadi kota pintar (smart city) pertama Indonesia, siap huni 2028.",
- geo:[[116.6,-1.5],[117.9,-2.7],[118.6,-4.5],[117.6,-5.0],[116.3,-5.3],[116.1,-4.0],[115.6,-2.5],[115.9,-1.0],[116.3,0.5],[116.6,1.0],[116.9,2.1],[118.1,3.6],[118.9,2.6],[118.6,0.6],[117.9,-0.4],[116.6,-1.5]]},
+{id:23, cat:"provinsi", q:"Berdasarkan BPS 2026, provinsi Kalimantan Tengah memiliki kepadatan penduduk...",
+ o:["8 jiwa/km²","18 jiwa/km²","27 jiwa/km²","35 jiwa/km²"], a:1,
+ src:"BPS, Proyeksi Penduduk 2026; Luas Kalteng = 153.564 km²",
+ e:"Kalteng: ~2.759,5 ribu jiwa ÷ 153.564 km² ≈ 18 jiwa/km² — termasuk provinsi terjarang di Indonesia. Luasnya melebihi gabungan Jawa–Bali namun populasinya hanya 2,7 juta jiwa."},
 
-{id:23, name:"Kalimantan Utara",   isle:"Kalimantan",  pop:733000,   luas:72567,   grow:2.15, sex:107, kab:5,  ib:"Tanjung Selor",
- cities:[["Kota Tarakan","269.000"],["Kab. Nunukan","183.000"],["Kab. Bulungan","151.000"],["Kab. Malinau","83.000"]],
- note:"Provinsi termuda Kalimantan (2012). Berbatasan langsung dengan Malaysia Sabah & Sarawak. Tarakan — pulau minyak strategis sejak PD II. Kawasan konservasi orangutan dan macan dahan.",
- spec:null,
- geo:[[116.9,2.1],[118.1,3.6],[119.1,4.5],[119.6,4.1],[119.3,3.1],[118.9,2.6],[116.9,2.1]]},
+{id:24, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Sumatera Utara (ribu jiwa) adalah...",
+ o:["13.847,2","15.138,0","15.356,7","16.213,5"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Sumatera Utara 2026",
+ e:"Sumatera Utara diproyeksikan 15.356,7 ribu jiwa pada 2026 — provinsi terpadat di Sumatra. Medan sebagai ibukota adalah kota terbesar ketiga di Indonesia."},
 
-/* ── SULAWESI ── */
-{id:24, name:"Sulawesi Utara",     isle:"Sulawesi",    pop:2636000,  luas:15273,   grow:1.14, sex:102, kab:15, ib:"Manado",
- cities:[["Kota Manado","444.000"],["Kota Bitung","230.000"],["Kab. Minahasa","345.000"],["Kota Tomohon","106.000"]],
- note:"Pintu gerbang Indonesia ke Pasifik. Bunaken — biodiversitas terumbu karang tertinggi di Asia Pasifik. Manado kota progresif dengan kampanye 'Kota Setara'. Masakan Manado terkenal pedas.",
- spec:null,
- geo:[[124.6,0.9],[125.6,1.5],[127.6,1.9],[128.1,1.3],[126.9,0.6],[125.1,0.3],[124.6,0.9]]},
+{id:25, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Sulawesi Selatan (ribu jiwa) adalah...",
+ o:["8.934,2","9.434,0","9.612,8","10.127,4"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Sulawesi Selatan 2026",
+ e:"Sulawesi Selatan diproyeksikan ~9.612,8 ribu jiwa pada 2026 — provinsi terpadat di Sulawesi. Makassar adalah pusat ekonomi Kawasan Timur Indonesia."},
 
-{id:25, name:"Gorontalo",          isle:"Sulawesi",    pop:1175000,  luas:11257,   grow:1.02, sex:101, kab:6,  ib:"Gorontalo",
- cities:[["Kab. Gorontalo","385.000"],["Kota Gorontalo","220.000"],["Kab. Pohuwato","164.000"],["Kab. Bone Bolango","169.000"]],
- note:"Provinsi terkecil di Sulawesi. Danau Limboto — danau terbesar Sulawesi yang terus menyusut. Jagung sebagai komoditas utama. Sejarah Kerajaan Gorontalo (abad 15).",
- spec:null,
- geo:[[121.6,0.1],[122.9,0.9],[123.9,0.6],[124.4,0.1],[123.1,-0.4],[122.1,-0.4],[121.6,0.1]]},
+{id:26, cat:"provinsi", q:"Berdasarkan BPS 2026, provinsi Kalimantan Utara memiliki jumlah penduduk sekitar...",
+ o:["512,4 ribu jiwa","733,0 ribu jiwa","757,8 ribu jiwa","892,3 ribu jiwa"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Kalimantan Utara 2026",
+ e:"Kaltara diproyeksikan ~757,8 ribu jiwa pada 2026 — provinsi dengan populasi tersedikit di Kalimantan. Laju pertumbuhan 2,15%/tahun — tinggi akibat migrasi dan pengembangan kawasan perbatasan."},
 
-{id:26, name:"Sulawesi Tengah",    isle:"Sulawesi",    pop:3028000,  luas:61841,   grow:1.59, sex:103, kab:13, ib:"Palu",
- cities:[["Kab. Parigi Moutong","488.000"],["Kota Palu","396.000"],["Kab. Donggala","325.000"],["Kab. Morowali","140.000"]],
- note:"Gempa M7,5 + tsunami + likuefaksi di Palu (2018) — 4.340 korban jiwa. Bangkit dengan rekonstruksi. Situs megalitik Lembah Bada (batu patung misterius). Morowali hub industri nikel.",
- spec:"Sulteng kini menjadi pusat industri nikel terbesar dunia — nikel untuk baterai EV global.",
- geo:[[120.4,-1.1],[121.6,-0.8],[122.1,0.1],[122.9,0.9],[123.9,0.6],[124.1,-0.4],[123.1,-1.4],[122.6,-2.4],[121.6,-2.0],[120.6,-2.4],[120.1,-2.0],[120.4,-1.1]]},
+{id:27, cat:"provinsi", q:"Berdasarkan BPS 2026, laju pertumbuhan penduduk Papua Barat 2020–2026 adalah...",
+ o:["1,45%/tahun","1,74%/tahun","2,02%/tahun","2,35%/tahun"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Papua Barat mencatat laju 2,02%/tahun — di atas rata-rata nasional. Gas alam LNG Tangguh mendorong migrasi tenaga kerja. Provinsi ini berbatasan dengan semenanjung Kepala Burung Papua."},
 
-{id:27, name:"Sulawesi Barat",     isle:"Sulawesi",    pop:1453000,  luas:16787,   grow:1.88, sex:103, kab:6,  ib:"Mamuju",
- cities:[["Kab. Polewali Mandar","475.000"],["Kab. Mamuju Tengah","159.000"],["Kab. Majene","200.000"],["Kota Mamuju","144.000"]],
- note:"Provinsi termuda Sulawesi (2004). Gempa merusak Mamuju (2021). Penghasil kakao dan kopra terbesar. Suku Mandar terkenal sebagai pelaut dan pembuat perahu pinisi.",
- spec:null,
- geo:[[119.1,-1.5],[120.4,-1.1],[120.1,-2.5],[120.1,-5.0],[119.6,-4.8],[119.1,-4.1],[118.9,-3.0],[119.1,-1.5]]},
+{id:28, cat:"provinsi", q:"Berdasarkan BPS 2026, provinsi dengan rasio jenis kelamin TERTINGGI (paling banyak laki-laki per 100 perempuan) adalah...",
+ o:["DKI Jakarta (101)","Kalimantan Timur (106)","Kalimantan Utara (107)","Papua Tengah (104)"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Kalimantan Utara memiliki rasio jenis kelamin tertinggi (~107) — 107 laki-laki per 100 perempuan, mencerminkan dominasi migrasi laki-laki ke daerah perbatasan dan sektor ekstraktif/konstruksi."},
 
-{id:28, name:"Sulawesi Selatan",   isle:"Sulawesi",    pop:9434000,  luas:46717,   grow:0.84, sex:97,  kab:24, ib:"Makassar",
- cities:[["Kota Makassar","1.513.000"],["Kab. Gowa","796.000"],["Kab. Bone","786.000"],["Kota Palopo","205.000"]],
- note:"Makassar — pusat ekonomi Kawasan Timur Indonesia (KTI). Suku Bugis: pelaut ulung, menguasai jalur maritim Asia Tenggara selama berabad-abad. Perahu Pinisi diakui UNESCO (2017).",
- spec:"Sulsel memiliki IPM (Indeks Pembangunan Manusia) tertinggi di luar Jawa-Bali.",
- geo:[[119.6,-3.9],[120.4,-3.0],[121.6,-2.5],[122.6,-3.0],[122.9,-4.5],[122.1,-6.5],[121.1,-7.8],[120.3,-7.8],[119.6,-6.5],[119.1,-5.5],[119.1,-4.4],[119.6,-3.9]]},
+{id:29, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Aceh (ribu jiwa) adalah...",
+ o:["4.987,3","5.397,6","5.487,3","5.634,8"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi Aceh 2026",
+ e:"Aceh diproyeksikan ~5.487,3 ribu jiwa pada 2026. Laju pertumbuhan 1,52%/tahun, lebih tinggi dari rata-rata nasional. Kepadatan 97 jiwa/km² (luas 56.813 km²)."},
 
-{id:29, name:"Sulawesi Tenggara",  isle:"Sulawesi",    pop:2682000,  luas:38140,   grow:1.42, sex:101, kab:17, ib:"Kendari",
- cities:[["Kota Kendari","365.000"],["Kab. Konawe Selatan","290.000"],["Kab. Kolaka","250.000"],["Kab. Muna","242.000"]],
- note:"Wakatobi — Taman Nasional dengan biodiversitas terumbu karang terbaik di dunia (4 pulau: Wangi-Wangi, Kaledupa, Tomia, Binongko). Aspal alam terbesar di Pulau Buton.",
- spec:null,
- geo:[[121.6,-2.8],[123.6,-3.0],[124.6,-5.0],[123.9,-5.8],[122.6,-5.5],[121.6,-4.8],[121.6,-3.4],[121.6,-2.8]]},
+{id:30, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Bali (ribu jiwa) diproyeksikan...",
+ o:["3.987,4","4.361,0","4.440,5","4.875,2"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi Bali 2026",
+ e:"Bali diproyeksikan ~4.440,5 ribu jiwa pada 2026. Kepadatan 768 jiwa/km² (luas 5.780 km²). Laju pertumbuhan 1,49%/tahun — di atas nasional, didorong migrasi tenaga kerja sektor pariwisata."},
 
-/* ── MALUKU ── */
-{id:30, name:"Maluku",             isle:"Maluku",      pop:1859000,  luas:46914,   grow:1.14, sex:100, kab:11, ib:"Ambon",
- cities:[["Kota Ambon","460.000"],["Kab. Maluku Tengah","435.000"],["Kab. Seram Bagian Barat","204.000"],["Kab. Buru","164.000"]],
- note:"Kepulauan rempah legendaris — pala dan cengkeh Maluku mengubah peta geopolitik dunia abad 15–16. Banda Neira bekas pusat VOC. Ambon 'Kota Musik Indonesia'.",
- spec:"Rempah Maluku menjadi pendorong utama Penjelajahan Samudra — Columbus dan Magellan mencari jalur ke Maluku.",
- geo:[[128.6,-2.4],[130.6,-3.0],[133.1,-5.7],[132.1,-7.4],[129.6,-6.9],[128.1,-5.1],[127.6,-3.8],[128.6,-2.4]]},
+{id:31, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Maluku (ribu jiwa) adalah...",
+ o:["1.489,2","1.859,0","1.883,4","2.134,7"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi Maluku 2026",
+ e:"Maluku diproyeksikan ~1.883,4 ribu jiwa pada 2026. Provinsi kepulauan ini memiliki kepadatan rendah karena luasnya perairan. Ambon adalah kota terbesar sekaligus ibukota provinsi."},
 
-{id:31, name:"Maluku Utara",       isle:"Maluku",      pop:1290000,  luas:31982,   grow:1.61, sex:102, kab:10, ib:"Sofifi",
- cities:[["Kota Ternate","229.000"],["Kab. Halmahera Selatan","260.000"],["Kab. Halmahera Utara","200.000"],["Kota Tidore","116.000"]],
- note:"Ternate & Tidore — dua kesultanan cengkeh yang bersaing memperebutkan hegemoni Asia Timur, menarik Portugis, Spanyol, Belanda. Gunung Gamalama aktif di Ternate.",
- spec:null,
- geo:[[127.1,0.6],[128.1,1.9],[129.6,2.1],[130.6,1.3],[130.1,-0.4],[128.6,-1.4],[127.1,-0.4],[127.1,0.6]]},
+{id:32, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Papua Selatan (ribu jiwa) adalah...",
+ o:["421,3","559,0","574,1","712,8"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Papua Selatan diproyeksikan ~574,1 ribu jiwa pada 2026. Kota Merauke sebagai ibukota adalah kota paling timur Indonesia. TN Wasur adalah padang savana terluas di Indonesia."},
 
-/* ── PAPUA ── */
-{id:32, name:"Papua Barat Daya",   isle:"Papua",       pop:519000,   luas:26369,   grow:1.93, sex:104, kab:6,  ib:"Sorong",
- cities:[["Kota Sorong","280.000"],["Kab. Sorong","129.000"],["Kab. Raja Ampat","56.000"],["Kab. Maybrat","50.000"]],
- note:"Provinsi Papua terbaru (2022). Sorong hub ekonomi barat Papua. Raja Ampat — destinasi menyelam terbaik di dunia (biodiversitas laut tertinggi di bumi: 75% spesies karang dunia).",
- spec:"Raja Ampat: 1.500+ spesies ikan, 537 spesies karang — keanekaragaman hayati laut tertinggi di bumi.",
- geo:[[130.6,-0.5],[132.1,-0.8],[133.6,-2.0],[133.1,-4.0],[131.6,-4.4],[130.6,-3.5],[130.1,-1.8],[130.6,-0.5]]},
+{id:33, cat:"provinsi", q:"Berdasarkan BPS 2026, provinsi NTT (Nusa Tenggara Timur) diproyeksikan berpenduduk...",
+ o:["4.987,3 ribu jiwa","5.457,0 ribu jiwa","5.535,8 ribu jiwa","5.987,4 ribu jiwa"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi NTT 2026",
+ e:"NTT diproyeksikan ~5.535,8 ribu jiwa pada 2026. Terdiri dari 566 pulau dengan 22 kab/kota. Kupang adalah ibukota dan kota terbesar. Komodo di NTT adalah warisan dunia UNESCO."},
 
-{id:33, name:"Papua Barat",        isle:"Papua",       pop:616000,   luas:40640,   grow:2.02, sex:105, kab:7,  ib:"Manokwari",
- cities:[["Kota Manokwari","215.000"],["Kab. Fakfak","83.000"],["Kab. Teluk Bintuni","59.000"],["Kab. Manokwari Selatan","39.000"]],
- note:"Semenanjung Kepala Burung (Bird's Head). TN Arfak — habitat cendrawasih endemik dan 320+ spesies anggrek. LNG Tangguh: cadangan gas alam raksasa. Manokwari kota misionaris pertama Papua (1855).",
- spec:null,
- geo:[[133.6,-0.5],[135.6,-0.5],[136.6,-2.0],[136.1,-4.0],[134.6,-4.4],[133.6,-3.5],[133.1,-2.0],[133.6,-0.5]]},
+{id:34, cat:"provinsi", q:"Berdasarkan BPS 2026, kepadatan penduduk Jawa Tengah adalah...",
+ o:["875 jiwa/km²","1.079 jiwa/km²","1.119 jiwa/km²","1.254 jiwa/km²"], a:2,
+ src:"BPS, Proyeksi Penduduk 2026; Luas Jateng = 32.801 km²",
+ e:"Jawa Tengah: ~36.731 ribu jiwa ÷ 32.801 km² ≈ 1.119 jiwa/km². Ini membuat Jawa Tengah lebih padat dari Jawa Timur (874 jiwa/km²) tetapi jauh di bawah Jawa Barat (1.426 jiwa/km²) dan Jakarta (17.040 jiwa/km²)."},
 
-{id:34, name:"Papua",              isle:"Papua",       pop:1020000,  luas:90550,   grow:1.83, sex:104, kab:10, ib:"Jayapura",
- cities:[["Kota Jayapura","380.000"],["Kab. Jayapura","184.000"],["Kab. Keerom","61.000"],["Kab. Sarmi","43.000"]],
- note:"Ibukota provinsi Papua (pasca pemekaran 2022). Jayapura berbatasan langsung dengan Papua Nugini di Skouw. Danau Sentani dengan Festival Budaya Internasional. Pantai Base-G bersejarah PD II.",
- spec:null,
- geo:[[135.6,-1.0],[138.6,-1.0],[141.1,-2.5],[141.1,-5.5],[139.1,-5.0],[137.1,-4.0],[135.6,-3.0],[135.6,-2.0],[135.6,-1.0]]},
+{id:35, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk DI Yogyakarta (ribu jiwa) adalah...",
+ o:["3.458,7","3.840,0","3.887,5","4.123,4"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), DI Yogyakarta 2026",
+ e:"DIY diproyeksikan ~3.887,5 ribu jiwa pada 2026. Dengan luas hanya 3.186 km², kepadatannya mencapai 1.220 jiwa/km². Terdapat 5 kab/kota dan lebih dari 100 perguruan tinggi."},
 
-{id:35, name:"Papua Tengah",       isle:"Papua",       pop:923000,   luas:119749,  grow:1.69, sex:104, kab:8,  ib:"Nabire",
- cities:[["Kab. Mimika","290.000"],["Kota Nabire","134.000"],["Kab. Paniai","186.000"],["Kab. Puncak","96.000"]],
- note:"Grasberg di Mimika (PT Freeport Indonesia) — tambang tembaga & emas terbesar di dunia. Danau Paniai, Tage, Tigi — tiga danau kembar yang indah di dataran tinggi.",
- spec:"Grasberg menyumbang >50% pendapatan Papua — tetapi juga menjadi kontroversi lingkungan dan HAM.",
- geo:[[135.6,-3.5],[137.1,-4.0],[139.1,-5.0],[139.1,-7.0],[137.6,-7.4],[136.1,-7.4],[135.1,-6.0],[135.1,-4.5],[135.6,-3.5]]},
+/* ── 36-55: KONSEP KEPENDUDUKAN ── */
+{id:36, cat:"konsep", q:"Pernyataan yang BENAR tentang Crude Birth Rate (CBR) adalah...",
+ o:["CBR dihitung per 10.000 penduduk","CBR adalah jumlah kelahiran per 1.000 penduduk pertengahan tahun","CBR hanya menghitung kelahiran laki-laki","CBR identik dengan Total Fertility Rate (TFR)"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Kependudukan",
+ e:"CBR (Crude Birth Rate) = (Jumlah kelahiran setahun / Jumlah penduduk pertengahan tahun) × 1.000. Hasilnya per 1.000 penduduk. CBR Indonesia 2023 ≈ 18,2 per 1.000 penduduk."},
 
-{id:36, name:"Papua Pegunungan",   isle:"Papua",       pop:1209000,  luas:67296,   grow:1.60, sex:103, kab:8,  ib:"Wamena",
- cities:[["Kab. Jayawijaya","265.000"],["Kota Wamena","149.000"],["Kab. Lanny Jaya","200.000"],["Kab. Peg. Bintang","83.000"]],
- note:"Lembah Baliem — Suku Dani mempertahankan tradisi leluhur ribuan tahun (Festival Budaya Lembah Baliem dikenal dunia). Puncak Jaya / Carstensz Pyramid (4.884m) — tertinggi di Indonesia.",
- spec:"Puncak Jaya (4.884m): puncak tertinggi di antara Himalaya dan Pegunungan Andes. Salah satu Seven Summits.",
- geo:[[138.6,-4.5],[141.1,-5.5],[141.1,-8.0],[139.6,-8.0],[138.6,-7.5],[137.6,-7.4],[139.1,-7.0],[139.1,-5.5],[138.6,-4.5]]},
+{id:37, cat:"konsep", q:"Apa perbedaan utama antara CBR (Crude Birth Rate) dan TFR (Total Fertility Rate)?",
+ o:["CBR untuk laki-laki, TFR untuk perempuan","CBR per 1.000 penduduk umum, TFR rata-rata anak per wanita usia subur","CBR tahunan, TFR 10 tahunan","CBR dan TFR adalah hal yang sama"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Demografi",
+ e:"CBR mengukur kelahiran per 1.000 penduduk (semua usia dan jenis kelamin). TFR mengukur rata-rata jumlah anak yang dilahirkan per wanita usia subur (15–49 tahun) sepanjang hidupnya. Indonesia: CBR ≈ 18,2 per 1.000, TFR ≈ 2,14."},
 
-{id:37, name:"Papua Selatan",      isle:"Papua",       pop:559000,   luas:116671,  grow:1.43, sex:104, kab:4,  ib:"Merauke",
- cities:[["Kota Merauke","240.000"],["Kab. Mappi","114.000"],["Kab. Asmat","109.000"],["Kab. Boven Digoel","76.000"]],
- note:"Merauke — kota paling TIMUR Indonesia, ujung frasa 'Sabang–Merauke'. TN Wasur: padang savana & rawa terluas Indonesia menyerupai Afrika. Suku Asmat: ukiran kayu bernilai seni tinggi (UNESCO).",
- spec:"Merauke berbatasan langsung dengan Papua Nugini — pintu timur NKRI.",
- geo:[[136.1,-7.4],[137.6,-7.4],[139.6,-8.0],[141.1,-8.0],[141.1,-10.0],[138.6,-10.0],[136.6,-9.5],[135.6,-8.5],[136.1,-7.4]]},
+{id:38, cat:"konsep", q:"Kepadatan penduduk FISIOLOGIS berbeda dari kepadatan penduduk KASAR karena...",
+ o:["Fisiologis memperhitungkan umur penduduk","Fisiologis menggunakan luas lahan yang dapat ditanami (cultivable land)","Fisiologis hanya menghitung penduduk perkotaan","Fisiologis menggunakan data sensus 10 tahunan"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Kependudukan",
+ e:"Kepadatan fisiologis = jumlah penduduk ÷ luas lahan yang dapat ditanami (cultivable land), bukan total luas wilayah. Ini lebih mencerminkan tekanan penduduk terhadap kapasitas produksi pangan suatu wilayah."},
+
+{id:39, cat:"konsep", q:"Jika suatu wilayah memiliki penduduk 500.000 jiwa dan luas 2.500 km², maka kepadatan penduduk kasarnya adalah...",
+ o:["50 jiwa/km²","100 jiwa/km²","200 jiwa/km²","250 jiwa/km²"], a:2,
+ src:"BPS, Rumus Kepadatan Penduduk Kasar",
+ e:"Kepadatan = 500.000 ÷ 2.500 = 200 jiwa/km². Ini disebut 'kepadatan kasar' (crude population density) karena menggunakan total luas wilayah tanpa mempertimbangkan penggunaan lahan."},
+
+{id:40, cat:"konsep", q:"Yang dimaksud dengan 'Rasio Jenis Kelamin = 97' adalah...",
+ o:["97 perempuan per 100 laki-laki","97 laki-laki per 100 perempuan","97% penduduk adalah perempuan","Perbandingan usia laki-laki 97 tahun"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Kependudukan",
+ e:"Rasio jenis kelamin 97 berarti terdapat 97 laki-laki untuk setiap 100 perempuan — menunjukkan penduduk perempuan lebih banyak. SR > 100 = dominan laki-laki; SR < 100 = dominan perempuan."},
+
+{id:41, cat:"konsep", q:"Laju Pertumbuhan Penduduk GEOMETRIK dihitung menggunakan rumus...",
+ o:["P = P₀ × r × t","Pt = P₀ (1+r)^t","Pt = P₀ × e^(rt)","r = (Pt − P₀)/P₀"], a:1,
+ src:"BPS, Metode Perhitungan Laju Pertumbuhan Penduduk",
+ e:"Metode geometrik: Pt = P₀(1+r)^t, sehingga r = (Pt/P₀)^(1/t) − 1. Ini adalah metode standar BPS untuk menghitung laju pertumbuhan antar sensus. Beda dengan aritmatik (linier) dan eksponensial (e^rt)."},
+
+{id:42, cat:"konsep", q:"Piramida penduduk KONSTRUKTIF dicirikan oleh...",
+ o:["Dasar sangat lebar, puncak sangat runcing","Bentuk hampir segiempat, semua kelompok umur seimbang","Kelompok usia muda lebih kecil dari usia produktif, puncak relatif membesar","Kelompok lansia lebih banyak dari usia muda"], a:2,
+ src:"BPS, Konsep Piramida Penduduk",
+ e:"Piramida konstruktif: kelompok 0–14 (muda) lebih kecil dari kelompok 15–64 (produktif), menciptakan bentuk yang melebar di tengah. Indonesia saat ini bergerak ke tipe konstruktif, dengan usia median 30,2 tahun (2026)."},
+
+{id:43, cat:"konsep", q:"Angka Harapan Hidup saat lahir (AHH/e₀) di Indonesia pada 2026 menurut BPS adalah...",
+ o:["68,4 tahun","71,2 tahun","73,6 tahun","76,8 tahun"], a:2,
+ src:"BPS, Proyeksi Angka Harapan Hidup Indonesia 2020–2050",
+ e:"AHH Indonesia 2026 ≈ 73,6 tahun (laki-laki ≈ 71,4 tahun, perempuan ≈ 75,9 tahun). Naik pesat dari 45 tahun (1960) berkat perbaikan gizi, sanitasi, dan akses layanan kesehatan."},
+
+{id:44, cat:"konsep", q:"Apa yang dimaksud dengan 'Rasio Ketergantungan' (Dependency Ratio)?",
+ o:["Perbandingan jumlah lansia dengan usia muda","Perbandingan penduduk tidak produktif (0–14 dan 65+) dengan penduduk produktif (15–64) × 100","Rasio migrasi masuk terhadap migrasi keluar","Perbandingan angka kelahiran dengan angka kematian"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Kependudukan",
+ e:"Dependency Ratio = [(0–14) + (65+)] ÷ (15–64) × 100. Indonesia 2026 ≈ 45, artinya 100 orang produktif menanggung 45 orang tidak produktif. Makin rendah DR, makin besar peluang bonus demografi."},
+
+{id:45, cat:"konsep", q:"'Bonus Demografi' yang optimal terjadi ketika...",
+ o:["TFR mencapai 0 (tidak ada kelahiran)","Rasio Ketergantungan mencapai titik terendah (usia produktif sangat mendominasi)","Semua penduduk berusia 15–30 tahun","Angka kematian melebihi angka kelahiran"], a:1,
+ src:"BPS, Buku Saku Proyeksi Penduduk Indonesia 2020–2050",
+ e:"Bonus demografi optimal terjadi saat Dependency Ratio mencapai titik terendah — penduduk usia produktif mendominasi secara maksimal. Indonesia diperkirakan mencapai puncak bonus demografi sekitar 2030–2035."},
+
+{id:46, cat:"konsep", q:"Migrasi 'RISEN' (recent in-migration) yang digunakan BPS mengacu pada...",
+ o:["Migrasi yang terjadi lebih dari 5 tahun lalu","Migrasi yang terjadi dalam 5 tahun sebelum pencacahan sensus","Migrasi internasional antar negara","Migrasi yang dilakukan musiman"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Migrasi",
+ e:"Migrasi risen adalah perpindahan yang terjadi dalam 5 tahun terakhir sebelum sensus — berbeda dari migrasi seumur hidup yang mengukur perbedaan tempat lahir vs tempat tinggal saat sensus."},
+
+{id:47, cat:"konsep", q:"Angka Kematian Bayi (IMR/Infant Mortality Rate) dihitung sebagai...",
+ o:["Kematian bayi per 100 kelahiran hidup","Kematian bayi per 1.000 kelahiran hidup","Kematian bayi per 10.000 penduduk","Kematian bayi per 100 penduduk perempuan"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Kependudukan",
+ e:"IMR = (jumlah kematian bayi usia <1 tahun / jumlah kelahiran hidup) × 1.000. Indonesia: IMR ≈ 19,8 per 1.000 kelahiran hidup (2026) — turun drastis dari 142 per 1.000 pada 1970."},
+
+{id:48, cat:"konsep", q:"Apa yang dimaksud dengan 'transisi demografi'?",
+ o:["Perubahan ibukota negara yang mempengaruhi kependudukan","Proses pergeseran dari angka kelahiran dan kematian tinggi ke rendah, umumnya terjadi seiring pembangunan","Perpindahan penduduk antar pulau","Perubahan batas wilayah yang mempengaruhi sensus"], a:1,
+ src:"BPS, Laporan Kependudukan Indonesia 2024",
+ e:"Transisi demografi adalah proses historis di mana suatu masyarakat bergerak dari kombinasi (kelahiran tinggi + kematian tinggi) → (kelahiran tinggi + kematian rendah) → (kelahiran rendah + kematian rendah). Indonesia kini di fase ketiga."},
+
+{id:49, cat:"konsep", q:"Urbanisasi yang terjadi di Indonesia berdampak pada...",
+ o:["Berkurangnya jumlah penduduk kota","Bertambahnya proporsi penduduk perkotaan dan berkurangnya kepadatan perdesaan","Meningkatnya angka kelahiran di desa","Berkurangnya kepadatan kota karena banyak yang pindah"], a:1,
+ src:"BPS, Statistik Indonesia 2025",
+ e:"Urbanisasi meningkatkan proporsi penduduk kota (58,5% pada 2026) dan mengurangi penduduk desa. Dampak: kemacetan, permukiman kumuh kota, serta desa kekurangan tenaga produktif. BPS mencatat lebih dari 50% penduduk Indonesia urban sejak 2018."},
+
+{id:50, cat:"konsep", q:"TFR Indonesia tahun 2026 menurut BPS (Proyeksi SP2020) adalah sekitar...",
+ o:["1,78","2,14","2,57","3,02"], a:1,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020)",
+ e:"TFR Indonesia 2026 ≈ 2,14 — mendekati replacement level (2,1). Ini hasil dari keberhasilan Program KB yang berhasil menurunkan TFR dari 5,6 (1970) menjadi 2,14 (2026), meskipun penurunan kini melambat."},
+
+{id:51, cat:"konsep", q:"Struktur penduduk yang menunjukkan banyak penduduk usia tua (65+) dan sedikit penduduk muda disebut...",
+ o:["Piramida Ekspansif","Piramida Konstruktif","Piramida Stasioner","Piramida Regresif"], a:3,
+ src:"BPS, Konsep dan Definisi Statistik Kependudukan",
+ e:"Piramida regresif/kontraktif: jumlah penduduk tua (65+) mendekati atau melebihi jumlah anak-anak, sering berbentuk seperti guci terbalik. Khas negara maju seperti Jepang, Jerman, dan Italia."},
+
+{id:52, cat:"konsep", q:"'Pertumbuhan penduduk alami' dihitung dari...",
+ o:["Hanya angka kelahiran saja","Kelahiran dikurangi kematian (tanpa memperhitungkan migrasi)","Imigrasi dikurangi emigrasi","Kelahiran + imigrasi − kematian − emigrasi"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Kependudukan",
+ e:"Pertumbuhan alami = Kelahiran (L) − Kematian (M). Jika positif, penduduk bertambah secara alami. Berbeda dari pertumbuhan total yang juga memperhitungkan migrasi neto (I − E)."},
+
+{id:53, cat:"konsep", q:"Angka usia median penduduk Indonesia tahun 2026 menurut BPS adalah...",
+ o:["24,7 tahun","28,9 tahun","30,2 tahun","34,1 tahun"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), 2026",
+ e:"Usia median Indonesia 2026 ≈ 30,2 tahun — setengah penduduk berusia di bawah 30,2 tahun. Ini menunjukkan Indonesia masih relatif muda dibanding negara OECD (median >40 tahun), mendukung fase bonus demografi."},
+
+{id:54, cat:"konsep", q:"Sensus Penduduk Indonesia terakhir dilaksanakan pada tahun...",
+ o:["2015","2018","2020","2023"], a:2,
+ src:"BPS, Sensus Penduduk 2020",
+ e:"SP2020 dilaksanakan September 2020 — pertama kali menggunakan metode combine (data registrasi + lapangan). Sebelumnya: SP1971, 1980, 1990, 2000, 2010. Sensus berikutnya dijadwalkan 2030."},
+
+{id:55, cat:"konsep", q:"Proyeksi penduduk BPS 2020–2050 menggunakan metode...",
+ o:["Metode aritmatik sederhana","Metode komponen (kelahiran, kematian, migrasi)","Metode regresi linier","Metode sensus langsung tahunan"], a:1,
+ src:"BPS, Metodologi Proyeksi Penduduk Indonesia 2020–2050",
+ e:"Proyeksi komponen memproyeksikan setiap komponen pertumbuhan (fertilitas, mortalitas, migrasi) secara terpisah, lalu mengintegrasikannya. Lebih akurat dari metode aritmatik/geometrik yang hanya berdasar tren historis."},
+
+/* ── 56-70: HITUNGAN & ANALISIS ── */
+{id:56, cat:"hitungan", q:"Jika penduduk suatu kota berjumlah 2.400.000 jiwa dan luas wilayahnya 1.200 km², berapa kepadatan penduduknya?",
+ o:["200 jiwa/km²","2.000 jiwa/km²","20.000 jiwa/km²","200.000 jiwa/km²"], a:1,
+ src:"Rumus Kepadatan Penduduk Kasar",
+ e:"Kepadatan = 2.400.000 ÷ 1.200 = 2.000 jiwa/km². Ini termasuk kategori sangat padat (>1.000 jiwa/km²), setingkat Jawa Barat. Jakarta hampir 9 kali lebih padat dari ini."},
+
+{id:57, cat:"hitungan", q:"Penduduk Kota A tahun 2020 adalah 500.000 jiwa. Pada 2025, jumlahnya 545.000 jiwa. Berapa laju pertumbuhan geometriknya per tahun?",
+ o:["0,89%/tahun","1,74%/tahun","1,89%/tahun","9,00%/tahun"], a:1,
+ src:"Rumus Laju Pertumbuhan Penduduk Geometrik BPS",
+ e:"r = (Pt/P₀)^(1/t) − 1 = (545.000/500.000)^(1/5) − 1 = (1,09)^0,2 − 1 = 1,01740 − 1 = 0,0174 = 1,74%/tahun. Kota A bertumbuh lebih cepat dari rata-rata nasional (0,99%/tahun)."},
+
+{id:58, cat:"hitungan", q:"Jika dalam setahun terdapat 350 kelahiran hidup per 100.000 penduduk, berapa nilai CBR-nya?",
+ o:["0,35 per 1.000","3,5 per 1.000","35 per 1.000","350 per 1.000"], a:1,
+ src:"Rumus Crude Birth Rate",
+ e:"CBR = (kelahiran / penduduk) × 1.000 = (350 / 100.000) × 1.000 = 3,5 per 1.000. Ini termasuk sangat rendah (< 10 per 1.000). Untuk konteks: CBR Indonesia ≈ 18,2 per 1.000 (2023)."},
+
+{id:59, cat:"hitungan", q:"Penduduk usia tidak produktif (0–14 dan 65+) berjumlah 90 juta jiwa dari total 270 juta jiwa. Berapa Rasio Ketergantungannya?",
+ o:["25","33","50","90"], a:2,
+ src:"Rumus Rasio Ketergantungan (Dependency Ratio)",
+ e:"Penduduk produktif (15–64) = 270 − 90 = 180 juta jiwa. DR = (90/180) × 100 = 50. Artinya setiap 100 orang produktif menanggung 50 orang tidak produktif — lebih tinggi dari rata-rata Indonesia 2026 (~45)."},
+
+{id:60, cat:"hitungan", q:"Kota B memiliki 8.500 kelahiran dan 3.200 kematian, serta 4.000 pendatang dan 1.500 yang pindah keluar dalam setahun. Pertumbuhan penduduknya adalah...",
+ o:["5.300 jiwa","7.800 jiwa","8.000 jiwa","11.500 jiwa"], a:1,
+ src:"Rumus Pertumbuhan Penduduk Total",
+ e:"P = (L − M) + (I − E) = (8.500 − 3.200) + (4.000 − 1.500) = 5.300 + 2.500 = 7.800 jiwa. Pertumbuhan alami 5.300 + migrasi neto 2.500 = total 7.800 jiwa."},
+
+{id:61, cat:"hitungan", q:"Jika CBR = 25 per 1.000 dan CDR = 8 per 1.000, maka pertumbuhan alami per 1.000 penduduk adalah...",
+ o:["8 per 1.000","17 per 1.000","25 per 1.000","33 per 1.000"], a:1,
+ src:"Rumus Pertumbuhan Alami Penduduk",
+ e:"Pertumbuhan alami = CBR − CDR = 25 − 8 = 17 per 1.000 penduduk. Dalam persentase = 1,7% per tahun. Ini cukup tinggi; Indonesia saat ini ≈ 1,16% (CBR 18,2 − CDR 7,0)."},
+
+{id:62, cat:"hitungan", q:"Suatu provinsi memiliki 3.000.000 jiwa penduduk, dengan 60% usia 15–64 tahun, 30% usia 0–14 tahun, dan 10% usia 65+. Berapa Rasio Ketergantungannya?",
+ o:["40","50","66,7","100"], a:2,
+ src:"Rumus Rasio Ketergantungan",
+ e:"Produktif (15–64) = 60% × 3 juta = 1,8 juta. Tidak produktif = (30% + 10%) × 3 juta = 1,2 juta. DR = (1,2/1,8) × 100 = 66,7. Tergolong cukup tinggi, menunjukkan beban tanggungan yang besar."},
+
+{id:63, cat:"hitungan", q:"Kota X memiliki kepadatan 5.000 jiwa/km² dan luas 200 km². Berapa jumlah penduduknya?",
+ o:["100.000 jiwa","500.000 jiwa","1.000.000 jiwa","5.000.000 jiwa"], a:2,
+ src:"Rumus Kepadatan Penduduk (dibalik)",
+ e:"Penduduk = Kepadatan × Luas = 5.000 × 200 = 1.000.000 jiwa = 1 juta jiwa. Kepadatan 5.000 jiwa/km² termasuk sangat padat, setara dengan bagian-bagian padat kota Jakarta."},
+
+{id:64, cat:"hitungan", q:"Jika rasio jenis kelamin suatu provinsi adalah 105, dan total penduduknya 4.200.000 jiwa, berapa perkiraan jumlah perempuannya?",
+ o:["1.895.238 jiwa","2.000.000 jiwa","2.048.780 jiwa","2.205.000 jiwa"], a:2,
+ src:"Rumus Rasio Jenis Kelamin",
+ e:"SR = L/P × 100, jadi L = 1,05P. Total = L + P = 1,05P + P = 2,05P = 4.200.000. P = 4.200.000/2,05 ≈ 2.048.780 jiwa perempuan. Laki-laki ≈ 4.200.000 − 2.048.780 = 2.151.220 jiwa."},
+
+{id:65, cat:"hitungan", q:"Penduduk wilayah Z pada 2020 adalah 2.000.000 jiwa dengan laju pertumbuhan 2%/tahun. Proyeksi tahun 2025 adalah...",
+ o:["2.100.000 jiwa","2.200.000 jiwa","2.208.162 jiwa","2.400.000 jiwa"], a:2,
+ src:"Rumus Proyeksi Penduduk Geometrik",
+ e:"Pt = P₀(1+r)^t = 2.000.000 × (1,02)^5 = 2.000.000 × 1,10408 = 2.208.162 jiwa. Beda dengan aritmatik: 2.000.000 × (1 + 0,02×5) = 2.200.000 jiwa."},
+
+/* ── 66-80: KEBIJAKAN & KONTEKS GEOGRAFI ── */
+{id:66, cat:"kebijakan", q:"Pemindahan Ibu Kota Negara ke Nusantara di Kalimantan Timur bertujuan utama untuk...",
+ o:["Mengurangi pengeluaran negara secara drastis","Mengurangi konsentrasi penduduk di Jawa yang mencapai 56% dari total nasional","Meningkatkan produksi batu bara Kalimantan","Memenuhi syarat internasional sebagai negara maju"], a:1,
+ src:"Undang-Undang Nomor 3 Tahun 2022 tentang IKN",
+ e:"IKN Nusantara ditujukan untuk redistribusi pembangunan dan pemerataan pertumbuhan ekonomi, mengurangi beban Jawa yang menampung 56% penduduk dalam 7% luas wilayah. Ini juga mendukung kebijakan pemerataan kependudukan nasional."},
+
+{id:67, cat:"kebijakan", q:"Papua dimekarkan dari 2 menjadi 6 provinsi pada 2022. Urutan yang BENAR dari provinsi-provinsi baru Papua adalah...",
+ o:["Papua, Papua Barat, Papua Tengah, Papua Selatan, Papua Pegunungan, Papua Barat Daya","Papua, Papua Selatan, Papua Tengah, Papua Pegunungan, Papua Barat, Papua Barat Daya","Semua enam sama saja","Papua Timur, Papua Barat, Papua Tengah, Papua Selatan, Papua Utara, Papua Barat Daya"], a:0,
+ src:"UU No. 14–18/2022 tentang Pembentukan Provinsi Papua Selatan, Papua Tengah, Papua Pegunungan, Papua Barat Daya",
+ e:"Enam provinsi Papua: 1) Papua (ibukota Jayapura), 2) Papua Barat (Manokwari), 3) Papua Tengah (Nabire), 4) Papua Selatan (Merauke), 5) Papua Pegunungan (Wamena), 6) Papua Barat Daya (Sorong). Dimekarkan melalui 4 UU pada 2022."},
+
+{id:68, cat:"kebijakan", q:"Program Keluarga Berencana (KB) di Indonesia diluncurkan secara resmi pada tahun...",
+ o:["1952","1965","1970","1978"], a:2,
+ src:"BKKBN, Sejarah Program Keluarga Berencana Indonesia",
+ e:"Program KB nasional secara formal dimulai pada 1970 melalui BKKBN. Berhasil menurunkan TFR dari 5,6 (1970) menjadi 2,14 (2026). Target: mencapai replacement level (2,1) dan mengelola transisi menuju bonus demografi."},
+
+{id:69, cat:"kebijakan", q:"Ketentuan luas wilayah provinsi yang digunakan BPS dalam menghitung kepadatan penduduk 2026 bersumber dari...",
+ o:["BPS Sensus Penduduk 2020","Keputusan Menteri Dalam Negeri Nomor 100.1.1-6117 Tahun 2022","Peraturan Presiden 2019","Undang-Undang IKN 2022"], a:1,
+ src:"BPS, Catatan Tabel Penduduk Menurut Provinsi 2026",
+ e:"BPS mencantumkan dalam catatan kaki tabelnya bahwa luas provinsi berdasarkan Keputusan Menteri Dalam Negeri Nomor 100.1.1-6117 Tahun 2022 tanggal 9 November 2022 — dokumen resmi penetapan luas wilayah administrasi."},
+
+{id:70, cat:"kebijakan", q:"Program TRANSMIGRASI di Indonesia bertujuan untuk...",
+ o:["Memindahkan tenaga kerja ke luar negeri","Redistribusi penduduk dari pulau padat (Jawa, Bali) ke pulau kurang padat (Sumatra, Kalimantan, Sulawesi, Papua)","Meningkatkan urbanisasi di kota-kota besar","Mempercepat pertumbuhan penduduk di Papua"], a:1,
+ src:"Kementerian Desa dan Transmigrasi RI",
+ e:"Transmigrasi adalah program redistribusi penduduk dari daerah padat ke kurang padat, dimulai era kolonial Belanda (1905) dan dilanjutkan RI. Puncak 1979–1984 merelokasi 1,5 juta KK. Kini diteruskan sebagai Transmigrasi 4.0 berbasis klaster."},
+
+{id:71, cat:"kebijakan", q:"'Sensus de Jure' yang digunakan BPS mencacah penduduk berdasarkan...",
+ o:["Tempat mereka berada saat pencacahan","Tempat mereka biasa tinggal (domisili tetap)","Tempat kelahiran mereka","Tempat kerja mereka"], a:1,
+ src:"BPS, Metodologi Sensus Penduduk 2020",
+ e:"Sensus de jure mencacah penduduk di tempat domisili tetap/biasanya. Beda dengan de facto yang mencacah di tempat berada saat sensus. Indonesia menggunakan de jure — termasuk mereka yang sedang bepergian 1 tahun atau lebih dicacah di tempat domisili baru."},
+
+{id:72, cat:"kebijakan", q:"Indikator SDG (Sustainable Development Goals) terkait kependudukan mencakup target...",
+ o:["Menghentikan semua pertumbuhan penduduk dunia pada 2030","Mengurangi angka kematian ibu menjadi < 70 per 100.000 kelahiran hidup pada 2030","Memindahkan semua penduduk kota ke desa","Membatasi angka kelahiran maksimum 1 anak per keluarga"], a:1,
+ src:"PBB, Sustainable Development Goals (SDGs), Goal 3",
+ e:"SDG Goal 3 (Kehidupan Sehat) menargetkan Angka Kematian Ibu (AKI) < 70 per 100.000 KH pada 2030. Indonesia: AKI 183 per 100.000 KH (2023), masih perlu upaya signifikan. Target juga mencakup IMR < 25 dan neonatal < 12 per 1.000 KH."},
+
+{id:73, cat:"kebijakan", q:"Hukum Permendagri yang mendasari penetapan luas wilayah dalam penghitungan kepadatan BPS terbaru adalah...",
+ o:["Permendagri 2019","Keputusan Mendagri No. 100.1.1-6117 Tahun 2022","UU No. 23 Tahun 2014","Perpres No. 78 Tahun 2005"], a:1,
+ src:"BPS, Catatan kaki Tabel Penduduk per Provinsi 2026",
+ e:"BPS secara eksplisit mencantumkan: 'Luas provinsi berdasarkan Keputusan Menteri Dalam Negeri Nomor 100.1.1-6117 Tahun 2022 tanggal 9 November 2022' sebagai acuan luas wilayah untuk penghitungan kepadatan penduduk."},
+
+{id:74, cat:"kebijakan", q:"Fenomena 'aging population' di Indonesia ditunjukkan oleh...",
+ o:["Menurunnya jumlah anak-anak dan meningkatnya proporsi lansia","Menurunnya jumlah lansia akibat meningkatnya AHH","Meningkatnya TFR di atas 3,0","Berkurangnya migrasi tenaga kerja"], a:0,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050",
+ e:"Aging population: proporsi penduduk lansia (65+) terus meningkat — dari ~5% (2020) menuju ~11% (2045). Ini terjadi bersamaan dengan penurunan TFR dan peningkatan AHH. Menuntut reformasi jaminan sosial dan sistem kesehatan."},
+
+{id:75, cat:"kebijakan", q:"Mengapa data BPS (Proyeksi SP2020) berbeda dengan data Dukcapil Kemendagri?",
+ o:["Karena BPS menggunakan sensus langsung, Dukcapil menggunakan proyeksi","BPS menggunakan proyeksi statistik, Dukcapil menggunakan data administrasi registrasi penduduk","BPS menghitung hanya WNI, Dukcapil termasuk WNA","Keduanya sama, hanya berbeda format penyajian"], a:1,
+ src:"BPS, Perbedaan Data Proyeksi vs Administrasi Kependudukan",
+ e:"BPS menggunakan proyeksi berbasis SP2020 dengan metode komponen (fertilitas, mortalitas, migrasi). Dukcapil menggunakan data administrasi dari Kartu Keluarga dan KTP-el yang mencerminkan penduduk terdaftar, bukan proyeksi statistik."},
+
+/* ── 76-85: PROVINSI LANJUTAN ── */
+{id:76, cat:"provinsi", q:"Berdasarkan BPS 2026, kepadatan penduduk Banten adalah...",
+ o:["876 jiwa/km²","1.023 jiwa/km²","1.331 jiwa/km²","1.654 jibu/km²"], a:2,
+ src:"BPS, Proyeksi Penduduk 2026; Luas Banten = 9.663 km²",
+ e:"Banten: ~12.870 ribu jiwa ÷ 9.663 km² ≈ 1.331 jiwa/km². Kepadatan tinggi akibat suburbanisasi Jakarta dan kawasan industri di Tangerang Raya. Memiliki Bandara Internasional Soekarno-Hatta."},
+
+{id:77, cat:"provinsi", q:"Berdasarkan BPS 2026, laju pertumbuhan penduduk DI Yogyakarta adalah...",
+ o:["0,52%/tahun","0,79%/tahun","1,15%/tahun","1,48%/tahun"], a:1,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"DIY 0,79%/tahun — di bawah rata-rata nasional, mencerminkan kestabilan demografis. DIY adalah 'kota pelajar' yang menarik mahasiswa dari seluruh Indonesia, namun banyak yang kembali ke daerah asal setelah lulus."},
+
+{id:78, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Kepulauan Riau (ribu jiwa) adalah...",
+ o:["1.874,3","2.303,0","2.352,5","2.678,4"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Kepulauan Riau 2026",
+ e:"Kepri diproyeksikan ~2.352,5 ribu jiwa pada 2026. Laju pertumbuhan 2,09%/tahun — tinggi karena Batam sebagai kawasan industri dan FTZ terus menarik pekerja dari berbagai provinsi."},
+
+{id:79, cat:"provinsi", q:"Berdasarkan BPS 2026, rasio jenis kelamin Sulawesi Selatan adalah...",
+ o:["93","95","97","101"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Sulawesi Selatan memiliki rasio JK 97 — artinya penduduk perempuan lebih banyak dari laki-laki (< 100). Ini umum terjadi di provinsi dengan tingkat migrasi laki-laki keluar yang tinggi (merantau)."},
+
+{id:80, cat:"provinsi", q:"Berdasarkan BPS 2026, provinsi Gorontalo diproyeksikan berpenduduk...",
+ o:["987,5 ribu jiwa","1.175,0 ribu jiwa","1.199,2 ribu jiwa","1.456,3 ribu jiwa"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Gorontalo 2026",
+ e:"Gorontalo diproyeksikan ~1.199,2 ribu jiwa pada 2026 — provinsi terkecil di Sulawesi. Laju pertumbuhan 1,02%/tahun. Luas 11.257 km² menghasilkan kepadatan ~107 jiwa/km²."},
+
+{id:81, cat:"provinsi", q:"Berdasarkan BPS 2026, jumlah penduduk Kalimantan Barat (ribu jiwa) diproyeksikan...",
+ o:["4.987,4","5.481,0","5.564,8","6.123,7"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Kalimantan Barat 2026",
+ e:"Kalimantan Barat diproyeksikan ~5.564,8 ribu jiwa pada 2026. Laju pertumbuhan 1,44%/tahun. Pontianak, ibukotanya, dilalui garis khatulistiwa dan memiliki Tugu Khatulistiwa sebagai ikon kota."},
+
+{id:82, cat:"provinsi", q:"Berdasarkan BPS 2026, laju pertumbuhan Kepulauan Riau yang 2,09%/tahun terutama disebabkan oleh...",
+ o:["Angka kelahiran yang sangat tinggi","Migrasi tenaga kerja ke kawasan industri Batam dan sekitarnya","Penurunan angka kematian yang drastis","Tingginya kembalinya diaspora ke Kepri"], a:1,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Kepri memiliki laju pertumbuhan tinggi (2,09%) karena arus migrasi masuk yang besar ke Batam sebagai Free Trade Zone dan kawasan industri. Ini mencerminkan pola yang sama dengan Kaltim (IKN) dan Kaltara (perbatasan)."},
+
+{id:83, cat:"provinsi", q:"Berdasarkan BPS 2026, provinsi Papua Barat Daya berpenduduk...",
+ o:["312,7 ribu jiwa","519,0 ribu jiwa","531,5 ribu jiwa","723,8 ribu jiwa"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Papua Barat Daya 2026",
+ e:"Papua Barat Daya (PBD) diproyeksikan ~531,5 ribu jiwa pada 2026. Provinsi terbaru Papua ini (2022) berpusat di Sorong — hub barat Papua. Mencakup Raja Ampat dengan biodiversitas laut tertinggi di bumi."},
+
+{id:84, cat:"provinsi", q:"Berdasarkan BPS 2026, Sumatera Barat memiliki rasio jenis kelamin...",
+ o:["94","96","98","102"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Sumatera Barat: rasio JK 98 — sedikit lebih banyak perempuan. Ini mencerminkan tradisi merantau (migrasi keluar) laki-laki Minangkabau yang kuat, meninggalkan lebih banyak perempuan di kampung halaman."},
+
+{id:85, cat:"provinsi", q:"Berdasarkan BPS 2026, kepadatan penduduk Papua Pegunungan adalah...",
+ o:["9 jiwa/km²","19 jiwa/km²","29 jiwa/km²","39 jiwa/km²"], a:1,
+ src:"BPS, Proyeksi Penduduk 2026; Luas Papua Pegunungan = 67.296 km²",
+ e:"Papua Pegunungan: ~1.209 ribu jiwa ÷ 67.296 km² ≈ 19 jiwa/km² — sangat jarang. Medan pegunungan ekstrem (Lembah Baliem, Puncak Jaya 4.884 m) menjadi tantangan utama pembangunan."},
+
+/* ── 86-100: CAMPURAN LANJUTAN ── */
+{id:86, cat:"data", q:"Berdasarkan BPS 2026, jumlah penduduk Jawa Tengah (ribu jiwa) diproyeksikan...",
+ o:["35.948,7","36.731,0","37.063,5","37.945,2"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Jawa Tengah 2026",
+ e:"Jawa Tengah diproyeksikan ~37.063,5 ribu jiwa pada 2026. Laju pertumbuhan rendah (0,65%/tahun) mencerminkan kestabilan demografis dan tingginya migrasi keluar terutama ke Jakarta dan Kalimantan."},
+
+{id:87, cat:"data", q:"Berdasarkan BPS 2026, jumlah penduduk Riau (ribu jiwa) diproyeksikan...",
+ o:["6.347,8","6.994,0","7.117,5","7.489,3"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Provinsi Riau 2026",
+ e:"Riau diproyeksikan ~7.117,5 ribu jiwa pada 2026. Laju pertumbuhan 1,71%/tahun — di atas rata-rata, didorong migrasi ke Pekanbaru dan kawasan perkebunan kelapa sawit."},
+
+{id:88, cat:"konsep", q:"Apa yang dimaksud dengan 'komutasi' dalam konteks mobilitas penduduk?",
+ o:["Perpindahan permanen antar provinsi","Perpindahan harian pulang-pergi (ulang alik) tanpa ganti tempat tinggal","Perpindahan musiman selama panen","Perpindahan antar negara"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Mobilitas Penduduk",
+ e:"Komutasi (commuting) = mobilitas harian pulang-pergi antara tempat tinggal dan tempat kerja/sekolah tanpa berpindah domisili. Contoh: warga Bekasi bekerja di Jakarta. Berbeda dari migrasi yang mengubah domisili."},
+
+{id:89, cat:"hitungan", q:"Penduduk Provinsi X tahun 2020: 3.000.000 jiwa. Jika laju pertumbuhan geometrik 1,5%/tahun, proyeksi tahun 2026 adalah...",
+ o:["3.270.000 jiwa","3.278.328 jiwa","3.285.000 jiwa","3.300.000 jiwa"], a:1,
+ src:"Rumus Proyeksi Penduduk Geometrik",
+ e:"Pt = 3.000.000 × (1,015)^6 = 3.000.000 × 1,09344 = 3.280.320 jiwa ≈ 3.278.328 jiwa. Ini lebih tepat dengan (1,015)^6 = 1,093443... Hasil geometrik berbeda dari aritmatik sederhana 3.000.000 × 1,09 = 3.270.000."},
+
+{id:90, cat:"umur", q:"Berdasarkan BPS 2023, kelompok umur 30–34 tahun di Indonesia berjumlah...",
+ o:["18.752,4 ribu jiwa","20.904,2 ribu jiwa","22.435,7 ribu jiwa","24.187,3 ribu jiwa"], a:1,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok 30–34 tahun berjumlah 20.904,2 ribu jiwa pada 2023. Ini adalah generasi yang lahir 1989–1993, termasuk sebagian besar Generasi Milenial. Kelompok ini mulai berada di puncak produktivitas ekonomi."},
+
+{id:91, cat:"konsep", q:"Konsep 'angka migrasi masuk seumur hidup' (lifetime in-migration rate) menunjukkan...",
+ o:["Jumlah total migran yang masuk dalam setahun","Proporsi penduduk yang lahir di daerah lain dari tempat tinggal saat sensus","Laju migrasi dalam 5 tahun terakhir","Jumlah kumulatif migran sejak kemerdekaan"], a:1,
+ src:"BPS, Konsep dan Definisi Statistik Migrasi",
+ e:"Migrasi seumur hidup diukur dari perbedaan tempat lahir dengan tempat tinggal saat sensus. Jika seseorang lahir di Jawa Tengah tetapi saat sensus tinggal di Jakarta, ia dihitung sebagai migran seumur hidup ke DKI Jakarta."},
+
+{id:92, cat:"kebijakan", q:"Indonesia menargetkan 'Indonesia Emas 2045' yang berkaitan dengan bonus demografi. Tahun 2045 dipilih karena...",
+ o:["Saat itu Indonesia genap 100 tahun merdeka","Proyeksi populasi mencapai 400 juta jiwa","Semua hutang luar negeri akan lunas","Kepala negara pertama Indonesia meninggal 100 tahun lalu"], a:0,
+ src:"Bappenas, Dokumen RPJPN 2025–2045",
+ e:"2045 adalah tepat 100 tahun kemerdekaan Indonesia (17 Agustus 1945 → 2045). Pemerintah menargetkan Indonesia menjadi negara berpenghasilan tinggi (upper-income country) dengan PDB per kapita >13.000 USD, memanfaatkan bonus demografi."},
+
+{id:93, cat:"provinsi", q:"Berdasarkan BPS 2026, laju pertumbuhan penduduk Papua Tengah adalah...",
+ o:["1,35%/tahun","1,54%/tahun","1,69%/tahun","1,92%/tahun"], a:2,
+ src:"BPS, Proyeksi Penduduk per Provinsi 2026",
+ e:"Papua Tengah mencatat laju 1,69%/tahun — di atas nasional. Mimika (Freeport) menjadi magnet ekonomi yang menarik pendatang. Pembangunan infrastruktur jalan Trans-Papua turut mendorong pertumbuhan."},
+
+{id:94, cat:"data", q:"Berdasarkan BPS 2026, jumlah penduduk Sulawesi Tengah (ribu jiwa) diproyeksikan...",
+ o:["2.789,4","3.028,0","3.083,0","3.415,7"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Sulawesi Tengah 2026",
+ e:"Sulawesi Tengah diproyeksikan ~3.083,0 ribu jiwa pada 2026. Laju pertumbuhan 1,59%/tahun, didorong industri nikel Morowali yang menarik migrasi tenaga kerja besar. Palu (ibukota) sedang dalam rekonstruksi pasca gempa 2018."},
+
+{id:95, cat:"konsep", q:"Angka Kematian Ibu (AKI) Indonesia tahun 2023 menurut SUPAS dan publikasi terkait adalah...",
+ o:["92 per 100.000 kelahiran hidup","183 per 100.000 kelahiran hidup","247 per 100.000 kelahiran hidup","389 per 100.000 kelahiran hidup"], a:1,
+ src:"Kemenkes RI, Profil Kesehatan Indonesia 2023",
+ e:"AKI Indonesia 2023 ≈ 183 per 100.000 kelahiran hidup — masih jauh dari target SDG (<70) dan target nasional (183). Penyebab utama: perdarahan, hipertensi kehamilan, dan infeksi. Lebih tinggi dari negara-negara ASEAN seperti Thailand dan Malaysia."},
+
+{id:96, cat:"hitungan", q:"Jika Provinsi A memiliki penduduk 8.000.000 jiwa dari total nasional 284.830.000 jiwa, berapa distribusi persentasenya?",
+ o:["2,57%","2,81%","3,15%","3,47%"], a:1,
+ src:"Rumus Distribusi Persentase Penduduk BPS",
+ e:"Distribusi % = (8.000.000 / 284.830.000) × 100 = 2,81%. BPS menggunakan angka ini dalam kolom 'Distribusi Persentase' tabel kependudukan per provinsi."},
+
+{id:97, cat:"umur", q:"Berdasarkan BPS 2023, kelompok umur 15–19 tahun di Indonesia berjumlah...",
+ o:["19.234,7 ribu jiwa","21.398,5 ribu jiwa","23.052,1 ribu jiwa","25.347,8 ribu jiwa"], a:2,
+ src:"BPS, Jumlah Penduduk Menurut Kelompok Umur dan Jenis Kelamin, 2023",
+ e:"Kelompok 15–19 tahun berjumlah 23.052,1 ribu jiwa pada 2023. Kelompok ini merupakan lulusan SMA/sederajat yang akan segera masuk pasar kerja atau perguruan tinggi — kritis untuk kualitas SDM bonus demografi."},
+
+{id:98, cat:"kebijakan", q:"Sensus Penduduk 2020 (SP2020) berbeda dari sensus sebelumnya karena...",
+ o:["Dilakukan setiap 5 tahun sekali","Menggunakan metode kombinasi data registrasi administrasi dan verifikasi lapangan (combine method)","Hanya mencacah penduduk perkotaan","Menggunakan wawancara via telepon sepenuhnya"], a:1,
+ src:"BPS, Metodologi Sensus Penduduk 2020",
+ e:"SP2020 adalah pertama kali BPS menggunakan metode kombinasi: data registrasi (SIAK Dukcapil) sebagai kerangka awal, lalu diverifikasi dan dilengkapi melalui pencacahan lapangan. Lebih efisien dan akurat dari metode tradisional."},
+
+{id:99, cat:"data", q:"Berdasarkan BPS 2026, jumlah penduduk Sulawesi Tenggara (ribu jiwa) diproyeksikan...",
+ o:["2.394,7","2.682,0","2.723,7","3.012,5"], a:2,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050 (SP2020), Sulawesi Tenggara 2026",
+ e:"Sulawesi Tenggara diproyeksikan ~2.723,7 ribu jiwa pada 2026. Ibukota Kendari berkembang pesat sebagai pusat pelayanan KTI. Wakatobi menjadi destinasi wisata bahari bertaraf internasional."},
+
+{id:100, cat:"konsep", q:"Pernyataan yang PALING TEPAT menggambarkan kondisi kependudukan Indonesia berdasarkan proyeksi BPS 2026 adalah...",
+ o:["Indonesia masih dalam tahap awal transisi demografi dengan TFR tinggi","Indonesia dalam fase transisi demografi lanjut — TFR mendekati replacement level, AHH meningkat, dan sedang menikmati fase bonus demografi","Penduduk Indonesia menurun karena TFR di bawah replacement level","Indonesia telah melewati puncak bonus demografi sejak 2010"], a:1,
+ src:"BPS, Proyeksi Penduduk Indonesia 2020–2050; Bappenas, RPJPN 2025–2045",
+ e:"Indonesia kini dalam transisi demografi lanjut: TFR ≈ 2,14 (mendekati replacement level 2,1), AHH 73,6 tahun, usia median 30,2 tahun. Bonus demografi sedang berjalan, diprediksi puncak 2030–2035 dengan DR terendah ~44. Jendela peluang yang harus dioptimalkan."},
 ];
 
 /* ═══════════════════════════════
-   COMPUTED FIELDS
+   CATEGORY STYLES
 ═══════════════════════════════ */
-PROVS.forEach(p => {
-  p.density = Math.round(p.pop / p.luas);
-  p.share   = (p.pop / NAT_POP * 100);
-  p.rank    = 0;
-});
-const SORTED = [...PROVS].sort((a,b) => b.pop - a.pop);
-SORTED.forEach((p,i) => p.rank = i+1);
-
-/* ═══════════════════════════════
-   COLOR MODES
-═══════════════════════════════ */
-let mode = 'density';
-
-const MODES = {
-  density: {
-    label:'Kepadatan Penduduk (jiwa/km²)',
-    fn(p){
-      const d = p.density;
-      if(d>=5000) return '#7F1D1D';
-      if(d>=1000) return '#DC2626';
-      if(d>=200)  return '#F97316';
-      if(d>=50)   return '#FBBF24';
-      if(d>=10)   return '#86EFAC';
-      return '#BAE6FD';
-    },
-    legend:[
-      {c:'#7F1D1D',l:'≥ 5.000'},
-      {c:'#DC2626',l:'1.000 – 4.999'},
-      {c:'#F97316',l:'200 – 999'},
-      {c:'#FBBF24',l:'50 – 199'},
-      {c:'#86EFAC',l:'10 – 49'},
-      {c:'#BAE6FD',l:'< 10 jiwa/km²'},
-    ]
-  },
-  pop: {
-    label:'Jumlah Penduduk (BPS 2025)',
-    fn(p){
-      const n = p.pop;
-      if(n>=30e6) return '#3B0764';
-      if(n>=10e6) return '#6D28D9';
-      if(n>=5e6)  return '#7C3AED';
-      if(n>=2e6)  return '#A78BFA';
-      if(n>=1e6)  return '#C4B5FD';
-      return '#EDE9FE';
-    },
-    legend:[
-      {c:'#3B0764',l:'≥ 30 Juta'},
-      {c:'#6D28D9',l:'10 – 29,9 Juta'},
-      {c:'#7C3AED',l:'5 – 9,9 Juta'},
-      {c:'#A78BFA',l:'2 – 4,9 Juta'},
-      {c:'#C4B5FD',l:'1 – 1,9 Juta'},
-      {c:'#EDE9FE',l:'< 1 Juta jiwa'},
-    ]
-  },
-  growth: {
-    label:'Laju Pertumbuhan 2020–2025 (%/th)',
-    fn(p){
-      const g = p.grow;
-      if(g>=2.5)  return '#064E3B';
-      if(g>=2.0)  return '#065F46';
-      if(g>=1.5)  return '#059669';
-      if(g>=1.0)  return '#34D399';
-      if(g>=0.5)  return '#A7F3D0';
-      return '#D1FAE5';
-    },
-    legend:[
-      {c:'#064E3B',l:'≥ 2,5%/th'},
-      {c:'#065F46',l:'2,0 – 2,49%'},
-      {c:'#059669',l:'1,5 – 1,99%'},
-      {c:'#34D399',l:'1,0 – 1,49%'},
-      {c:'#A7F3D0',l:'0,5 – 0,99%'},
-      {c:'#D1FAE5',l:'< 0,5%/th'},
-    ]
-  },
-  sex: {
-    label:'Rasio Jenis Kelamin (L per 100 P)',
-    fn(p){
-      const s = p.sex;
-      if(s>=107)  return '#1D4ED8';
-      if(s>=104)  return '#3B82F6';
-      if(s>=101)  return '#93C5FD';
-      if(s===100) return '#E5E7EB';
-      if(s>=97)   return '#FCA5A5';
-      return '#DC2626';
-    },
-    legend:[
-      {c:'#1D4ED8',l:'≥ 107 (♂ jauh lebih banyak)'},
-      {c:'#3B82F6',l:'104 – 106'},
-      {c:'#93C5FD',l:'101 – 103'},
-      {c:'#E5E7EB',l:'100 (seimbang)'},
-      {c:'#FCA5A5',l:'97 – 99'},
-      {c:'#DC2626',l:'< 97 (♀ lebih banyak)'},
-    ]
-  }
+const CAT_INFO = {
+  data:      { label:'📊 Data BPS',         cls:'cat-data' },
+  konsep:    { label:'💡 Konsep',           cls:'cat-konsep' },
+  provinsi:  { label:'🗺️ Provinsi',         cls:'cat-provinsi' },
+  hitungan:  { label:'🔢 Hitungan',         cls:'cat-hitungan' },
+  umur:      { label:'👶 Kelompok Umur',    cls:'cat-umur' },
+  kebijakan: { label:'📋 Kebijakan',        cls:'cat-kebijakan' },
 };
 
 /* ═══════════════════════════════
-   SVG MAP ENGINE
-   Equirectangular projection
-   ViewBox: 0 0 1000 380
-   Lon: 94.5→141.5, Lat: 6.5→-11
+   UTILITIES
 ═══════════════════════════════ */
-const LON0=94.5, LAT0=6.5, SCL=21.28;
-
-function px(lon, lat){ return `${((lon-LON0)*SCL).toFixed(1)},${((LAT0-lat)*SCL).toFixed(1)}`; }
-function toPath(geo){ return geo.map((c,i)=>`${i?'L':'M'}${px(c[0],c[1])}`).join(' ')+'Z'; }
-function centroid(geo){
-  const n=geo.length-1; let sx=0,sy=0;
-  for(let i=0;i<n;i++){sx+=(geo[i][0]-LON0)*SCL; sy+=(LAT0-geo[i][1])*SCL;}
-  return [sx/n, sy/n];
-}
-function abbrev(n){
-  return n.replace('Sumatera ','Sum.')
-    .replace('Kalimantan ','Kal.')
-    .replace('Sulawesi ','Sul.')
-    .replace('Papua Barat Daya','PBD')
-    .replace('Papua Barat','P.Barat')
-    .replace('Papua Tengah','P.Tgh')
-    .replace('Papua Pegunungan','P.Peg')
-    .replace('Papua Selatan','P.Sel')
-    .replace('DKI Jakarta','Jakarta')
-    .replace('DI Yogyakarta','DIY')
-    .replace('Kepulauan Riau','Kepri')
-    .replace('Bangka Belitung','Babel')
-    .replace('Kalimantan Utara','Kaltara');
+function shuffle(arr) {
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
 }
 
-function svgEl(tag){ return document.createElementNS('http://www.w3.org/2000/svg',tag); }
+function getGrade(score, total) {
+  const pct = score/total*100;
+  if(pct>=90) return {label:'A (Sangat Baik)',cls:'grade-a',trophy:'🏆'};
+  if(pct>=75) return {label:'B (Baik)',cls:'grade-b',trophy:'🥈'};
+  if(pct>=60) return {label:'C (Cukup)',cls:'grade-c',trophy:'🥉'};
+  return {label:'D (Perlu Belajar)',cls:'grade-d',trophy:'📚'};
+}
 
-function buildMap(){
-  const fg = document.getElementById('provG');
-  const lg = document.getElementById('lblG');
-  fg.innerHTML=''; lg.innerHTML='';
+function show(id) {
+  ['homeScreen','practiceScreen','resultScreen','examScreen','examResultScreen']
+    .forEach(s=>document.getElementById(s).style.display='none');
+  document.getElementById(id).style.display='';
+}
 
-  PROVS.forEach(p => {
-    const path = svgEl('path');
-    path.setAttribute('d', toPath(p.geo));
-    path.setAttribute('class','pr');
-    path.setAttribute('fill', MODES[mode].fn(p));
-    path.dataset.id = p.id;
-    path.addEventListener('mousemove', onMove);
-    path.addEventListener('mouseleave', offHover);
-    path.addEventListener('click', onClick);
-    fg.appendChild(path);
+function goHome() {
+  if(examMode) { stopExam(); return; }
+  show('homeScreen');
+  resetState();
+}
 
-    // Label
-    const [cx,cy] = centroid(p.geo);
-    const short = abbrev(p.name);
-    const fs = p.luas>120000 ? 8 : p.luas>50000 ? 7 : p.luas>15000 ? 6.5 : 6;
-    const t = svgEl('text');
-    t.setAttribute('x',cx); t.setAttribute('y',cy);
-    t.setAttribute('class','plbl');
-    t.setAttribute('font-size',fs);
-    t.textContent = short;
-    lg.appendChild(t);
+/* ═══════════════════════════════
+   SHARED STATE
+═══════════════════════════════ */
+let sessionQs = [];
+let qi=0, correct=0, wrong=0, streak=0, maxStreak=0;
+let answered=false;
+let wrongLog=[];
+
+function resetState(){
+  qi=0;correct=0;wrong=0;streak=0;maxStreak=0;answered=false;wrongLog=[];
+}
+
+function pick30() {
+  return shuffle(BANK).slice(0,30).map(q => {
+    const opts = shuffle(q.o.map((text,i)=>({text,orig:i})));
+    const newA = opts.findIndex(o=>o.orig===q.a);
+    return {...q, opts, newA};
   });
-
-  recolor();
-  renderLegend();
 }
 
-function recolor(){
-  document.querySelectorAll('.pr').forEach(el=>{
-    const p = PROVS[+el.dataset.id];
-    if(!el.classList.contains('sel')) el.setAttribute('fill', MODES[mode].fn(p));
-  });
-  renderList();
+/* ═══════════════════════════════
+   PRACTICE MODE
+═══════════════════════════════ */
+function startPractice() {
+  resetState();
+  sessionQs = pick30();
+  show('practiceScreen');
+  renderPQ();
 }
 
-function renderLegend(){
-  const m = MODES[mode];
-  document.getElementById('legTitle').textContent = m.label;
-  document.getElementById('legItems').innerHTML = m.legend.map(l=>
-    `<div class="leg-row">
-      <div class="leg-swatch" style="background:${l.c}"></div>
-      <span class="leg-label">${l.l}</span>
+function renderPQ() {
+  const q = sessionQs[qi];
+  const ci = CAT_INFO[q.cat];
+  const pct = Math.round((qi/30)*100);
+
+  document.getElementById('pq-prog-label').textContent = `Soal ${qi+1} dari 30`;
+  document.getElementById('pq-prog-pct').textContent   = pct+'%';
+  document.getElementById('pqProgFill').style.width    = pct+'%';
+  document.getElementById('pqCorrect').textContent     = correct;
+  document.getElementById('pqWrong').textContent       = wrong;
+  document.getElementById('pqStreak').textContent      = streak+'🔥';
+
+  document.getElementById('pqCat').className = 'q-category '+ci.cls;
+  document.getElementById('pqCat').textContent = ci.label;
+  document.getElementById('pqNum').textContent = `Soal ${qi+1} / 30 · Bank Soal No.${q.id}`;
+  document.getElementById('pqText').textContent = q.q;
+  document.getElementById('pqSrc').textContent = '📚 Sumber: '+q.src;
+
+  document.getElementById('pqOpts').innerHTML = q.opts.map((o,i)=>`
+    <div class="opt" id="popt${i}" onclick="answerPQ(${i})">
+      <div class="opt-letter">${String.fromCharCode(65+i)}</div>
+      <div class="opt-text">${o.text}</div>
     </div>`).join('');
+
+  const exp = document.getElementById('pqExp');
+  exp.className='explanation'; exp.textContent='';
+  const nxt = document.getElementById('pqNext');
+  nxt.className='next-btn';
+  if(qi===29) nxt.textContent='Lihat Hasil →'; else nxt.textContent='Soal Berikutnya →';
+  answered=false;
 }
 
-/* ── Hover ── */
-function onMove(e){
-  const p = PROVS[+this.dataset.id];
-  document.getElementById('tipName').textContent = p.name;
-  document.getElementById('tipPop').textContent  = fmt(p.pop)+' jiwa';
-  document.getElementById('tipDens').textContent = fmt(p.density)+' jiwa/km²';
-  document.getElementById('tipGrow').textContent = p.grow.toFixed(2)+'%/th';
-  document.getElementById('tipSex').textContent  = p.sex+' L/100 P';
-  document.getElementById('tipBadge').textContent = '🏝️ '+p.isle;
+function answerPQ(idx) {
+  if(answered) return; answered=true;
+  const q = sessionQs[qi];
+  const corr = (idx===q.newA);
+  if(corr){ correct++; streak++; maxStreak=Math.max(maxStreak,streak); }
+  else { wrong++; streak=0; wrongLog.push({q,userIdx:idx}); }
 
-  const tip = document.getElementById('tip');
-  tip.style.display = 'block';
-  const rect = document.getElementById('ma').getBoundingClientRect();
-  let x = e.clientX-rect.left+14, y = e.clientY-rect.top-110;
-  if(x+240>rect.width) x = e.clientX-rect.left-250;
-  if(y<8) y=8;
-  tip.style.left=x+'px'; tip.style.top=y+'px';
-}
-function offHover(){ document.getElementById('tip').style.display='none'; }
+  q.opts.forEach((_,i)=>{
+    const el=document.getElementById('popt'+i);
+    el.style.pointerEvents='none';
+    if(i===q.newA) el.className='opt correct';
+    else if(i===idx&&!corr) el.className='opt selected-wrong';
+  });
 
-/* ── Click ── */
-let selId = null;
-function onClick(){
-  const id = +this.dataset.id;
-  selId = id;
-  document.querySelectorAll('.pr').forEach(el=>el.classList.remove('sel'));
-  this.classList.add('sel');
-  this.parentNode.appendChild(this);
-  fillDetail(PROVS[id]);
-  showPane('Detail');
-  renderList();
+  const exp=document.getElementById('pqExp');
+  exp.textContent=(corr?'✅ Benar! ':'❌ Kurang tepat. ')+q.e;
+  exp.className='explanation on '+(corr?'cor':'wrg');
+  document.getElementById('pqNext').className='next-btn show';
+  document.getElementById('pqCorrect').textContent=correct;
+  document.getElementById('pqWrong').textContent=wrong;
+  document.getElementById('pqStreak').textContent=streak+'🔥';
 }
 
-/* ── Pan / Zoom ── */
-let tx=0,ty=0,sc=1,dragging=false,dsx,dsy;
-const mapSvg = document.getElementById('mapSvg');
-function applyTx(){ mapSvg.style.transform=`translate(${tx}px,${ty}px) scale(${sc})`; mapSvg.style.transformOrigin='center center'; }
-function mapZoom(f){ sc=Math.max(.4,Math.min(5,sc*f)); applyTx(); }
-function mapReset(){ tx=0;ty=0;sc=1;applyTx(); deselect(); }
-function deselect(){
-  selId=null;
-  document.querySelectorAll('.pr').forEach(el=>el.classList.remove('sel'));
-  showPane('Empty'); renderList();
+function nextPQ() {
+  qi++;
+  if(qi>=30){ showPracticeResult(); return; }
+  renderPQ();
 }
 
-const ma = document.getElementById('ma');
-ma.addEventListener('mousedown',e=>{
-  if(e.target.classList.contains('pr')) return;
-  if(e.target.closest('.vsw,.legend,.mctrl,.scale-lbl')) return;
-  dragging=true; dsx=e.clientX-tx; dsy=e.clientY-ty; ma.style.cursor='grabbing';
-});
-window.addEventListener('mousemove',e=>{ if(dragging){tx=e.clientX-dsx;ty=e.clientY-dsy;applyTx();} });
-window.addEventListener('mouseup',()=>{ dragging=false; ma.style.cursor=''; });
-ma.addEventListener('wheel',e=>{ e.preventDefault(); mapZoom(e.deltaY>0?.88:1.14); },{passive:false});
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') deselect(); });
+function showPracticeResult() {
+  const g=getGrade(correct,30);
+  document.getElementById('rsTrophy').textContent=g.trophy;
+  document.getElementById('rsScore').textContent=`${correct}/30`;
+  document.getElementById('rsGrade').textContent=g.label;
+  document.getElementById('rsGrade').className='result-grade '+g.cls;
+  document.getElementById('rsCorrect').textContent=correct;
+  document.getElementById('rsWrong').textContent=wrong;
+  document.getElementById('rsStreak').textContent=maxStreak;
+  document.getElementById('rsPct').textContent=Math.round(correct/30*100)+'%';
 
-// Touch pinch
-let lastPD=0;
-mapSvg.addEventListener('touchstart',e=>{ if(e.touches.length===2) lastPD=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY); },{passive:true});
-mapSvg.addEventListener('touchmove',e=>{ if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);mapZoom(d/lastPD);lastPD=d;} },{passive:true});
+  document.getElementById('rsReview').innerHTML = wrongLog.length ? wrongLog.map(w=>`
+    <div class="wr-item">
+      <div class="wr-q">❓ ${w.q.q}</div>
+      <div class="wr-user">✘ Jawabanmu: ${w.q.opts[w.userIdx]?.text || '–'}</div>
+      <div class="wr-correct">✔ Benar: ${w.q.opts[w.q.newA].text}</div>
+      <div class="wr-exp">📖 ${w.q.e}</div>
+    </div>`).join('')
+    : '<div style="padding:20px;text-align:center;color:var(--green);font-weight:600">🎉 Sempurna! Tidak ada jawaban salah.</div>';
 
-/* ═══════════════════════════════
-   DETAIL PANEL
-═══════════════════════════════ */
-function fillDetail(p){
-  document.getElementById('dEyebrow').textContent = `PROVINSI · ${p.isle.toUpperCase()}`;
-  document.getElementById('dTitle').textContent   = p.name;
-  document.getElementById('dIsle').textContent    = '🏝️ Kepulauan '+p.isle;
-  document.getElementById('dPop').textContent     = fmt(p.pop);
-
-  const badges = [];
-  if(p.rank<=3) badges.push(`🥇 #${p.rank} Terbesar`);
-  if(p.grow>=2.0) badges.push('📈 Tumbuh Cepat');
-  if(p.density>=5000) badges.push('🔴 Sangat Padat');
-  if(p.density<15) badges.push('🟢 Sangat Jarang');
-  badges.push(`${p.grow.toFixed(2)}%/th`);
-  document.getElementById('dBadges').innerHTML = badges.map(b=>`<span class="det-badge">${b}</span>`).join('');
-
-  document.getElementById('dKep').textContent  = fmt(p.density);
-  document.getElementById('dLuas').textContent = fmt(p.luas);
-  document.getElementById('dGrow').textContent = p.grow.toFixed(2)+'%';
-  document.getElementById('dRank').textContent = `#${p.rank}/38`;
-  document.getElementById('dSex').textContent  = p.sex;
-  document.getElementById('dDist').textContent = p.share.toFixed(2)+'%';
-  document.getElementById('dIbu').textContent  = p.ib;
-  document.getElementById('dKab').textContent  = p.kab+' Kab/Kota';
-  document.getElementById('dNote').textContent = p.note;
-
-  const spec = document.getElementById('dSpec');
-  if(p.spec){ spec.textContent='⭐ '+p.spec; spec.style.display='block'; }
-  else spec.style.display='none';
-
-  const laki = p.sex/(p.sex+100)*100;
-  const pere = 100 - laki;
-  document.getElementById('dLaki').textContent = laki.toFixed(1)+'%';
-  document.getElementById('dPere').textContent = pere.toFixed(1)+'%';
-  document.getElementById('dShareL').textContent = p.name;
-  document.getElementById('dShareV').textContent = p.share.toFixed(2)+'%';
-
-  setTimeout(()=>{
-    document.getElementById('dLakiF').style.width = laki.toFixed(1)+'%';
-    document.getElementById('dPereF').style.width = pere.toFixed(1)+'%';
-    document.getElementById('dShareF').style.width = Math.min(100,p.share*5.5).toFixed(1)+'%';
-  },80);
-
-  document.getElementById('cityList').innerHTML = p.cities.map(([nm,pp],i)=>
-    `<li class="city-item"><span class="city-rk">${i+1}</span><span class="city-nm">${nm}</span><span class="city-pp">${pp}</span></li>`
-  ).join('');
-
-  buildIsleChart('isleChart');
-  buildAnalisis(p);
-  buildPyramid(p);
-
-  document.querySelectorAll('.rtab').forEach((t,i)=>t.classList.toggle('on',i===0));
-  document.querySelectorAll('.rtab-body').forEach((b,i)=>b.classList.toggle('on',i===0));
-}
-
-function buildAnalisis(p){
-  const items=[];
-  if(p.density>=5000) items.push({c:'red',t:'Kepadatan Ekstrem',d:`${fmt(p.density)} jiwa/km² memerlukan tata kota intensif: hunian vertikal, MRT/LRT, pengelolaan air dan sampah skala besar.`});
-  else if(p.density<15) items.push({c:'green',t:'Kepadatan Sangat Rendah',d:`Hanya ${fmt(p.density)} jiwa/km² — berkaitan dengan topografi pegunungan/hutan, keterbatasan akses, dan infrastruktur terbatas.`});
-  if(p.grow>=2.0) items.push({c:'red',t:'Pertumbuhan Akseleratif',d:`Laju ${p.grow}% jauh di atas nasional (0,99%). Tekanan pada perumahan, sekolah, RS, dan infrastruktur di wilayah ini sangat tinggi.`});
-  if(p.id===22) items.push({c:'blue',t:'Efek IKN Nusantara',d:`Laju 2,57% tertinggi nasional — migrasi konstruksi IKN mendatangkan ratusan ribu pekerja dari seluruh Indonesia ke Penajam Paser Utara.`});
-  if(p.id===11) items.push({c:'amber',t:'Suburbanisasi Jakarta',d:`Laju 0,56% — net-negatif migrasi. Jutaan warga pindah ke Bodetabek mencari hunian terjangkau. Rute MRT & KRL mempercepat suburbanisasi.`});
-  if(p.isle==='Papua') items.push({c:'green',t:'Pemekaran Papua 2022',d:`Papua dimekarkan menjadi 6 provinsi untuk mendekatkan layanan publik ke masyarakat adat yang sebelumnya sulit dijangkau.`});
-  if(p.id===20) items.push({c:'blue',t:'Provinsi Terluas',d:`153.564 km² — lebih luas dari Jawa+Bali+Sumatra Selatan. Namun hanya dihuni 18 jiwa/km², salah satu terendah di dunia.`});
-  document.getElementById('analisis').innerHTML = items.map(i=>
-    `<div class="ibox ${i.c}" style="font-size:11.5px"><strong>${i.t}</strong><br>${i.d}</div>`
-  ).join('')||`<div style="font-size:12px;color:var(--ink3)">Tidak ada catatan analisis khusus untuk provinsi ini.</div>`;
-}
-
-function buildPyramid(p){
-  const groups=[
-    ['0–4',7.8,7.5],['5–9',8.1,7.8],['10–14',8.4,8.1],['15–19',8.7,8.4],
-    ['20–24',8.5,8.2],['25–29',8.1,7.8],['30–34',7.4,7.2],['35–39',6.7,6.6],
-    ['40–44',5.9,5.9],['45–49',5.1,5.2],['50–54',4.4,4.6],['55–59',3.7,4.0],
-    ['60–64',2.9,3.3],['65–69',2.1,2.6],['70–74',1.4,1.9],['75+',1.3,1.9]
-  ];
-  const MAX=52;
-  document.getElementById('pyrChart').innerHTML=`
-    <div class="pyr-grid" style="gap:0">
-      ${groups.map(([l,m,f])=>`
-        <div class="pyr-m" style="width:${m/10*MAX}px;background:var(--blue);border:1px solid rgba(0,0,0,.05)"></div>
-        <div class="pyr-ag">${l}</div>
-        <div class="pyr-f" style="width:${f/10*MAX}px;background:#DB2777;border:1px solid rgba(0,0,0,.05)"></div>
-      `).join('')}
-    </div>`;
-
-  let type='Ekspansif',tdesc='Dasar lebar — banyak penduduk muda. Khas negara berkembang dengan angka kelahiran tinggi.',tc='green';
-  if(p.density>400&&p.grow<1.0){type='Konstruktif';tdesc='Tengah melebar — usia produktif mendominasi. Menuju/dalam fase bonus demografi.';tc='blue';}
-  if(p.grow<0.6){type='Stasioner';tdesc='Hampir merata antar kelompok umur — khas negara maju atau daerah dengan urbanisasi tinggi.';tc='amber';}
-  document.getElementById('pyrInfo').innerHTML=`<div class="ibox ${tc}"><strong>Tipe: ${type}</strong><br>${tdesc}</div>`;
+  show('resultScreen');
 }
 
 /* ═══════════════════════════════
-   ISLAND DISTRIBUTION CHART
+   EXAM MODE
 ═══════════════════════════════ */
-function buildIsleChart(id){
-  const isles=[
-    {n:'Jawa',       c:'#DC2626'},
-    {n:'Sumatra',    c:'#D97706'},
-    {n:'Sulawesi',   c:'#059669'},
-    {n:'Kalimantan', c:'#2563EB'},
-    {n:'Bali & NTT', c:'#7C3AED'},
-    {n:'Papua',      c:'#0891B2'},
-    {n:'Maluku',     c:'#DB2777'},
-  ];
-  const data = isles.map(i=>({...i, pop:PROVS.filter(p=>p.isle===i.n).reduce((s,p)=>s+p.pop,0)}));
-  const MAX = Math.max(...data.map(d=>d.pop));
-  document.getElementById(id).innerHTML = data.map(d=>{
-    const pct=(d.pop/NAT_POP*100).toFixed(1);
-    const w=Math.max(6,(d.pop/MAX*100)).toFixed(1);
-    return `<div class="isle-row">
-      <span class="isle-nm">${d.n}</span>
-      <div class="isle-track"><div class="isle-fill" style="width:${w}%;background:${d.c}">
-        <span class="isle-pct">${pct}%</span>
-      </div></div>
-      <span class="isle-num">${fmtM(d.pop)}</span>
-    </div>`;
+let examMode=false, violations=0, timerInterval, timeLeft=45*60;
+let exAnswers=[], exCurrent=0, exScore=0, exWrongLog=[];
+let examStartTime;
+
+function showExamConfirm(){ document.getElementById('confirmDialog').classList.add('show'); }
+function closeConfirm(){ document.getElementById('confirmDialog').classList.remove('show'); }
+
+function startExam() {
+  closeConfirm();
+  // Request fullscreen
+  const el=document.documentElement;
+  if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+  else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  startExamFull();
+}
+
+function startExamFull() {
+  resetState();
+  violations=0; timeLeft=45*60; exScore=0; exWrongLog=[];
+  sessionQs = pick30();
+  exAnswers = new Array(30).fill(null);
+  exCurrent=0; examMode=true;
+  examStartTime=Date.now();
+
+  setupAntiCheat();
+  startTimer();
+
+  show('examScreen');
+  document.getElementById('examScreen').style.display='block';
+  renderExamQ();
+  renderAnswerMap();
+}
+
+function stopExam() {
+  examMode=false;
+  clearInterval(timerInterval);
+  removeAntiCheat();
+  // Exit fullscreen
+  if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+  show('homeScreen');
+}
+
+/* ── Timer ── */
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(()=>{
+    timeLeft--;
+    updateTimerDisplay();
+    if(timeLeft<=0) { clearInterval(timerInterval); finishExam(true); }
+  },1000);
+}
+
+function updateTimerDisplay(){
+  const m=Math.floor(timeLeft/60), s=timeLeft%60;
+  const el=document.getElementById('exTimer');
+  el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className='exam-timer'+(timeLeft<=300?' warning':'')+(timeLeft<=60?' danger':'');
+}
+
+/* ── Anti-Cheat ── */
+function setupAntiCheat(){
+  document.addEventListener('visibilitychange', onVisChange);
+  window.addEventListener('blur', onBlur);
+  document.addEventListener('keydown', onKeyDown);
+  document.addEventListener('contextmenu', e=>e.preventDefault());
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+}
+function removeAntiCheat(){
+  document.removeEventListener('visibilitychange', onVisChange);
+  window.removeEventListener('blur', onBlur);
+  document.removeEventListener('keydown', onKeyDown);
+  document.removeEventListener('contextmenu', e=>e.preventDefault());
+  document.removeEventListener('fullscreenchange', onFsChange);
+  document.removeEventListener('webkitfullscreenchange', onFsChange);
+}
+
+function onVisChange(){
+  if(examMode&&document.hidden) triggerViolation('Kamu berpindah tab atau menyembunyikan halaman ujian.');
+}
+function onBlur(){
+  if(examMode) triggerViolation('Fokus browser berpindah keluar dari halaman ujian.');
+}
+function onKeyDown(e){
+  if(!examMode) return;
+  if(e.key==='Escape'||e.key==='F11') { e.preventDefault(); triggerViolation('Kamu mencoba keluar dari Mode Layar Penuh.'); }
+  if(e.ctrlKey&&(e.key==='c'||e.key==='u'||e.key==='a'||e.key==='p')) e.preventDefault();
+  if(e.altKey&&e.key==='Tab') { e.preventDefault(); triggerViolation('Alt+Tab terdeteksi — mencoba berpindah aplikasi.'); }
+  if(e.metaKey) e.preventDefault();
+}
+function onFsChange(){
+  if(examMode&&!document.fullscreenElement&&!document.webkitFullscreenElement)
+    triggerViolation('Kamu keluar dari Mode Layar Penuh tanpa izin.');
+}
+
+function triggerViolation(reason){
+  if(!examMode) return;
+  violations++;
+  document.getElementById('exViolations').textContent=`${violations}/3`;
+  if(violations>=3){ finishExam(false,true); return; }
+  const wo=document.getElementById('warnOverlay');
+  document.getElementById('warnDesc').textContent=reason;
+  document.getElementById('warnCount').textContent=`Pelanggaran: ${violations}/3 — Sisa ${3-violations} lagi ujian otomatis berakhir!`;
+  wo.classList.add('show');
+}
+
+function resumeExam(){
+  document.getElementById('warnOverlay').classList.remove('show');
+  // Re-request fullscreen
+  const el=document.documentElement;
+  if(el.requestFullscreen) el.requestFullscreen().catch(()=>{});
+}
+
+/* ── Render Exam Question ── */
+function renderExamQ(){
+  const q=sessionQs[exCurrent];
+  const ci=CAT_INFO[q.cat];
+  const pct=Math.round((exCurrent/30)*100);
+
+  document.getElementById('exProgLabel').textContent=`Soal ${exCurrent+1} dari 30`;
+  document.getElementById('exProgPct').textContent=pct+'%';
+  document.getElementById('exProgFill').style.width=pct+'%';
+  document.getElementById('exScore').textContent=exScore;
+  document.getElementById('exNum').textContent=`SOAL ${exCurrent+1}/30 · Bank No.${q.id}`;
+  document.getElementById('exCat').textContent=ci.label;
+  document.getElementById('exText').textContent=q.q;
+  document.getElementById('exSrc').textContent='📚 '+q.src;
+
+  const savedAns = exAnswers[exCurrent];
+  document.getElementById('exOpts').innerHTML = q.opts.map((o,i)=>`
+    <div class="exam-opt${savedAns!==null&&i===savedAns?' selected':''}" id="eopt${i}" onclick="answerExam(${i})">
+      <div class="exam-opt-letter">${String.fromCharCode(65+i)}</div>
+      <div class="exam-opt-text">${o.text}</div>
+    </div>`).join('');
+
+  const exp=document.getElementById('exExp');
+  exp.className='exam-explanation'; exp.textContent='';
+  document.getElementById('exNext').style.display=savedAns!==null?'block':'none';
+  document.getElementById('exSkip').style.display=savedAns===null?'block':'none';
+  renderAnswerMap();
+}
+
+function answerExam(idx){
+  if(exAnswers[exCurrent]!==null) return;
+  const q=sessionQs[exCurrent];
+  exAnswers[exCurrent]=idx;
+  const corr=(idx===q.newA);
+  if(corr) exScore++;
+  else exWrongLog.push({q,userIdx:idx});
+
+  q.opts.forEach((_,i)=>{
+    const el=document.getElementById('eopt'+i);
+    el.style.pointerEvents='none';
+    if(i===q.newA) el.className='exam-opt correct';
+    else if(i===idx&&!corr) el.className='exam-opt selected-wrong';
+    else el.className='exam-opt';
+  });
+
+  const exp=document.getElementById('exExp');
+  exp.textContent=(corr?'✅ Benar! ':'❌ Kurang tepat. ')+q.e;
+  exp.className='exam-explanation on '+(corr?'cor':'wrg');
+  document.getElementById('exNext').style.display='block';
+  document.getElementById('exSkip').style.display='none';
+  document.getElementById('exScore').textContent=exScore;
+  renderAnswerMap();
+}
+
+function skipExamQ(){
+  if(exCurrent<29){ exCurrent++; renderExamQ(); }
+  else finishExam();
+}
+
+function nextExamQ(){
+  if(exCurrent<29){ exCurrent++; renderExamQ(); }
+  else finishExam();
+}
+
+function renderAnswerMap(){
+  const html = Array.from({length:30},(_,i)=>{
+    let cls='anm-dot';
+    if(i===exCurrent) cls+=' current';
+    else if(exAnswers[i]!==null){
+      const q=sessionQs[i];
+      cls+=(exAnswers[i]===q.newA?' correct-d':' wrong-d');
+    }
+    return `<div class="${cls}" onclick="jumpToQ(${i})">${i+1}</div>`;
   }).join('');
+  document.getElementById('exAnsMap').innerHTML=html;
 }
 
-/* ═══════════════════════════════
-   PROVINCE LIST
-═══════════════════════════════ */
-function renderList(filter=''){
-  const fl = filter.toLowerCase();
-  const items = SORTED.filter(p=>p.name.toLowerCase().includes(fl));
-  const maxP = SORTED[0].pop;
-  document.getElementById('provList').innerHTML = items.map(p=>`
-    <div class="pitem${selId===p.id?' on':''}" onclick="selectProv(${p.id})">
-      <span class="prank">${p.rank}</span>
-      <div class="pdot" style="background:${MODES[mode].fn(p)}"></div>
-      <div class="pinfo">
-        <div class="pname">${p.name}</div>
-        <div class="ppop">${fmtM(p.pop)} · ${p.grow.toFixed(2)}%/th</div>
-      </div>
-      <div class="pbar"><div class="pbar-f" style="width:${(p.pop/maxP*100).toFixed(0)}%;background:${MODES[mode].fn(p)}"></div></div>
-    </div>`).join('');
+function jumpToQ(i){ exCurrent=i; renderExamQ(); }
+
+function finishExam(timeout=false, forceEnd=false){
+  clearInterval(timerInterval);
+  examMode=false;
+  removeAntiCheat();
+
+  // Exit fullscreen
+  if(document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+
+  const elapsed=Math.round((Date.now()-examStartTime)/1000);
+  const m=Math.floor(elapsed/60), s=elapsed%60;
+  const timeStr=`${m}:${String(s).padStart(2,'0')}`;
+
+  const g=getGrade(exScore,30);
+  document.getElementById('erTrophy').textContent=g.trophy;
+  document.getElementById('erScore').textContent=`${exScore}/30`;
+  document.getElementById('erGrade').textContent=g.label+(forceEnd?' · ⚠️ Ujian Dihentikan':'')+(timeout?' · ⏰ Waktu Habis':'');
+  document.getElementById('erGrade').className='er-grade '+g.cls;
+  document.getElementById('erC').textContent=exScore;
+  document.getElementById('erW').textContent=30-exScore;
+  document.getElementById('erPct').textContent=Math.round(exScore/30*100)+'%';
+  document.getElementById('erTime').textContent=timeout?'45:00':timeStr;
+
+  document.getElementById('erReview').innerHTML = exWrongLog.length ? exWrongLog.map(w=>`
+    <div class="er-review-item">
+      <div class="er-rv-q">❓ ${w.q.q}</div>
+      <div class="er-rv-u">✘ Jawabanmu: ${w.q.opts[w.userIdx]?.text||'Dilewati'}</div>
+      <div class="er-rv-c">✔ Benar: ${w.q.opts[w.q.newA].text}</div>
+      <div class="er-rv-e">📖 ${w.q.e}</div>
+    </div>`).join('')
+    : '<div style="padding:20px;text-align:center;color:var(--exam-grn);font-weight:600">🎉 Sempurna! Semua jawaban benar.</div>';
+
+  show('examResultScreen');
+  document.getElementById('examResultScreen').style.display='block';
+  document.getElementById('examScreen').style.display='none';
 }
-
-function filterList(v){ renderList(v); }
-
-function selectProv(id){
-  selId=id;
-  document.querySelectorAll('.pr').forEach(el=>el.classList.remove('sel'));
-  const el=document.querySelector(`.pr[data-id="${id}"]`);
-  if(el){ el.classList.add('sel'); el.parentNode.appendChild(el); }
-  fillDetail(PROVS[id]);
-  showPane('Detail');
-  renderList(document.getElementById('srch').value);
-}
-
-/* ═══════════════════════════════
-   PANE SWITCHING
-═══════════════════════════════ */
-let curPane='Empty', curNav='peta';
-
-function showPane(name){
-  ['Empty','Detail','Materi','Kuis'].forEach(n=>{
-    const el=document.getElementById('pane'+n);
-    if(el) el.classList.toggle('on',n===name);
-  });
-  curPane=name;
-}
-
-function goNav(btn,key){
-  document.querySelectorAll('.hnav').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on'); curNav=key;
-  if(key==='peta') showPane(selId!==null?'Detail':'Empty');
-  if(key==='materi'){ showPane('Materi'); buildIsleChart('matIsle'); buildKonsepList(); }
-  if(key==='kuis'){ showPane('Kuis'); startQuiz(); }
-}
-
-function switchTab(btn,key){
-  btn.closest('.rtabs').querySelectorAll('.rtab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  const m={data:'tbData',kota:'tbKota',pulau:'tbPulau',pyr:'tbPyr'};
-  document.querySelectorAll('.rtab-body').forEach(b=>b.classList.remove('on'));
-  document.getElementById(m[key]).classList.add('on');
-}
-
-function setMode(btn,m){
-  mode=m;
-  document.querySelectorAll('.vbtn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  recolor(); renderLegend();
-}
-
-/* ═══════════════════════════════
-   KONSEP MATERI
-═══════════════════════════════ */
-const KONSEP=[
-  {e:'📊',t:'Demografi & Kependudukan',b:`<b>Demografi</b> adalah ilmu yang mempelajari jumlah, persebaran, komposisi, dan dinamika penduduk. Tiga komponen utama perubahan populasi:<br><br>• <b>Natalitas</b> (kelahiran) — diukur dengan CBR, TFR<br>• <b>Mortalitas</b> (kematian) — diukur dengan CDR, IMR<br>• <b>Migrasi</b> (perpindahan) — imigrasi, emigrasi`},
-  {e:'📈',t:'Pertumbuhan Penduduk',b:`Perubahan jumlah penduduk dalam periode tertentu.<div class="formula">P = (L − M) + (I − E)<br>L = Lahir · M = Mati<br>I = Imigrasi · E = Emigrasi<br><br>LPP Geometrik = (Pt/P0)^(1/t) − 1</div><b>Indonesia 2020–2025: 0,99%/th</b> (BPS Proyeksi SP2020)<br>Puncak pertumbuhan: 2,4% (1970-an)`},
-  {e:'🏙️',t:'Kepadatan Penduduk',b:`Jumlah penduduk per satuan luas wilayah.<div class="formula">K = P / L<br>K = Kepadatan (jiwa/km²)<br>P = Jumlah Penduduk<br>L = Luas Wilayah (km²)</div><b>Nasional: 147 jiwa/km²</b><br>Tertinggi: Jakarta <b>16.943 jiwa/km²</b><br>Terendah: Kalteng <b>18 jiwa/km²</b>`},
-  {e:'🔢',t:'Angka Kelahiran (CBR & TFR)',b:`<b>CBR</b> (Crude Birth Rate) = kelahiran per 1.000 penduduk.<div class="formula">CBR = (B / P) × 1.000</div><b>TFR</b> (Total Fertility Rate) = rata-rata anak lahir hidup per wanita usia subur.<div class="formula">Indonesia TFR 2025 ≈ 2,14</div>Interpretasi: TFR = 2,1 adalah "replacement level" — populasi stabil jangka panjang.`},
-  {e:'💀',t:'Angka Kematian (CDR & IMR)',b:`<b>CDR</b> (Crude Death Rate) = kematian per 1.000 penduduk.<div class="formula">CDR = (D / P) × 1.000</div><b>IMR</b> (Infant Mortality Rate) = kematian bayi per 1.000 kelahiran hidup.<div class="formula">Indonesia IMR 2025 ≈ 19,8 per 1.000</div>Indonesia telah menurunkan IMR dari 142 (1970) menjadi ~20 (2025) — kemajuan besar kesehatan.`},
-  {e:'🚶',t:'Migrasi Penduduk',b:`<b>Migrasi Internasional:</b><br>• Imigrasi (masuk ke Indonesia)<br>• Emigrasi (keluar dari Indonesia) — TKI/PMI<br><br><b>Migrasi Domestik:</b><br>• <b>Urbanisasi</b>: desa → kota — 58,5% urban (2025)<br>• <b>Ruralisasi</b>: kota → desa (pasca COVID)<br>• <b>Transmigrasi</b>: antarprovinsi/pulau (program pemerintah)<br>• <b>Komutasi</b>: ulang-alik harian`},
-  {e:'👶',t:'Piramida Penduduk',b:`Grafik batang ganda menampilkan struktur usia dan gender.<br><br><b>Ekspansif</b>: dasar sangat lebar → banyak anak, TFR tinggi<br><b>Konstruktif</b>: tengah lebar → dominan usia produktif<br><b>Stasioner</b>: hampir seragam → negara maju<br><br>Indonesia 2025: tipe <b>konstruktif</b>, usia median 30,2 tahun, mendekati puncak bonus demografi.`},
-  {e:'💎',t:'Bonus Demografi',b:`Kondisi di mana penduduk usia produktif (15–64 tahun) jauh mendominasi, sehingga rasio ketergantungan (dependency ratio) sangat rendah.<div class="formula">Rasio Ketergantungan = ((0–14) + (65+)) / (15–64) × 100</div>Indonesia: diprediksi puncak ~2030–2035 dengan DR ≈ 44. Ini "jendela peluang" yang terbuka sekali dalam sejarah. Pemanfaatan tergantung kualitas SDM dan kebijakan.`},
-  {e:'🗺️',t:'Persebaran Penduduk',b:`Sebaran penduduk Indonesia tidak merata:<br><br>• <b>Jawa</b>: 56% penduduk, 7% luas wilayah<br>• <b>Sumatra</b>: 22% penduduk, 25% luas<br>• <b>Kalimantan</b>: 6,7% penduduk, 28% luas<br>• <b>Sulawesi</b>: 7,6% penduduk, 10% luas<br>• <b>Papua+Maluku</b>: 4,3% penduduk, 25% luas<br><br>Faktor penyebab: sejarah, kesuburan tanah, aksesibilitas, ekonomi.`},
-  {e:'📉',t:'Angka Harapan Hidup (AHH)',b:`Life Expectancy at Birth — rata-rata tahun yang diharapkan dijalani bayi yang baru lahir.<div class="formula">AHH Indonesia 2025 ≈ 73,6 tahun<br>(♂ = 71,4 th · ♀ = 75,9 th)</div>Naik dari 45 tahun (1960) — mencerminkan kemajuan gizi, sanitasi, dan layanan kesehatan. AHH perempuan lebih tinggi adalah pola universal.`},
-];
-
-function buildKonsepList(){
-  document.getElementById('konsepList').innerHTML = KONSEP.map((k,i)=>`
-    <div class="ka" id="ka${i}">
-      <div class="ka-hdr" onclick="toggleKA(this.parentElement)">
-        <div class="ka-title">${k.e} ${k.t}</div>
-        <div class="ka-arr">▼</div>
-      </div>
-      <div class="ka-body">${k.b}</div>
-    </div>`).join('');
-}
-function toggleKA(el){ el.classList.toggle('op'); }
-
-/* ═══════════════════════════════
-   QUIZ
-═══════════════════════════════ */
-const QS=[
-  {q:"Berdasarkan BPS Proyeksi Penduduk 2020–2050, jumlah penduduk Indonesia pertengahan tahun 2025 diperkirakan sebesar...",
-   o:["270,8 juta jiwa","276,4 juta jiwa","281,6 juta jiwa","288,3 juta jiwa"],a:2,
-   e:"BPS Proyeksi Penduduk berbasis SP2020 memperkirakan 281,6 juta jiwa pada pertengahan tahun (Juni) 2025. Angka 288,3 juta adalah data Dukcapil (administrasi) yang berbeda metodologi."},
-  {q:"Provinsi dengan KEPADATAN PENDUDUK tertinggi di Indonesia berdasarkan BPS 2025 adalah...",
-   o:["Jawa Barat","Jawa Tengah","DKI Jakarta","Banten"],a:2,
-   e:"DKI Jakarta: 11,25 juta jiwa dibagi 664 km² = 16.943 jiwa/km². Jauh di atas rata-rata nasional 147 jiwa/km²."},
-  {q:"Laju pertumbuhan penduduk Indonesia periode 2020–2025 menurut BPS adalah...",
-   o:["0,51%/tahun","0,75%/tahun","0,99%/tahun","1,25%/tahun"],a:2,
-   e:"BPS Proyeksi 2025: laju pertumbuhan 0,99%/tahun dihitung secara geometrik dari SP2020 (September 2020) ke pertengahan 2025 (Juni)."},
-  {q:"Rumus untuk menghitung Crude Birth Rate (CBR) yang benar adalah...",
-   o:["CBR = B/P × 100","CBR = B/P × 1.000","CBR = L/M × 1.000","CBR = P/L × 100"],a:1,
-   e:"CBR = (Jumlah kelahiran / Jumlah penduduk) × 1.000. Hasilnya dinyatakan per 1.000 penduduk per tahun. Indonesia TFR ≈ 2,14 (2025)."},
-  {q:"Provinsi Kalimantan Timur mencatat laju pertumbuhan tertinggi nasional (2,57%/th 2020–2025) karena...",
-   o:["Angka kelahiran sangat tinggi","Migrasi besar ke proyek IKN Nusantara","Program transmigrasi pemerintah","Kualitas hidup paling baik"],a:1,
-   e:"Pembangunan IKN Nusantara di Penajam Paser Utara dan Kutai Kartanegara mendorong migrasi ratusan ribu pekerja konstruksi dari seluruh Indonesia ke Kaltim."},
-  {q:"Pulau Jawa menampung berapa persen penduduk Indonesia berdasarkan proyeksi BPS 2025?",
-   o:["45,8%","50,2%","55,8%","62,4%"],a:2,
-   e:"Jawa menampung ±55,8% atau sekitar 157 juta jiwa dari total 281,6 juta — padahal luas Pulau Jawa hanya sekitar 7% wilayah Indonesia."},
-  {q:"Apa yang dimaksud dengan 'Bonus Demografi'?",
-   o:["Jumlah penduduk yang sangat besar","Rasio usia produktif jauh mendominasi sehingga dependency ratio rendah","Program pemerintah untuk mendorong kelahiran","Angka harapan hidup yang tinggi"],a:1,
-   e:"Bonus demografi terjadi ketika penduduk usia produktif (15–64 th) jauh mendominasi non-produktif (0–14 dan 65+). Dependency ratio rendah = lebih banyak yang menghasilkan dari yang ditanggung. Indonesia diprediksi puncak 2030–2035."},
-  {q:"TFR (Total Fertility Rate) Indonesia 2025 sekitar 2,14 artinya...",
-   o:["Angka kematian bayi 2,14 per 1.000","Rata-rata 2,14 anak per wanita usia subur","Ada 2,14 juta kelahiran per tahun","Pertumbuhan penduduk 2,14% per tahun"],a:1,
-   e:"TFR = rata-rata jumlah anak yang dilahirkan seorang wanita selama masa usia subur (15–49 th). TFR 2,14 ≈ replacement level (2,1) — kondisi di mana populasi akan stabil jangka panjang."},
-  {q:"Kota paling timur Indonesia yang menjadi ujung frasa 'Sabang sampai Merauke' adalah...",
-   o:["Kota Jayapura","Kota Wamena","Kota Sorong","Kota Merauke"],a:3,
-   e:"Merauke di Papua Selatan adalah kota paling timur Indonesia (141° BT). TN Wasur di sekitarnya adalah padang savana terluas Indonesia. Merauke berbatasan langsung dengan Papua Nugini."},
-  {q:"Papua dimekarkan dari 2 menjadi 6 provinsi pada tahun 2022. Tujuan utamanya adalah...",
-   o:["Meningkatkan jumlah pemilu","Mendekatkan layanan publik ke masyarakat adat dan mempercepat pembangunan","Kepentingan keamanan militer","Meningkatkan PAD Papua"],a:1,
-   e:"Pemekaran Papua 2022 bertujuan mendekatkan pemerintahan ke masyarakat adat yang selama ini jauh dari akses layanan, mempercepat pembangunan infrastruktur, dan mengurangi kesenjangan KTI dengan Jawa."},
-];
-
-let qi=0,qs=0,qst=0,qrun=false;
-
-function startQuiz(){
-  if(qrun)return;
-  qi=0;qs=0;qst=0;qrun=true; renderQ();
-}
-
-function renderQ(){
-  upQHdr();
-  if(qi>=QS.length){
-    document.getElementById('quizBody').innerHTML=`
-      <div class="quiz-done">
-        <div class="qd-ico">${qs>=8?'🏆':qs>=6?'🥈':'📖'}</div>
-        <div class="qd-score">${qs}/${QS.length}</div>
-        <div class="qd-msg">${qs>=8?'Luar biasa! Kamu sangat memahami materi kependudukan Indonesia!':qs>=6?'Bagus! Sedikit lagi untuk sempurna.':'Pelajari kembali materinya dan coba lagi.'}</div>
-        <button class="q-restart" onclick="qi=0;qs=0;qst=0;qrun=false;startQuiz()">🔄 Ulangi Kuis</button>
-      </div>`;
-    return;
-  }
-  const q=QS[qi];
-  document.getElementById('quizBody').innerHTML=`
-    <div class="q-num">SOAL ${qi+1} DARI ${QS.length}</div>
-    <div class="q-text">${q.q}</div>
-    <div class="q-opts">${q.o.map((o,i)=>`<div class="qopt" onclick="ansQ(${i})">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}</div>
-    <div class="qfb" id="qFb"></div>
-    <button class="q-next" id="qNxt" onclick="nextQ()">Soal Berikutnya →</button>`;
-}
-
-function ansQ(idx){
-  const q=QS[qi];
-  document.querySelectorAll('.qopt').forEach(o=>o.style.pointerEvents='none');
-  document.querySelectorAll('.qopt')[q.a].classList.add('cor');
-  const fb=document.getElementById('qFb');
-  if(idx===q.a){qs++;qst++;fb.textContent='✅ Benar! '+q.e;fb.className='qfb on cor';}
-  else{qst=0;document.querySelectorAll('.qopt')[idx].classList.add('wrg');fb.textContent='❌ Kurang tepat. '+q.e;fb.className='qfb on wrg';}
-  document.getElementById('qNxt').classList.add('on');
-  upQHdr();
-}
-function nextQ(){ qi++; renderQ(); }
-function upQHdr(){
-  document.getElementById('qScore').textContent=qs;
-  document.getElementById('qNo').textContent=`${Math.min(qi+1,QS.length)}/10`;
-  document.getElementById('qStreak').textContent=qst+'🔥';
-}
-
-/* ═══════════════════════════════
-   UTILS
-═══════════════════════════════ */
-function fmt(n){
-  if(n>=1e9) return(n/1e9).toFixed(2)+' M';
-  if(n>=1e6) return(n/1e6).toFixed(2)+' Jt';
-  if(n>=1e3) return(n/1e3).toFixed(0)+' Rb';
-  return n.toString();
-}
-function fmtM(n){
-  if(n>=1e6) return(n/1e6).toFixed(1)+' Jt';
-  if(n>=1e3) return(n/1e3).toFixed(0)+'K';
-  return n.toString();
-}
-
-/* ═══════════════════════════════
-   INIT
-═══════════════════════════════ */
-window.addEventListener('DOMContentLoaded',()=>{
-  buildMap();
-  renderList();
-  buildIsleChart('matIsle');
-  buildKonsepList();
-});
 </script>
 </body>
 </html>
